@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/listMachines">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="de.florianisme.wakeonlan.home.MainActivity"
+        android:label="@string/title_activity_main"
+        tools:layout="@layout/activity_main" />
+
+    <action android:id="@+id/MainActivity_to_AddMachineActivity"
+        app:destination="@id/addMachineActivity" />
+
+    <activity
+        android:id="@+id/addMachineActivity"
+        android:name="de.florianisme.wakeonlan.home.AddMachineActivity"
+        android:label="@string/title_activity_add_machine"
+        tools:layout="@layout/activity_add_machine" />
+
+    <fragment android:id="@+id/listMachines"
+        android:name="de.florianisme.wakeonlan.home.MachineListFragment"
+        android:label="@string/title_activity_main"
+        tools:layout="@layout/fragment_list_machines"/>
+</navigation>
