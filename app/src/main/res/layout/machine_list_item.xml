@@ -22,6 +22,7 @@
             android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textStyle="bold"
+            style="@style/FontMonospaced"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Machine Name" />
@@ -33,6 +34,7 @@
             android:layout_marginStart="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textSize="12sp"
+            style="@style/FontMonospaced"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/machine_name"
             tools:text="d9:ad:41:ce:2f:0f" />

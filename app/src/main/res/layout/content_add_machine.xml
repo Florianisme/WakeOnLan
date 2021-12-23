@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />
@@ -50,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />
@@ -75,6 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />

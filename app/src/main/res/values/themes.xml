@@ -14,13 +14,16 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:fontFamily">monospace</item>
         <item name="card_background_color">@color/card_background_light</item>
     </style>
 
     <style name="Theme.WakeOnLan.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="FontMonospaced">
+        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="Theme.WakeOnLan.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
