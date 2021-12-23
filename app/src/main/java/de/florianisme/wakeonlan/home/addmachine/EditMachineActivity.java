@@ -81,13 +81,14 @@ public class EditMachineActivity extends ModifyMachineActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     protected void persistMachine() {
         machine.name = machineNameInput.getText().toString();
         machine.macAddress = machineMacInput.getText().toString();
         machine.broadcast_address = machineBroadcastInput.getText().toString();
         machine.port = getPort();
 
-        databaseInstance.machineDao().insertAll(machine);
+        databaseInstance.machineDao().update(machine);
     }
 
 }

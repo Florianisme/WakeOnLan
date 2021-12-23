@@ -33,6 +33,7 @@ public class AddMachineActivity extends ModifyMachineActivity {
 
     }
 
+    @Override
     protected void persistMachine() {
         Machine machine = new Machine();
         machine.name = machineNameInput.getText().toString();
