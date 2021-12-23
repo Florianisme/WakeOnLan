@@ -25,6 +25,9 @@
         <activity
             android:name=".home.addmachine.AddMachineActivity"
             android:label="@string/title_activity_add_machine" />
+        <activity
+            android:name=".home.addmachine.EditMachineActivity"
+            android:label="@string/title_activity_edit_machine" />
     </application>
 
 </manifest>

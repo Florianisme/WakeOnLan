@@ -50,7 +50,7 @@ public class MachineListFragment extends Fragment {
     }
 
     private List<Machine> loadMachines() {
-        return databaseInstance.userDao().getAll();
+        return databaseInstance.machineDao().getAll();
     }
 
     @Override

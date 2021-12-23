@@ -18,7 +18,7 @@
         android:id="@+id/addMachineActivity"
         android:name="de.florianisme.wakeonlan.home.addmachine.AddMachineActivity"
         android:label="@string/title_activity_add_machine"
-        tools:layout="@layout/activity_add_machine" />
+        tools:layout="@layout/activity_modify_machine" />
 
     <fragment
         android:id="@+id/listMachines"

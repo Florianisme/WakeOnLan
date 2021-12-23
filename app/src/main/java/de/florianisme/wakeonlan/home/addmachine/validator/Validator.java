@@ -21,8 +21,8 @@ public abstract class Validator implements TextWatcher {
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
-        ValidationResult validate = validate(s.toString());
+    public void afterTextChanged(Editable editable) {
+        ValidationResult validate = validate(editable.toString());
         if (validate == ValidationResult.VALID) {
             editTextView.setError(null);
         } else {

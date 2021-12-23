@@ -73,11 +73,9 @@ public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             machineItemViewHolder.setMachineName(machine.name);
             machineItemViewHolder.setMachineMac(machine.macAddress);
             machineItemViewHolder.setOnClickHandler(machine);
+            machineItemViewHolder.setOnEditClickHandler(machine);
         }
     }
-
-
-
 }
 
 
