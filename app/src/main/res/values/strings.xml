@@ -1,8 +1,10 @@
 <resources>
+    <!-- Titles -->
     <string name="app_name">WakeOnLan</string>
     <string name="title_activity_main">Wake On Lan</string>
-
     <string name="title_activity_add_machine">Add Machine</string>
+
+    <!-- Add Machine Activity -->
     <string name="add_machine_name">Name</string>
     <string name="add_machine_mac_address">MAC Address</string>
     <string name="add_machine_port">Port</string>
@@ -10,5 +12,9 @@
     <string name="add_machine_port_seven">7</string>
     <string name="add_machine_port_nine">9</string>
     <string name="add_machine_menu_save">Save</string>
+
+    <!-- Machine List -->
     <string name="machine_list_startup">Turn on</string>
+    <string name="machine_list_empty_title">No machines available</string>
+    <string name="machine_list_empty_hint">Tap the \"+\" icon to add your first machine</string>
 </resources>

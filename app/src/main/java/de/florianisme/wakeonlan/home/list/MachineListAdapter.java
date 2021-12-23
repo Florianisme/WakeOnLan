@@ -1,23 +1,22 @@
 package de.florianisme.wakeonlan.home.list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
+import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
+import de.florianisme.wakeonlan.home.list.viewholder.MachineItemViewHolder;
 import de.florianisme.wakeonlan.persistence.Machine;
-import de.florianisme.wakeonlan.wol.WolSender;
 
-public class MachineListAdapter extends RecyclerView.Adapter<MachineListAdapter.ViewHolder> {
+public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Machine> machines;
 
@@ -26,81 +25,58 @@ public class MachineListAdapter extends RecyclerView.Adapter<MachineListAdapter.
     }
 
     public void updateDataset(List<Machine> machines) {
-        this.machines = machines;
+        this.machines = Collections.unmodifiableList(machines);
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.machine_list_item, viewGroup, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view;
+        RecyclerView.ViewHolder viewHolder;
 
-        return new ViewHolder(view);
+        if (ListViewType.EMPTY.ordinal() == viewType) {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.machine_list_empty, viewGroup, false);
+            viewHolder = new EmptyViewHolder(view);
+        } else {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.machine_list_item, viewGroup, false);
+            viewHolder = new MachineItemViewHolder(view);
+        }
+
+        return viewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (machines.isEmpty()) {
+            return ListViewType.EMPTY.ordinal();
+        } else {
+            return ListViewType.MACHINE.ordinal();
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (machines.isEmpty()) {
+            return 1; // "Empty" item
+        }
         return machines.size();
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Machine machine = machines.get(position);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
+        if (getItemViewType(position) == ListViewType.MACHINE.ordinal()) {
+            MachineItemViewHolder machineItemViewHolder = (MachineItemViewHolder) viewHolder;
+            Machine machine = machines.get(position);
 
-        viewHolder.setMachineName(machine.name);
-        viewHolder.setMachineMac(machine.macAddress);
-        viewHolder.setOnClickHandler(machine);
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView machineName;
-        private final TextView machineMac;
-        private final Button sendWolButton;
-
-        public ViewHolder(View view) {
-            super(view);
-            machineName = view.findViewById(R.id.machine_name);
-            machineMac = view.findViewById(R.id.machine_mac);
-
-            sendWolButton = view.findViewById(R.id.send_wol);
-        }
-
-        public void setMachineName(String name) {
-            machineName.setText(name);
-        }
-
-        public void setMachineMac(String mac) {
-            machineMac.setText(mac);
-        }
-
-        public void setOnClickHandler(Machine machine) {
-            sendWolButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Sending Magic Packet to " + machineName.getText(), Toast.LENGTH_LONG).show();
-
-                    sendWolPacket();
-                }
-
-                private void sendWolPacket() {
-                    Thread thread = new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            try {
-                                WolSender.sendWolPacket(machine);
-                            } catch (Exception e) {
-                                Log.e(this.getClass().getName(), "Error while sending magic packet: ", e);
-                            }
-                        }
-                    });
-
-                    thread.start();
-                }
-            });
+            machineItemViewHolder.setMachineName(machine.name);
+            machineItemViewHolder.setMachineMac(machine.macAddress);
+            machineItemViewHolder.setOnClickHandler(machine);
         }
     }
+
+
 
 }
 
