@@ -5,6 +5,18 @@ plugins {
 android {
     compileSdk 31
 
+    signingConfigs {
+        release {
+            storeFile file(project.property('KEYSTORE_PATH'))
+            storePassword project.property('KEYSTORE_PASSWORD')
+            keyAlias project.property('KEY_ALIAS')
+            keyPassword project.property('KEY_PASSWORD')
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
@@ -17,6 +29,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
