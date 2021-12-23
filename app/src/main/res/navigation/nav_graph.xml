@@ -16,12 +16,13 @@
 
     <activity
         android:id="@+id/addMachineActivity"
-        android:name="de.florianisme.wakeonlan.home.AddMachineActivity"
+        android:name="de.florianisme.wakeonlan.home.addmachine.AddMachineActivity"
         android:label="@string/title_activity_add_machine"
         tools:layout="@layout/activity_add_machine" />
 
-    <fragment android:id="@+id/listMachines"
-        android:name="de.florianisme.wakeonlan.home.MachineListFragment"
+    <fragment
+        android:id="@+id/listMachines"
+        android:name="de.florianisme.wakeonlan.home.list.MachineListFragment"
         android:label="@string/title_activity_main"
         tools:layout="@layout/fragment_list_machines"/>
 </navigation>

@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home;
+package de.florianisme.wakeonlan.home.list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

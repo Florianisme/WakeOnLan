@@ -22,8 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.AddMachineActivity"
-            android:label="@string/title_activity_add_machine"/>
+        <activity
+            android:name=".home.addmachine.AddMachineActivity"
+            android:label="@string/title_activity_add_machine" />
     </application>
 
 </manifest>
