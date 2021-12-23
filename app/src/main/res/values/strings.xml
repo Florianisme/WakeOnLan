@@ -13,6 +13,11 @@
     <string name="add_machine_port_nine">9</string>
     <string name="add_machine_menu_save">Save</string>
 
+    <string name="add_machine_error_mac_invalid">Invalid MAC Address</string>
+    <string name="add_machine_error_name_empty">Name must not be empty</string>
+    <string name="add_machine_error_broadcast_invalid">Invalid Broadcast Address</string>
+    <string name="add_machine_error_save_clicked">Please correct your inputs first</string>
+
     <!-- Machine List -->
     <string name="machine_list_startup">Turn on</string>
     <string name="machine_list_empty_title">No machines available</string>
