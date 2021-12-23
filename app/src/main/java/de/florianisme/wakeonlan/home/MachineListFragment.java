@@ -10,34 +10,37 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.florianisme.wakeonlan.databinding.FragmentListMachinesBinding;
+import de.florianisme.wakeonlan.persistence.AppDatabase;
+import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.Machine;
 
 
 public class MachineListFragment extends Fragment {
 
     private FragmentListMachinesBinding binding;
+    private AppDatabase databaseInstance;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
         binding = FragmentListMachinesBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine("Machine 1", "b1:bd:50:27:48:1b", "", 9));
-        machines.add(new Machine("Machine 2", "51:c4:de:6c:06:33", "", 9));
-        machines.add(new Machine("Machine 3", "d9:ad:41:ce:2f:0f", "", 9));
+        populateRecyclerView();
+    }
+
+    private void populateRecyclerView() {
+        List<Machine> machines = databaseInstance.userDao().getAll();
         MachineListAdapter machineListAdapter = new MachineListAdapter(machines);
         RecyclerView machinesRecyclerView = binding.machineList;
 

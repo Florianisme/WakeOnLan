@@ -9,10 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityAddMachineBinding;
+import de.florianisme.wakeonlan.persistence.AppDatabase;
+import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.persistence.Machine;
 
 public class AddMachineActivity extends AppCompatActivity {
 
     private ActivityAddMachineBinding binding;
+    private AppDatabase databaseInstance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,7 @@ public class AddMachineActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+        databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
     }
 
     @Override
@@ -35,11 +41,26 @@ public class AddMachineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_machine_menu_save:
-                // TODO persist
+                persistMachine();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void persistMachine() {
+        Machine machine = new Machine();
+        machine.name = binding.machine.machineName.getText().toString();
+        machine.macAddress = binding.machine.machineMac.getText().toString();
+        machine.broadcast_address = binding.machine.machineBroadcast.toString();
+        machine.port = getPort();
+
+        databaseInstance.userDao().insertAll(machine);
+    }
+
+    private int getPort() {
+        return binding.machine.portNine.isChecked() ? 9 : 7;
     }
 }

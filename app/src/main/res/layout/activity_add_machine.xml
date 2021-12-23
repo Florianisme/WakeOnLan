@@ -20,6 +20,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_add_machine"/>
+    <include
+        android:id="@+id/machine"
+        layout="@layout/content_add_machine" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

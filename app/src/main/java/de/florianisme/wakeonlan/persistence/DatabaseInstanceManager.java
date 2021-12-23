@@ -9,7 +9,7 @@ public class DatabaseInstanceManager {
     private static AppDatabase appDatabase;
 
     public static void init(Context context) {
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name").allowMainThreadQueries().build();
     }
 
     public static AppDatabase getDatabaseInstance() {
