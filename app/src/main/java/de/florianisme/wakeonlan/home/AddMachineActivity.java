@@ -39,14 +39,13 @@ public class AddMachineActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_machine_menu_save:
-                persistMachine();
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.add_machine_menu_save) {
+            persistMachine();
+            finish();
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
 
     }
 
