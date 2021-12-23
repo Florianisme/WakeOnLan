@@ -22,6 +22,7 @@ public class MachineListFragment extends Fragment {
 
     private FragmentListMachinesBinding binding;
     private AppDatabase databaseInstance;
+    private MachineListAdapter machineListAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -40,12 +41,23 @@ public class MachineListFragment extends Fragment {
     }
 
     private void populateRecyclerView() {
-        List<Machine> machines = databaseInstance.userDao().getAll();
-        MachineListAdapter machineListAdapter = new MachineListAdapter(machines);
+        List<Machine> machines = loadMachines();
+        machineListAdapter = new MachineListAdapter(machines);
         RecyclerView machinesRecyclerView = binding.machineList;
 
         machinesRecyclerView.setAdapter(machineListAdapter);
         machinesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private List<Machine> loadMachines() {
+        return databaseInstance.userDao().getAll();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        machineListAdapter.updateDataset(loadMachines());
+        machineListAdapter.notifyDataSetChanged();
     }
 
     @Override

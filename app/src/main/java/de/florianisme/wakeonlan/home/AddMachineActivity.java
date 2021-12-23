@@ -54,7 +54,7 @@ public class AddMachineActivity extends AppCompatActivity {
         Machine machine = new Machine();
         machine.name = binding.machine.machineName.getText().toString();
         machine.macAddress = binding.machine.machineMac.getText().toString();
-        machine.broadcast_address = binding.machine.machineBroadcast.toString();
+        machine.broadcast_address = binding.machine.machineBroadcast.getText().toString();
         machine.port = getPort();
 
         databaseInstance.userDao().insertAll(machine);
