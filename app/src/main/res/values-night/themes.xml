@@ -14,5 +14,6 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">monospace</item>
+        <item name="card_background_color">@color/card_background_dark</item>
     </style>
 </resources>

@@ -9,6 +9,9 @@
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 
+    <color name="card_background_light">#EDEDED</color>
+    <color name="card_background_dark">#1C1C1C</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -15,6 +15,7 @@
         <!-- Customize your theme here. -->
 
         <item name="android:fontFamily">monospace</item>
+        <item name="card_background_color">@color/card_background_light</item>
     </style>
 
     <style name="Theme.WakeOnLan.NoActionBar">
