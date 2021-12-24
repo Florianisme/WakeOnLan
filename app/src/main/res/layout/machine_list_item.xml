@@ -37,6 +37,7 @@
             style="@style/FontMonospaced"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/machine_name"
+            android:textAllCaps="true"
             tools:text="d9:ad:41:ce:2f:0f" />
 
         <Button
@@ -46,7 +47,6 @@
             android:layout_height="wrap_content"
             android:text="@string/machine_list_edit"
             android:textColor="@color/primaryDarkColor"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/send_wol"
             app:layout_constraintTop_toBottomOf="@+id/machine_mac" />
 
