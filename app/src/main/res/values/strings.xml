@@ -1,7 +1,7 @@
 <resources>
     <!-- Titles -->
     <string name="app_name">WakeOnLan</string>
-    <string name="title_activity_main">Wake On Lan</string>
+    <string name="title_activity_main">Wake on Lan</string>
     <string name="title_activity_add_machine">Add Machine</string>
     <string name="title_activity_edit_machine">Edit Machine</string>
 
@@ -10,8 +10,8 @@
     <string name="add_machine_mac_address">MAC Address</string>
     <string name="add_machine_port">Port</string>
     <string name="add_machine_broadcast_address">Broadcast Address</string>
-    <string name="add_machine_port_seven">7</string>
-    <string name="add_machine_port_nine">9</string>
+    <string name="add_machine_port_seven" translatable="false">7</string>
+    <string name="add_machine_port_nine" translatable="false">9</string>
     <string name="add_machine_menu_save">Save</string>
 
     <string name="add_machine_error_mac_invalid">Invalid MAC Address</string>
