@@ -52,7 +52,7 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress(ModifyMachineActivity.this);
+                    Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
                     broadcastAddress.ifPresent(inetAddress -> binding.machine.machineBroadcast.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
