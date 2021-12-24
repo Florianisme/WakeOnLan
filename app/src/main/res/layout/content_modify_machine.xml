@@ -2,30 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="?attr/actionBarSize"
-    android:clipToPadding="false"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="?attr/actionBarSize">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/machine_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/add_machine_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/machine_name"
+            style="@style/FontMonospaced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />
@@ -33,25 +33,25 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/machine_mac_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/add_machine_mac_address"
-        app:placeholderText="AB:12:CD:34:EF:56"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/machine_name_layout" >
+        app:layout_constraintTop_toBottomOf="@+id/machine_name_layout"
+        app:placeholderText="AB:12:CD:34:EF:56">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/machine_mac"
+            style="@style/FontMonospaced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />
@@ -59,29 +59,40 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/machine_broadcast_layout"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
         android:hint="@string/add_machine_broadcast_address"
-        app:placeholderText="192.168.0.255"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/broadcast_autofill"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/machine_mac_layout" >
+        app:layout_constraintTop_toBottomOf="@+id/machine_mac_layout"
+        app:placeholderText="192.168.0.255">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/machine_broadcast"
+            style="@style/FontMonospaced"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            style="@style/FontMonospaced"
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/broadcast_autofill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="#00000000"
+        android:contentDescription="@String/add_machine_autofill_broadcast"
+        style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+        app:layout_constraintBottom_toBottomOf="@+id/machine_broadcast_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/machine_broadcast_layout"
+        app:srcCompat="@drawable/ic_autofill_broadcast" />
 
     <TextView
         android:id="@+id/port"
@@ -97,9 +108,10 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:orientation="horizontal"
+        android:layout_marginEnd="24dp"
         android:checkedButton="@id/port_nine"
-        app:layout_constraintEnd_toEndOf="@+id/machine_broadcast_layout"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/port">
 
         <RadioButton

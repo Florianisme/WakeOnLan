@@ -10,6 +10,7 @@
     <string name="add_machine_mac_address">MAC Address</string>
     <string name="add_machine_port">Port</string>
     <string name="add_machine_broadcast_address">Broadcast Address</string>
+    <string name="add_machine_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_machine_port_seven" translatable="false">7</string>
     <string name="add_machine_port_nine" translatable="false">9</string>
     <string name="add_machine_menu_save">Save</string>

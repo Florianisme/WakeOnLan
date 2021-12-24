@@ -22,6 +22,6 @@
 
     <include
         android:id="@+id/machine"
-        layout="@layout/content_add_machine" />
+        layout="@layout/content_modify_machine" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

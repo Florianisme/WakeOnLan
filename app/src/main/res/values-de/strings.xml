@@ -26,4 +26,5 @@
     <string name="tile_no_machine_found">Keine Maschine gefunden</string>
     <string name="tile_subtitle">Wake on Lan</string>
     <string name="wol_toast_sending_packet">"Magic Packet wird gesendet an "</string>
+    <string name="add_machine_autofill_broadcast">Broadcast automatisch ausfüllen</string>
 </resources>
