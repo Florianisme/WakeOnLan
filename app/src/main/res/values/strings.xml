@@ -21,14 +21,14 @@
 
     <!-- Edit Machine Activity-->
     <string name="edit_machine_error_loading">Error while accessing machine</string>
+    <string name="edit_machine_delete_title">Delete machine</string>
+    <string name="edit_machine_delete_message">Are you sure you want to delete this entry?</string>
 
     <!-- Machine List -->
     <string name="machine_list_startup">Turn on</string>
     <string name="machine_list_empty_title">No machines available</string>
     <string name="machine_list_empty_hint">Tap the \"+\" icon to add your first machine</string>
     <string name="machine_list_edit">Edit</string>
-    <string name="edit_machine_delete_title">Delete machine</string>
-    <string name="edit_machine_delete_message">Are you sure you want to delete this entry?</string>
 
     <!-- Tile -->
     <string name="tile_name_machine_one">WOL Machine 1</string>
