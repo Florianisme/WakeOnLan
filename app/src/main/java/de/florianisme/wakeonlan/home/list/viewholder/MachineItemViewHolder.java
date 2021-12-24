@@ -44,7 +44,7 @@ public class MachineItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 WolSender.sendWolPacket(machine);
-                Toast.makeText(view.getContext(), "Sending Magic Packet to " + machineName.getText(), Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), view.getContext().getString(R.string.wol_toast_sending_packet) + machineName.getText(), Toast.LENGTH_LONG).show();
             }
         });
     }

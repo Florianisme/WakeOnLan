@@ -34,4 +34,9 @@
     <string name="tile_name_machine_one">WOL Machine 1</string>
     <string name="tile_name_machine_two">WOL Machine 2</string>
     <string name="tile_name_machine_three">WOL Machine 3</string>
+    <string name="tile_no_machine_found">No machine found</string>
+    <string name="tile_subtitle">Wake on Lan</string>
+
+    <!-- Misc -->
+    <string name="wol_toast_sending_packet">"Sending Magic Packet to "</string>
 </resources>

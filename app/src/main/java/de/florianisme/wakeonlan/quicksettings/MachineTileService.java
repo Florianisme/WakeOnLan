@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Optional;
 
+import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.Machine;
@@ -35,12 +36,12 @@ public abstract class MachineTileService extends TileService {
 
             super.getQsTile().setLabel(machine.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                super.getQsTile().setSubtitle("Wake on Lan");
+                super.getQsTile().setSubtitle(getString(R.string.tile_subtitle));
             }
             super.getQsTile().setState(Tile.STATE_ACTIVE);
         } else {
-            super.getQsTile().setLabel("No machine found");
-            super.getQsTile().setState(Tile.STATE_INACTIVE);
+            super.getQsTile().setLabel(getString(R.string.tile_no_machine_found));
+            super.getQsTile().setState(Tile.STATE_UNAVAILABLE);
         }
         super.getQsTile().updateTile();
     }
@@ -57,7 +58,7 @@ public abstract class MachineTileService extends TileService {
     public void onClick() {
         try {
             WolSender.sendWolPacket(machine);
-            Toast.makeText(this, "Sending Magic Packet to " + machine.name, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.wol_toast_sending_packet) + machine.name, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "Error while sending WOL Packet", e);
         }
