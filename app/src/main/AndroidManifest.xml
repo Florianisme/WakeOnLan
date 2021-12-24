@@ -28,6 +28,37 @@
         <activity
             android:name=".home.addmachine.EditMachineActivity"
             android:label="@string/title_activity_edit_machine" />
+
+        <service
+            android:name=".quicksettings.MachineOneTileService"
+            android:label="@string/tile_name_machine_one"
+            android:icon="@drawable/ic_tile_icon"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".quicksettings.MachineTwoTileService"
+            android:label="@string/tile_name_machine_two"
+            android:icon="@drawable/ic_tile_icon"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".quicksettings.MachineThreeTileService"
+            android:label="@string/tile_name_machine_three"
+            android:icon="@drawable/ic_tile_icon"
+            android:exported="true"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

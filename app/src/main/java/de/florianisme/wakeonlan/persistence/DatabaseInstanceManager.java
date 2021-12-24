@@ -8,8 +8,9 @@ public class DatabaseInstanceManager {
 
     private static AppDatabase appDatabase;
 
-    public static void init(Context context) {
+    public static AppDatabase init(Context context) {
         appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name").allowMainThreadQueries().build();
+        return appDatabase;
     }
 
     public static AppDatabase getDatabaseInstance() {

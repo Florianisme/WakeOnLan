@@ -3,7 +3,6 @@ package de.florianisme.wakeonlan.home.list.viewholder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,24 +43,8 @@ public class MachineItemViewHolder extends RecyclerView.ViewHolder {
         sendWolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                WolSender.sendWolPacket(machine);
                 Toast.makeText(view.getContext(), "Sending Magic Packet to " + machineName.getText(), Toast.LENGTH_LONG).show();
-                sendWolPacket();
-            }
-
-            private void sendWolPacket() {
-                Thread thread = new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            WolSender.sendWolPacket(machine);
-                        } catch (Exception e) {
-                            Log.e(this.getClass().getName(), "Error while sending magic packet: ", e);
-                        }
-                    }
-                });
-
-                thread.start();
             }
         });
     }
