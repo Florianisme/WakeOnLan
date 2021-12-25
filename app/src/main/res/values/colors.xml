@@ -3,16 +3,14 @@
     <color name="primaryColor">#9bf6d9</color>
     <color name="primaryLightColor">#ceffff</color>
     <color name="primaryDarkColor">#69c3a8</color>
-    <color name="secondaryColor">#e0e0e0</color>
+    <color name="secondaryColor">#EFEFEF</color>
     <color name="secondaryColorDark">#575757</color>
     <color name="secondaryLightColor">#ffffff</color>
     <color name="secondaryVariantColor">#aeaeae</color>
     <color name="secondaryVariantDarkColor">#424242</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#000000</color>
 
-    <color name="card_background_light">#EDEDED</color>
-    <color name="card_background_dark">#1C1C1C</color>
+    <color name="primaryTextColor">#0E0E0E</color>
+    <color name="secondaryTextColor">#0E0E0E</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
