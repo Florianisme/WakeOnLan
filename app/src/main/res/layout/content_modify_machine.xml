@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -94,38 +93,27 @@
         app:layout_constraintTop_toTopOf="@+id/machine_broadcast_layout"
         app:srcCompat="@drawable/ic_autofill_broadcast" />
 
-    <TextView
-        android:id="@+id/port"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:text="@string/add_machine_port"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/machine_broadcast_layout" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/machine_port_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:checkedButton="@id/port_nine"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/port">
+        android:hint="@string/add_machine_port"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/machine_broadcast_layout">
 
-        <RadioButton
-            android:id="@+id/port_seven"
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/machine_ports"
+            style="@style/FontMonospaced"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/add_machine_port_seven"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:minHeight="48dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioButton
-            android:id="@+id/port_nine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/add_machine_port_nine"
-            tools:ignore="TouchTargetSizeCheck" />
-    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

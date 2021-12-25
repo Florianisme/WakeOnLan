@@ -38,9 +38,9 @@ public class EditMachineActivity extends ModifyMachineActivity {
             machineMacInput.setText(machine.macAddress);
             machineBroadcastInput.setText(machine.broadcast_address);
             if (machine.port == 9) {
-                binding.machine.portNine.setChecked(true);
+                machinePorts.setText("9", false);
             } else {
-                binding.machine.portSeven.setChecked(true);
+                machinePorts.setText("7", false);
             }
         }
     }

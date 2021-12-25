@@ -3,15 +3,18 @@ package de.florianisme.wakeonlan.home.addmachine;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Optional;
 
+import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyMachineBinding;
 import de.florianisme.wakeonlan.home.addmachine.validator.BroadcastValidator;
 import de.florianisme.wakeonlan.home.addmachine.validator.MacValidator;
@@ -28,6 +31,7 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
     protected TextInputEditText machineMacInput;
     protected TextInputEditText machineNameInput;
     protected TextInputEditText machineBroadcastInput;
+    protected MaterialAutoCompleteTextView machinePorts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
         binding = ActivityModifyMachineBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        machinePorts = binding.machine.machinePorts;
         machineMacInput = binding.machine.machineMac;
         machineNameInput = binding.machine.machineName;
         machineBroadcastInput = binding.machine.machineBroadcast;
@@ -45,6 +50,7 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
         databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
         addValidators();
         addAutofillClickHandler();
+        addMachinePortsAdapter();
     }
 
     private void addAutofillClickHandler() {
@@ -73,9 +79,16 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
                 machineBroadcastInput.getError() == null && machineBroadcastInput.getText().length() != 0;
     }
 
+    private void addMachinePortsAdapter() {
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_machine_port_dropdown,
+                getResources().getStringArray(R.array.ports_selection));
+        machinePorts.setAdapter(stringArrayAdapter);
+        machinePorts.setText("9", false);
+    }
+
     abstract protected void persistMachine();
 
     protected int getPort() {
-        return binding.machine.portNine.isChecked() ? 9 : 7;
+        return "7".equals(binding.machine.machinePorts.getText().toString()) ? 7 : 9;
     }
 }

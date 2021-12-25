@@ -11,9 +11,11 @@
     <string name="add_machine_port">Port</string>
     <string name="add_machine_broadcast_address">Broadcast Address</string>
     <string name="add_machine_autofill_broadcast">Autofill Broadcast Address</string>
-    <string name="add_machine_port_seven" translatable="false">7</string>
-    <string name="add_machine_port_nine" translatable="false">9</string>
     <string name="add_machine_menu_save">Save</string>
+    <string-array name="ports_selection">
+        <item>9</item>
+        <item>7</item>
+    </string-array>
 
     <string name="add_machine_error_mac_invalid">Invalid MAC Address</string>
     <string name="add_machine_error_name_empty">Name must not be empty</string>
