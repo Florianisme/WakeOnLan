@@ -7,7 +7,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(project.property('KEYSTORE_PATH'))
+            storeFile file(project.property('UPLOAD_KEYSTORE_PATH'))
             storePassword project.property('KEYSTORE_PASSWORD')
             keyAlias project.property('KEY_ALIAS')
             keyPassword project.property('KEY_PASSWORD')
