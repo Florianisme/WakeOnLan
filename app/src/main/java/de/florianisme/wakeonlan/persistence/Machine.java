@@ -2,6 +2,7 @@ package de.florianisme.wakeonlan.persistence;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Machines")
@@ -22,6 +23,7 @@ public class Machine {
     @ColumnInfo(name = "port")
     public int port;
 
+    @Ignore
     public Machine(String name, String macAddress, String broadcast_address, int port) {
         this.name = name;
         this.macAddress = macAddress;
