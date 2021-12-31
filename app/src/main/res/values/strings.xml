@@ -1,6 +1,6 @@
 <resources>
     <!-- Titles -->
-    <string name="app_name">WakeOnLan</string>
+    <string name="app_name">Wake on Lan</string>
     <string name="title_activity_main">Wake on Lan</string>
     <string name="title_activity_add_machine">Add Machine</string>
     <string name="title_activity_edit_machine">Edit Machine</string>

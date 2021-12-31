@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WakeOnLan</string>
+    <string name="app_name">Wake on Lan</string>
     <string name="title_activity_main">Wake on Lan</string>
     <string name="title_activity_add_machine">Maschine hinzufügen</string>
     <string name="title_activity_edit_machine">Maschine bearbeiten</string>
