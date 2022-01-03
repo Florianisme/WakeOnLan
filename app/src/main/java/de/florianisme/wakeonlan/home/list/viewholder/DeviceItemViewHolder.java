@@ -11,18 +11,18 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.home.addmachine.EditMachineActivity;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.home.deviceadd.EditDeviceActivity;
+import de.florianisme.wakeonlan.persistence.Device;
 import de.florianisme.wakeonlan.wol.WolSender;
 
-public class MachineItemViewHolder extends RecyclerView.ViewHolder {
+public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView machineName;
     private final TextView machineMac;
     private final Button editButton;
     private final Button sendWolButton;
 
-    public MachineItemViewHolder(View view) {
+    public DeviceItemViewHolder(View view) {
         super(view);
         machineName = view.findViewById(R.id.machine_name);
         machineMac = view.findViewById(R.id.machine_mac);
@@ -39,25 +39,25 @@ public class MachineItemViewHolder extends RecyclerView.ViewHolder {
         machineMac.setText(mac);
     }
 
-    public void setOnClickHandler(Machine machine) {
+    public void setOnClickHandler(Device device) {
         sendWolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WolSender.sendWolPacket(machine);
+                WolSender.sendWolPacket(device);
                 Toast.makeText(view.getContext(), view.getContext().getString(R.string.wol_toast_sending_packet) + machineName.getText(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void setOnEditClickHandler(Machine machine) {
+    public void setOnEditClickHandler(Device device) {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
 
-                Intent intent = new Intent(context, EditMachineActivity.class);
+                Intent intent = new Intent(context, EditDeviceActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt(EditMachineActivity.MACHINE_ID_KEY, machine.id);
+                bundle.putInt(EditDeviceActivity.MACHINE_ID_KEY, device.id);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

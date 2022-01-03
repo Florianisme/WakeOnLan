@@ -5,8 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Machines")
-public class Machine {
+@Entity(tableName = "Devices")
+public class Device {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -24,13 +24,13 @@ public class Machine {
     public int port;
 
     @Ignore
-    public Machine(String name, String macAddress, String broadcast_address, int port) {
+    public Device(String name, String macAddress, String broadcast_address, int port) {
         this.name = name;
         this.macAddress = macAddress;
         this.broadcast_address = broadcast_address;
         this.port = port;
     }
 
-    public Machine() {
+    public Device() {
     }
 }

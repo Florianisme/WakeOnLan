@@ -2,10 +2,10 @@
     <!-- Titles -->
     <string name="app_name">Wake on Lan</string>
     <string name="title_activity_main">Wake on Lan</string>
-    <string name="title_activity_add_machine">Add Machine</string>
-    <string name="title_activity_edit_machine">Edit Machine</string>
+    <string name="title_activity_add_machine">Add Device</string>
+    <string name="title_activity_edit_machine">Edit Device</string>
 
-    <!-- Add Machine Activity -->
+    <!-- Add Device Activity -->
     <string name="add_machine_name">Name</string>
     <string name="add_machine_mac_address">MAC Address</string>
     <string name="add_machine_port">Port</string>
@@ -22,22 +22,22 @@
     <string name="add_machine_error_broadcast_invalid">Invalid Broadcast Address</string>
     <string name="add_machine_error_save_clicked">Please correct your inputs first</string>
 
-    <!-- Edit Machine Activity-->
-    <string name="edit_machine_error_loading">Error while accessing machine</string>
-    <string name="edit_machine_delete_title">Delete machine</string>
+    <!-- Edit Device Activity-->
+    <string name="edit_machine_error_loading">Error while accessing device</string>
+    <string name="edit_machine_delete_title">Delete device</string>
     <string name="edit_machine_delete_message">Are you sure you want to delete this entry?</string>
 
-    <!-- Machine List -->
+    <!-- Device List -->
     <string name="machine_list_startup">Turn on</string>
-    <string name="machine_list_empty_title">No machines available</string>
-    <string name="machine_list_empty_hint">Tap the \"+\" icon to add your first machine</string>
+    <string name="machine_list_empty_title">No devices available</string>
+    <string name="machine_list_empty_hint">Tap the \"+\" icon to add your first device</string>
     <string name="machine_list_edit">Edit</string>
 
     <!-- Tile -->
-    <string name="tile_name_machine_one">WOL Machine 1</string>
-    <string name="tile_name_machine_two">WOL Machine 2</string>
-    <string name="tile_name_machine_three">WOL Machine 3</string>
-    <string name="tile_no_machine_found">No machine found</string>
+    <string name="tile_name_machine_one">WOL Device 1</string>
+    <string name="tile_name_machine_two">WOL Device 2</string>
+    <string name="tile_name_machine_three">WOL Device 3</string>
+    <string name="tile_no_machine_found">No device found</string>
     <string name="tile_subtitle">Wake on Lan</string>
 
     <!-- Misc -->

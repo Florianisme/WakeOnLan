@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.addmachine.validator;
+package de.florianisme.wakeonlan.home.deviceadd.validator;
 
 import android.widget.EditText;
 

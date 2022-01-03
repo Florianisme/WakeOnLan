@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.addmachine;
+package de.florianisme.wakeonlan.home.deviceadd;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.persistence.Device;
 
-public class EditMachineActivity extends ModifyMachineActivity {
+public class EditDeviceActivity extends ModifyDeviceActivity {
 
     public static final String MACHINE_ID_KEY = "machineId";
-    private Machine machine;
+    private Device device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,12 @@ public class EditMachineActivity extends ModifyMachineActivity {
                 return;
             }
 
-            machine = databaseInstance.machineDao().getById(machineId);
+            device = databaseInstance.machineDao().getById(machineId);
 
-            machineNameInput.setText(machine.name);
-            machineMacInput.setText(machine.macAddress);
-            machineBroadcastInput.setText(machine.broadcast_address);
-            if (machine.port == 9) {
+            machineNameInput.setText(device.name);
+            machineMacInput.setText(device.macAddress);
+            machineBroadcastInput.setText(device.broadcast_address);
+            if (device.port == 9) {
                 machinePorts.setText("9", false);
             } else {
                 machinePorts.setText("7", false);
@@ -66,7 +66,7 @@ public class EditMachineActivity extends ModifyMachineActivity {
                     .setTitle(R.string.edit_machine_delete_title)
                     .setMessage(R.string.edit_machine_delete_message)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        databaseInstance.machineDao().delete(machine);
+                        databaseInstance.machineDao().delete(device);
                         dialog.dismiss();
                         finish();
                     })
@@ -83,12 +83,12 @@ public class EditMachineActivity extends ModifyMachineActivity {
 
     @Override
     protected void persistMachine() {
-        machine.name = machineNameInput.getText().toString();
-        machine.macAddress = machineMacInput.getText().toString();
-        machine.broadcast_address = machineBroadcastInput.getText().toString();
-        machine.port = getPort();
+        device.name = machineNameInput.getText().toString();
+        device.macAddress = machineMacInput.getText().toString();
+        device.broadcast_address = machineBroadcastInput.getText().toString();
+        device.port = getPort();
 
-        databaseInstance.machineDao().update(machine);
+        databaseInstance.machineDao().update(device);
     }
 
 }

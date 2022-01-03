@@ -12,24 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import de.florianisme.wakeonlan.databinding.FragmentListMachinesBinding;
+import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.persistence.Device;
 
 
-public class MachineListFragment extends Fragment {
+public class DeviceListFragment extends Fragment {
 
-    private FragmentListMachinesBinding binding;
+    private FragmentListDevicesBinding binding;
     private AppDatabase databaseInstance;
-    private MachineListAdapter machineListAdapter;
+    private DeviceListAdapter deviceListAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
-        binding = FragmentListMachinesBinding.inflate(inflater, container, false);
+        binding = FragmentListDevicesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -41,23 +41,23 @@ public class MachineListFragment extends Fragment {
     }
 
     private void populateRecyclerView() {
-        List<Machine> machines = loadMachines();
-        machineListAdapter = new MachineListAdapter(machines);
+        List<Device> devices = loadMachines();
+        deviceListAdapter = new DeviceListAdapter(devices);
         RecyclerView machinesRecyclerView = binding.machineList;
 
-        machinesRecyclerView.setAdapter(machineListAdapter);
+        machinesRecyclerView.setAdapter(deviceListAdapter);
         machinesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private List<Machine> loadMachines() {
+    private List<Device> loadMachines() {
         return databaseInstance.machineDao().getAll();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        machineListAdapter.updateDataset(loadMachines());
-        machineListAdapter.notifyDataSetChanged();
+        deviceListAdapter.updateDataset(loadMachines());
+        deviceListAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.addmachine;
+package de.florianisme.wakeonlan.home.deviceadd;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -7,9 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.persistence.Device;
 
-public class AddMachineActivity extends ModifyMachineActivity {
+public class AddDeviceActivity extends ModifyDeviceActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,13 +35,13 @@ public class AddMachineActivity extends ModifyMachineActivity {
 
     @Override
     protected void persistMachine() {
-        Machine machine = new Machine();
-        machine.name = machineNameInput.getText().toString();
-        machine.macAddress = machineMacInput.getText().toString();
-        machine.broadcast_address = machineBroadcastInput.getText().toString();
-        machine.port = getPort();
+        Device device = new Device();
+        device.name = machineNameInput.getText().toString();
+        device.macAddress = machineMacInput.getText().toString();
+        device.broadcast_address = machineBroadcastInput.getText().toString();
+        device.port = getPort();
 
-        databaseInstance.machineDao().insertAll(machine);
+        databaseInstance.machineDao().insertAll(device);
     }
 
 }

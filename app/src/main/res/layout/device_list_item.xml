@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textStyle="bold"
-                tools:text="Machine Name" />
+                tools:text="Device Name" />
 
             <TextView
                 android:id="@+id/machine_mac"

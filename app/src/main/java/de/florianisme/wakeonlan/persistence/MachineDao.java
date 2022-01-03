@@ -11,18 +11,18 @@ import java.util.List;
 @Dao
 public interface MachineDao {
 
-    @Query("SELECT * FROM Machines")
-    List<Machine> getAll();
+    @Query("SELECT * FROM Devices")
+    List<Device> getAll();
 
-    @Query("SELECT * FROM Machines WHERE id = :id")
-    Machine getById(int id);
+    @Query("SELECT * FROM Devices WHERE id = :id")
+    Device getById(int id);
 
     @Insert
-    void insertAll(Machine... machines);
+    void insertAll(Device... devices);
 
     @Update
-    void update(Machine machine);
+    void update(Device device);
 
     @Delete
-    void delete(Machine machines);
+    void delete(Device device);
 }

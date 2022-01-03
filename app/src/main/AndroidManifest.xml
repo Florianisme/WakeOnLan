@@ -24,14 +24,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.addmachine.AddMachineActivity"
+            android:name=".home.deviceadd.AddDeviceActivity"
             android:label="@string/title_activity_add_machine" />
         <activity
-            android:name=".home.addmachine.EditMachineActivity"
+            android:name=".home.deviceadd.EditDeviceActivity"
             android:label="@string/title_activity_edit_machine" />
 
         <service
-            android:name=".quicksettings.MachineOneTileService"
+            android:name=".quicksettings.DeviceOneTileService"
             android:label="@string/tile_name_machine_one"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"
@@ -41,7 +41,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".quicksettings.MachineTwoTileService"
+            android:name=".quicksettings.DeviceTwoTileService"
             android:label="@string/tile_name_machine_two"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"
@@ -51,7 +51,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".quicksettings.MachineThreeTileService"
+            android:name=".quicksettings.DeviceThreeTileService"
             android:label="@string/tile_name_machine_three"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"

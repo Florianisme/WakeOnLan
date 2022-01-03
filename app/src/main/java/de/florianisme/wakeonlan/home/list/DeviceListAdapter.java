@@ -11,21 +11,21 @@ import java.util.Collections;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.home.list.viewholder.DeviceItemViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
-import de.florianisme.wakeonlan.home.list.viewholder.MachineItemViewHolder;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.persistence.Device;
 
-public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Machine> machines;
+    private List<Device> devices;
 
-    public MachineListAdapter(List<Machine> machines) {
-        this.machines = machines;
+    public DeviceListAdapter(List<Device> devices) {
+        this.devices = devices;
     }
 
-    public void updateDataset(List<Machine> machines) {
-        this.machines = Collections.unmodifiableList(machines);
+    public void updateDataset(List<Device> devices) {
+        this.devices = Collections.unmodifiableList(devices);
     }
 
     @NonNull
@@ -36,12 +36,12 @@ public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (ListViewType.EMPTY.ordinal() == viewType) {
             view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.machine_list_empty, viewGroup, false);
+                    .inflate(R.layout.device_list_empty, viewGroup, false);
             viewHolder = new EmptyViewHolder(view);
         } else {
             view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.machine_list_item, viewGroup, false);
-            viewHolder = new MachineItemViewHolder(view);
+                    .inflate(R.layout.device_list_item, viewGroup, false);
+            viewHolder = new DeviceItemViewHolder(view);
         }
 
         return viewHolder;
@@ -49,7 +49,7 @@ public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (machines.isEmpty()) {
+        if (devices.isEmpty()) {
             return ListViewType.EMPTY.ordinal();
         } else {
             return ListViewType.MACHINE.ordinal();
@@ -58,22 +58,22 @@ public class MachineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        if (machines.isEmpty()) {
+        if (devices.isEmpty()) {
             return 1; // "Empty" item
         }
-        return machines.size();
+        return devices.size();
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == ListViewType.MACHINE.ordinal()) {
-            MachineItemViewHolder machineItemViewHolder = (MachineItemViewHolder) viewHolder;
-            Machine machine = machines.get(position);
+            DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
+            Device device = devices.get(position);
 
-            machineItemViewHolder.setMachineName(machine.name);
-            machineItemViewHolder.setMachineMac(machine.macAddress);
-            machineItemViewHolder.setOnClickHandler(machine);
-            machineItemViewHolder.setOnEditClickHandler(machine);
+            deviceItemViewHolder.setMachineName(device.name);
+            deviceItemViewHolder.setMachineMac(device.macAddress);
+            deviceItemViewHolder.setOnClickHandler(device);
+            deviceItemViewHolder.setOnEditClickHandler(device);
         }
     }
 }

@@ -12,13 +12,13 @@ import java.util.Optional;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.Machine;
+import de.florianisme.wakeonlan.persistence.Device;
 import de.florianisme.wakeonlan.wol.WolSender;
 
-public abstract class MachineTileService extends TileService {
+public abstract class DeviceTileService extends TileService {
 
     protected AppDatabase appDatabase;
-    protected Machine machine;
+    protected Device device;
 
     @Override
     public void onTileAdded() {
@@ -28,13 +28,13 @@ public abstract class MachineTileService extends TileService {
 
     private void updateTileState() {
         appDatabase = DatabaseInstanceManager.init(this.getApplicationContext());
-        Optional<Machine> optionalMachine = getMachineAtIndex(machineAtIndex());
+        Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
         if (optionalMachine.isPresent()) {
-            Machine machine = optionalMachine.get();
-            this.machine = machine;
+            Device device = optionalMachine.get();
+            this.device = device;
 
-            super.getQsTile().setLabel(machine.name);
+            super.getQsTile().setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 super.getQsTile().setSubtitle(getString(R.string.tile_subtitle));
             }
@@ -46,8 +46,8 @@ public abstract class MachineTileService extends TileService {
         super.getQsTile().updateTile();
     }
 
-    private Optional<Machine> getMachineAtIndex(int index) {
-        List<Machine> machineList = appDatabase.machineDao().getAll();
+    private Optional<Device> getMachineAtIndex(int index) {
+        List<Device> machineList = appDatabase.machineDao().getAll();
         if (machineList.size() <= index) {
             return Optional.empty();
         }
@@ -57,8 +57,8 @@ public abstract class MachineTileService extends TileService {
     @Override
     public void onClick() {
         try {
-            WolSender.sendWolPacket(machine);
-            Toast.makeText(this, getString(R.string.wol_toast_sending_packet) + machine.name, Toast.LENGTH_LONG).show();
+            WolSender.sendWolPacket(device);
+            Toast.makeText(this, getString(R.string.wol_toast_sending_packet) + device.name, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "Error while sending WOL Packet", e);
         }

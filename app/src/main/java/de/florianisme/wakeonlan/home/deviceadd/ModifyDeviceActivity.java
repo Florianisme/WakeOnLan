@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.addmachine;
+package de.florianisme.wakeonlan.home.deviceadd;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,17 +15,17 @@ import java.net.InetAddress;
 import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.databinding.ActivityModifyMachineBinding;
-import de.florianisme.wakeonlan.home.addmachine.validator.BroadcastValidator;
-import de.florianisme.wakeonlan.home.addmachine.validator.MacValidator;
-import de.florianisme.wakeonlan.home.addmachine.validator.NameValidator;
+import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
+import de.florianisme.wakeonlan.home.deviceadd.validator.BroadcastValidator;
+import de.florianisme.wakeonlan.home.deviceadd.validator.MacValidator;
+import de.florianisme.wakeonlan.home.deviceadd.validator.NameValidator;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.util.BroadcastHelper;
 
-public abstract class ModifyMachineActivity extends AppCompatActivity {
+public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
-    protected ActivityModifyMachineBinding binding;
+    protected ActivityModifyDeviceBinding binding;
     protected AppDatabase databaseInstance;
 
     protected TextInputEditText machineMacInput;
@@ -37,13 +37,13 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityModifyMachineBinding.inflate(getLayoutInflater());
+        binding = ActivityModifyDeviceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        machinePorts = binding.machine.machinePorts;
-        machineMacInput = binding.machine.machineMac;
-        machineNameInput = binding.machine.machineName;
-        machineBroadcastInput = binding.machine.machineBroadcast;
+        machinePorts = binding.device.machinePorts;
+        machineMacInput = binding.device.machineMac;
+        machineNameInput = binding.device.machineName;
+        machineBroadcastInput = binding.device.machineBroadcast;
 
         setSupportActionBar(binding.toolbar);
 
@@ -54,12 +54,12 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
     }
 
     private void addAutofillClickHandler() {
-        binding.machine.broadcastAutofill.setOnClickListener(new View.OnClickListener() {
+        binding.device.broadcastAutofill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> binding.machine.machineBroadcast.setText(inetAddress.getHostAddress()));
+                    broadcastAddress.ifPresent(inetAddress -> binding.device.machineBroadcast.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
                 }
@@ -80,7 +80,7 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
     }
 
     private void addMachinePortsAdapter() {
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_machine_port_dropdown,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_device_port_dropdown,
                 getResources().getStringArray(R.array.ports_selection));
         machinePorts.setAdapter(stringArrayAdapter);
         machinePorts.setText("9", false);
@@ -89,6 +89,6 @@ public abstract class ModifyMachineActivity extends AppCompatActivity {
     abstract protected void persistMachine();
 
     protected int getPort() {
-        return "7".equals(binding.machine.machinePorts.getText().toString()) ? 7 : 9;
+        return "7".equals(binding.device.machinePorts.getText().toString()) ? 7 : 9;
     }
 }

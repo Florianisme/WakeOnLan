@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.addmachine.ModifyMachineActivity">
+    tools:context=".home.deviceadd.ModifyDeviceActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        android:id="@+id/machine"
-        layout="@layout/content_modify_machine" />
+        android:id="@+id/device"
+        layout="@layout/content_modify_device" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

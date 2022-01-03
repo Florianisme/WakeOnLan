@@ -16,6 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/machine_list_item" />
+        tools:listitem="@layout/device_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,9 @@
 package de.florianisme.wakeonlan.quicksettings;
 
-public class MachineTwoTileService extends MachineTileService {
+public class DeviceThreeTileService extends DeviceTileService {
+
     @Override
     int machineAtIndex() {
-        return 1;
+        return 2;
     }
 }
