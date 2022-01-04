@@ -17,7 +17,7 @@ public class MacValidator extends Validator {
 
     @Override
     public ValidationResult validate(String text) {
-        Matcher matcher = MAC_PATTERN.matcher(text);
+        Matcher matcher = MAC_PATTERN.matcher(text.trim());
         if (matcher.matches()) {
             return ValidationResult.VALID;
         } else {

@@ -32,22 +32,22 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                 return;
             }
 
-            device = databaseInstance.machineDao().getById(machineId);
+            device = databaseInstance.deviceDao().getById(machineId);
 
-            machineNameInput.setText(device.name);
-            machineMacInput.setText(device.macAddress);
-            machineBroadcastInput.setText(device.broadcast_address);
+            deviceNameInput.setText(device.name);
+            deviceMacInput.setText(device.macAddress);
+            deviceBroadcastInput.setText(device.broadcast_address);
             if (device.port == 9) {
-                machinePorts.setText("9", false);
+                devicePorts.setText("9", false);
             } else {
-                machinePorts.setText("7", false);
+                devicePorts.setText("7", false);
             }
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_machine_menu, menu);
+        getMenuInflater().inflate(R.menu.edit_device_menu, menu);
         return true;
     }
 
@@ -55,7 +55,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.edit_machine_menu_save) {
             if (assertInputsNotEmptyAndValid()) {
-                persistMachine();
+                persistDevice();
                 finish();
                 return true;
             } else {
@@ -66,7 +66,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                     .setTitle(R.string.edit_device_delete_title)
                     .setMessage(R.string.edit_device_delete_message)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        databaseInstance.machineDao().delete(device);
+                        databaseInstance.deviceDao().delete(device);
                         dialog.dismiss();
                         finish();
                     })
@@ -82,13 +82,14 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     }
 
     @Override
-    protected void persistMachine() {
-        device.name = machineNameInput.getText().toString();
-        device.macAddress = machineMacInput.getText().toString();
-        device.broadcast_address = machineBroadcastInput.getText().toString();
+    protected void persistDevice() {
+        device.name = getDeviceNameInputText();
+        device.macAddress = getDeviceMacInputText();
+        device.broadcast_address = getDeviceBroadcastAddressText();
         device.port = getPort();
 
-        databaseInstance.machineDao().update(device);
+        databaseInstance.deviceDao().update(device);
     }
+
 
 }

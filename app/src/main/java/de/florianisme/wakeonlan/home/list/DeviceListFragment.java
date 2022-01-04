@@ -50,7 +50,7 @@ public class DeviceListFragment extends Fragment {
     }
 
     private List<Device> loadMachines() {
-        return databaseInstance.machineDao().getAll();
+        return databaseInstance.deviceDao().getAll();
     }
 
     @Override

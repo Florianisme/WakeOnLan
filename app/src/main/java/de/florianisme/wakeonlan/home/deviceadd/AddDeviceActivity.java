@@ -21,7 +21,7 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add_device_menu_save) {
             if (assertInputsNotEmptyAndValid()) {
-                persistMachine();
+                persistDevice();
                 finish();
                 return true;
             } else {
@@ -34,14 +34,14 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     }
 
     @Override
-    protected void persistMachine() {
+    protected void persistDevice() {
         Device device = new Device();
-        device.name = machineNameInput.getText().toString();
-        device.macAddress = machineMacInput.getText().toString();
-        device.broadcast_address = machineBroadcastInput.getText().toString();
+        device.name = getDeviceNameInputText();
+        device.macAddress = getDeviceMacInputText();
+        device.broadcast_address = getDeviceBroadcastAddressText();
         device.port = getPort();
 
-        databaseInstance.machineDao().insertAll(device);
+        databaseInstance.deviceDao().insertAll(device);
     }
 
 }

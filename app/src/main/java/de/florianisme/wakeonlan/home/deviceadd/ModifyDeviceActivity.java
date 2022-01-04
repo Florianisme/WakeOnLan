@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -28,10 +29,10 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected ActivityModifyDeviceBinding binding;
     protected AppDatabase databaseInstance;
 
-    protected TextInputEditText machineMacInput;
-    protected TextInputEditText machineNameInput;
-    protected TextInputEditText machineBroadcastInput;
-    protected MaterialAutoCompleteTextView machinePorts;
+    protected TextInputEditText deviceMacInput;
+    protected TextInputEditText deviceNameInput;
+    protected TextInputEditText deviceBroadcastInput;
+    protected MaterialAutoCompleteTextView devicePorts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +41,17 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         binding = ActivityModifyDeviceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        machinePorts = binding.device.machinePorts;
-        machineMacInput = binding.device.machineMac;
-        machineNameInput = binding.device.machineName;
-        machineBroadcastInput = binding.device.machineBroadcast;
+        devicePorts = binding.device.machinePorts;
+        deviceMacInput = binding.device.machineMac;
+        deviceNameInput = binding.device.machineName;
+        deviceBroadcastInput = binding.device.machineBroadcast;
 
         setSupportActionBar(binding.toolbar);
 
         databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
         addValidators();
         addAutofillClickHandler();
-        addMachinePortsAdapter();
+        addDevicePortsAdapter();
     }
 
     private void addAutofillClickHandler() {
@@ -68,27 +69,49 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     private void addValidators() {
-        machineMacInput.addTextChangedListener(new MacValidator(machineMacInput));
-        machineNameInput.addTextChangedListener(new NameValidator(machineNameInput));
-        machineBroadcastInput.addTextChangedListener(new BroadcastValidator(machineBroadcastInput));
+        deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
+        deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
+        deviceBroadcastInput.addTextChangedListener(new BroadcastValidator(deviceBroadcastInput));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
-        return machineMacInput.getError() == null && machineMacInput.getText().length() != 0 &&
-                machineNameInput.getError() == null && machineNameInput.getText().length() != 0 &&
-                machineBroadcastInput.getError() == null && machineBroadcastInput.getText().length() != 0;
+        return deviceMacInput.getError() == null && deviceMacInput.getText().length() != 0 &&
+                deviceNameInput.getError() == null && deviceNameInput.getText().length() != 0 &&
+                deviceBroadcastInput.getError() == null && deviceBroadcastInput.getText().length() != 0;
     }
 
-    private void addMachinePortsAdapter() {
+    private void addDevicePortsAdapter() {
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_device_port_dropdown,
                 getResources().getStringArray(R.array.ports_selection));
-        machinePorts.setAdapter(stringArrayAdapter);
-        machinePorts.setText("9", false);
+        devicePorts.setAdapter(stringArrayAdapter);
+        devicePorts.setText("9", false);
     }
 
-    abstract protected void persistMachine();
+    abstract protected void persistDevice();
 
     protected int getPort() {
         return "7".equals(binding.device.machinePorts.getText().toString()) ? 7 : 9;
     }
+
+    @NonNull
+    private String getInputText(TextInputEditText deviceBroadcastInput) {
+        return deviceBroadcastInput.getText().toString().trim();
+    }
+
+    @NonNull
+    protected String getDeviceBroadcastAddressText() {
+        return getInputText(deviceBroadcastInput);
+    }
+
+    @NonNull
+    protected String getDeviceMacInputText() {
+        return getInputText(deviceMacInput);
+    }
+
+    @NonNull
+    protected String getDeviceNameInputText() {
+        return getInputText(deviceNameInput);
+    }
+
+
 }

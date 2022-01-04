@@ -41,5 +41,5 @@
     <string name="tile_subtitle">Wake on Lan</string>
 
     <!-- Misc -->
-    <string name="wol_toast_sending_packet">Sending Magic Packet to </string>
+    <string name="wol_toast_sending_packet">"Sending Magic Packet to "</string>
 </resources>

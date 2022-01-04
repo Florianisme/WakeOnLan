@@ -17,7 +17,7 @@ public class BroadcastValidator extends Validator {
 
     @Override
     public ValidationResult validate(String text) {
-        Matcher matcher = IP_PATTERN.matcher(text);
+        Matcher matcher = IP_PATTERN.matcher(text.trim());
         if (matcher.matches()) {
             return ValidationResult.VALID;
         } else {

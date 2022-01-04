@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        binding.addMachineFab.setOnClickListener(view -> navController.navigate(R.id.MainActivity_to_AddMachineActivity));
+        binding.addDeviceFab.setOnClickListener(view -> navController.navigate(R.id.MainActivity_to_AddMachineActivity));
     }
 
     @Override

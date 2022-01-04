@@ -17,26 +17,27 @@ import de.florianisme.wakeonlan.wol.WolSender;
 
 public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView machineName;
-    private final TextView machineMac;
+    private final TextView deviceName;
+    private final TextView deviceMacAddress;
+
     private final Button editButton;
     private final Button sendWolButton;
 
     public DeviceItemViewHolder(View view) {
         super(view);
-        machineName = view.findViewById(R.id.machine_name);
-        machineMac = view.findViewById(R.id.machine_mac);
+        deviceName = view.findViewById(R.id.machine_name);
+        deviceMacAddress = view.findViewById(R.id.machine_mac);
 
         editButton = view.findViewById(R.id.edit);
         sendWolButton = view.findViewById(R.id.send_wol);
     }
 
-    public void setMachineName(String name) {
-        machineName.setText(name);
+    public void setDeviceName(String name) {
+        deviceName.setText(name);
     }
 
-    public void setMachineMac(String mac) {
-        machineMac.setText(mac);
+    public void setDeviceMacAddress(String mac) {
+        deviceMacAddress.setText(mac);
     }
 
     public void setOnClickHandler(Device device) {
@@ -44,7 +45,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 WolSender.sendWolPacket(device);
-                Toast.makeText(view.getContext(), view.getContext().getString(R.string.wol_toast_sending_packet) + machineName.getText(), Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), view.getContext().getString(R.string.wol_toast_sending_packet) + deviceName.getText(), Toast.LENGTH_LONG).show();
             }
         });
     }

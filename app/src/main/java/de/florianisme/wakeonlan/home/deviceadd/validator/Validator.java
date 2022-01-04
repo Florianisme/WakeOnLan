@@ -30,10 +30,6 @@ public abstract class Validator implements TextWatcher {
         }
     }
 
-    public boolean isValid() {
-        return validate(editTextView.getText().toString()) == ValidationResult.VALID;
-    }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         // Do nothing

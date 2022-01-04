@@ -70,8 +70,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
             Device device = devices.get(position);
 
-            deviceItemViewHolder.setMachineName(device.name);
-            deviceItemViewHolder.setMachineMac(device.macAddress);
+            deviceItemViewHolder.setDeviceName(device.name);
+            deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
             deviceItemViewHolder.setOnClickHandler(device);
             deviceItemViewHolder.setOnEditClickHandler(device);
         }

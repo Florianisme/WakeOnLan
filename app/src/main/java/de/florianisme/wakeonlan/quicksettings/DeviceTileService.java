@@ -47,7 +47,7 @@ public abstract class DeviceTileService extends TileService {
     }
 
     private Optional<Device> getMachineAtIndex(int index) {
-        List<Device> machineList = appDatabase.machineDao().getAll();
+        List<Device> machineList = appDatabase.deviceDao().getAll();
         if (machineList.size() <= index) {
             return Optional.empty();
         }
