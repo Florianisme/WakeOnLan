@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">Wake on Lan</string>
-    <string name="tile_label">WOL Label</string>
-    <string name="tile_description">WOL your Devies</string>
 </resources>

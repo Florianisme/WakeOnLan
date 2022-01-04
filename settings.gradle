@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "WakeOnLan"
 include ':app', ':wear'
+include ':models'

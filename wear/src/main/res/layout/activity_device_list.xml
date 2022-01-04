@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".DeviceListActivity"
+    tools:deviceIds="wear">
+
+    <androidx.wear.widget.WearableRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/device_list"
+        android:padding="@dimen/inner_frame_layout_padding"
+        app:layout_boxedEdges="all"
+        tools:listitem="@layout/device_list_item"
+        tools:itemCount="3">
+
+    </androidx.wear.widget.WearableRecyclerView>
+</androidx.wear.widget.BoxInsetLayout>

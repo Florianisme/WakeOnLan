@@ -20,15 +20,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
-    implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    implementation "androidx.wear.tiles:tiles:1.0.0"
     implementation 'com.google.guava:guava:31.0.1-jre'
-    debugImplementation "androidx.wear.tiles:tiles-renderer:1.0.0"
+    implementation 'androidx.wear:wear:1.2.0'
+    implementation project(path: ':models')
 }
