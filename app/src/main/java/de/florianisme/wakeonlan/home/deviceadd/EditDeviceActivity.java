@@ -59,12 +59,12 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                 finish();
                 return true;
             } else {
-                Toast.makeText(this, R.string.add_machine_error_save_clicked, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
             }
         } else if (item.getItemId() == R.id.edit_machine_menu_delete) {
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.edit_machine_delete_title)
-                    .setMessage(R.string.edit_machine_delete_message)
+                    .setTitle(R.string.edit_device_delete_title)
+                    .setMessage(R.string.edit_device_delete_message)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         databaseInstance.machineDao().delete(device);
                         dialog.dismiss();

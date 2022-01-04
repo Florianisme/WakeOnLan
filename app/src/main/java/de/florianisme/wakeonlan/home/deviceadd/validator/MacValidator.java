@@ -27,7 +27,7 @@ public class MacValidator extends Validator {
 
     @Override
     int getErrorMessageStringId() {
-        return R.string.add_machine_error_mac_invalid;
+        return R.string.add_device_error_mac_invalid;
     }
 
 }

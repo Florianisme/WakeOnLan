@@ -2,44 +2,44 @@
     <!-- Titles -->
     <string name="app_name">Wake on Lan</string>
     <string name="title_activity_main">Wake on Lan</string>
-    <string name="title_activity_add_machine">Add Device</string>
-    <string name="title_activity_edit_machine">Edit Device</string>
+    <string name="title_activity_add_device">Add Device</string>
+    <string name="title_activity_edit_device">Edit Device</string>
 
     <!-- Add Device Activity -->
-    <string name="add_machine_name">Name</string>
-    <string name="add_machine_mac_address">MAC Address</string>
-    <string name="add_machine_port">Port</string>
-    <string name="add_machine_broadcast_address">Broadcast Address</string>
-    <string name="add_machine_autofill_broadcast">Autofill Broadcast Address</string>
-    <string name="add_machine_menu_save">Save</string>
+    <string name="add_device_name">Name</string>
+    <string name="add_device_mac_address">MAC Address</string>
+    <string name="add_device_port">Port</string>
+    <string name="add_device_broadcast_address">Broadcast Address</string>
+    <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
+    <string name="add_device_menu_save">Save</string>
     <string-array name="ports_selection">
         <item>9</item>
         <item>7</item>
     </string-array>
 
-    <string name="add_machine_error_mac_invalid">Invalid MAC Address</string>
-    <string name="add_machine_error_name_empty">Name must not be empty</string>
-    <string name="add_machine_error_broadcast_invalid">Invalid Broadcast Address</string>
-    <string name="add_machine_error_save_clicked">Please correct your inputs first</string>
+    <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
+    <string name="add_device_error_name_empty">Name must not be empty</string>
+    <string name="add_device_error_broadcast_invalid">Invalid Broadcast Address</string>
+    <string name="add_device_error_save_clicked">Please correct your inputs first</string>
 
     <!-- Edit Device Activity-->
     <string name="edit_machine_error_loading">Error while accessing device</string>
-    <string name="edit_machine_delete_title">Delete device</string>
-    <string name="edit_machine_delete_message">Are you sure you want to delete this entry?</string>
+    <string name="edit_device_delete_title">Delete device</string>
+    <string name="edit_device_delete_message">Are you sure you want to delete this entry?</string>
 
     <!-- Device List -->
-    <string name="machine_list_startup">Turn on</string>
-    <string name="machine_list_empty_title">No devices available</string>
-    <string name="machine_list_empty_hint">Tap the \"+\" icon to add your first device</string>
-    <string name="machine_list_edit">Edit</string>
+    <string name="device_list_startup">Turn on</string>
+    <string name="device_list_empty_title">No devices available</string>
+    <string name="device_list_empty_hint">Tap the \"+\" icon to add your first device</string>
+    <string name="device_list_edit">Edit</string>
 
     <!-- Tile -->
-    <string name="tile_name_machine_one">WOL Device 1</string>
-    <string name="tile_name_machine_two">WOL Device 2</string>
-    <string name="tile_name_machine_three">WOL Device 3</string>
-    <string name="tile_no_machine_found">No device found</string>
+    <string name="tile_name_device_one">WOL Device 1</string>
+    <string name="tile_name_device_two">WOL Device 2</string>
+    <string name="tile_name_device_three">WOL Device 3</string>
+    <string name="tile_no_device_found">No device found</string>
     <string name="tile_subtitle">Wake on Lan</string>
 
     <!-- Misc -->
-    <string name="wol_toast_sending_packet">"Sending Magic Packet to "</string>
+    <string name="wol_toast_sending_packet">Sending Magic Packet to </string>
 </resources>

@@ -17,7 +17,7 @@ public class NameValidator extends Validator {
 
     @Override
     int getErrorMessageStringId() {
-        return R.string.add_machine_error_name_empty;
+        return R.string.add_device_error_name_empty;
     }
 
 }

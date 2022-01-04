@@ -40,7 +40,7 @@ public abstract class DeviceTileService extends TileService {
             }
             super.getQsTile().setState(Tile.STATE_ACTIVE);
         } else {
-            super.getQsTile().setLabel(getString(R.string.tile_no_machine_found));
+            super.getQsTile().setLabel(getString(R.string.tile_no_device_found));
             super.getQsTile().setState(Tile.STATE_UNAVAILABLE);
         }
         super.getQsTile().updateTile();

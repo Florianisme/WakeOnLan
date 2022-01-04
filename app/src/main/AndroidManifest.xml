@@ -25,14 +25,14 @@
         </activity>
         <activity
             android:name=".home.deviceadd.AddDeviceActivity"
-            android:label="@string/title_activity_add_machine" />
+            android:label="@string/title_activity_add_device" />
         <activity
             android:name=".home.deviceadd.EditDeviceActivity"
-            android:label="@string/title_activity_edit_machine" />
+            android:label="@string/title_activity_edit_device" />
 
         <service
             android:name=".quicksettings.DeviceOneTileService"
-            android:label="@string/tile_name_machine_one"
+            android:label="@string/tile_name_device_one"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -42,7 +42,7 @@
         </service>
         <service
             android:name=".quicksettings.DeviceTwoTileService"
-            android:label="@string/tile_name_machine_two"
+            android:label="@string/tile_name_device_two"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -52,7 +52,7 @@
         </service>
         <service
             android:name=".quicksettings.DeviceThreeTileService"
-            android:label="@string/tile_name_machine_three"
+            android:label="@string/tile_name_device_three"
             android:icon="@drawable/ic_tile_icon"
             android:exported="true"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

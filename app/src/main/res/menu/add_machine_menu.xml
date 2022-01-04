@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/add_machine_menu_save"
+        android:id="@+id/add_device_menu_save"
         android:icon="@drawable/ic_save"
-        android:title="@string/add_machine_menu_save"
+        android:title="@string/add_device_menu_save"
         app:showAsAction="ifRoom" />
 </menu>

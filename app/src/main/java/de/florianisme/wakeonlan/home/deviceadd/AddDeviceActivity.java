@@ -13,19 +13,19 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_machine_menu, menu);
+        getMenuInflater().inflate(R.menu.add_device_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.add_machine_menu_save) {
+        if (item.getItemId() == R.id.add_device_menu_save) {
             if (assertInputsNotEmptyAndValid()) {
                 persistMachine();
                 finish();
                 return true;
             } else {
-                Toast.makeText(this, R.string.add_machine_error_save_clicked, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
             }
         }
 
