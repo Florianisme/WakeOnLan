@@ -21,6 +21,11 @@ import de.florianisme.wakeonlan.model.Device;
 public class WearDeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Device> devices = new ArrayList<>();
+    private final OnDeviceClickedListener onDeviceClickedListener;
+
+    public WearDeviceListAdapter(OnDeviceClickedListener onDeviceClickedListener) {
+        this.onDeviceClickedListener = onDeviceClickedListener;
+    }
 
     @NonNull
     @Override
@@ -75,7 +80,7 @@ public class WearDeviceListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Device device = devices.get(position - 1);
 
             wearDeviceItemViewHolder.setDeviceName(device.name);
-            wearDeviceItemViewHolder.setOnClickHandler(device);
+            wearDeviceItemViewHolder.setOnClickHandler(device, onDeviceClickedListener);
         }
     }
 

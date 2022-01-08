@@ -8,6 +8,7 @@ import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataItemBuffer;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.MessageClient;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeClient;
 import com.google.android.gms.wearable.PutDataRequest;
@@ -20,12 +21,24 @@ import de.florianisme.wakeonlan.model.Device;
 public class MobileClient {
 
     private static final String DEVICE_LIST_PATH = "/device_list";
+    private static final String DEVICE_CLICKED_PATH = "/device_clicked";
 
     public static void getDevicesList(NodeClient nodeClient, DataClient dataClient, OnDataReceivedListener onDataReceivedListener) {
         nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
             @Override
             public void onSuccess(List<Node> nodes) {
                 queryDevices(dataClient, onDataReceivedListener);
+            }
+        });
+    }
+
+    public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, Device device) {
+        nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
+            @Override
+            public void onSuccess(List<Node> nodes) {
+                for (Node node : nodes) {
+                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.id});
+                }
             }
         });
     }

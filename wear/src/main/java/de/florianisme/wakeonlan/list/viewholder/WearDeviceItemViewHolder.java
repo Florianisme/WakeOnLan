@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.list.OnDeviceClickedListener;
 import de.florianisme.wakeonlan.model.Device;
 
 public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
@@ -22,11 +23,11 @@ public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
         deviceButton.setText(name);
     }
 
-    public void setOnClickHandler(Device device) {
+    public void setOnClickHandler(Device device, OnDeviceClickedListener onDeviceClickedListener) {
         deviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO send message to handheld
+                onDeviceClickedListener.onDeviceClicked(device);
                 Toast.makeText(view.getContext(), view.getContext().getString(R.string.sending_wol) + deviceButton.getText(), Toast.LENGTH_LONG).show();
             }
         });

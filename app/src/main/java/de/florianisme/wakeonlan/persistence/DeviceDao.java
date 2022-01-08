@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface MachineDao {
+public interface DeviceDao {
 
     @Query("SELECT * FROM Devices")
     List<Device> getAll();

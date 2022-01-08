@@ -13,6 +13,7 @@ import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.MessageClient;
 import com.google.android.gms.wearable.NodeClient;
 import com.google.android.gms.wearable.Wearable;
 
@@ -31,6 +32,9 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
     private ActivityDeviceListBinding binding;
     private WearDeviceListAdapter wearDeviceListAdapter;
 
+    private MessageClient messageClient;
+    private DataClient dataClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +42,18 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         binding = ActivityDeviceListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        NodeClient nodeClient = Wearable.getNodeClient(this);
+        dataClient = Wearable.getDataClient(this);
+        messageClient = Wearable.getMessageClient(this);
+
         WearableRecyclerView deviceList = binding.deviceList;
         deviceList.setEdgeItemsCenteringEnabled(false);
         deviceList.setLayoutManager(new WearableLinearLayoutManager(this, new CustomScrollingLayoutCallback()));
-        wearDeviceListAdapter = new WearDeviceListAdapter();
+        wearDeviceListAdapter = new WearDeviceListAdapter(device -> {
+            MobileClient.sendDeviceClickedMessage(nodeClient, messageClient, device);
+        });
         deviceList.setAdapter(wearDeviceListAdapter);
         deviceList.requestFocus();
-
-        DataClient dataClient = Wearable.getDataClient(this);
-        NodeClient nodeClient = Wearable.getNodeClient(this);
 
         dataClient.addListener(this);
         MobileClient.getDevicesList(nodeClient, dataClient, this);
@@ -72,6 +79,12 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataClient.removeListener(this);
     }
 
     @Override
