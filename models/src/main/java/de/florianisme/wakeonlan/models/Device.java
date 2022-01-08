@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Machines")
+@Entity(tableName = "Devices")
 public class Device {
 
     @PrimaryKey(autoGenerate = true)
