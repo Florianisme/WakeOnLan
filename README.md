@@ -1,6 +1,6 @@
 ## Wake on Lan
-An Android application for sending WOL Signals to your machines
+An Android application for sending WOL Signals to your devices
 
-![Machine List](screenshots/machine_list.png)
-![Add Machine](screenshots/add_machine.png)
+![Device List](screenshots/machine_list.png)
+![Add Device](screenshots/add_machine.png)
 ![Quicktiles](screenshots/quicktiles.png)
