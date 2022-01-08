@@ -52,7 +52,7 @@ public class DeviceFetcher {
         });
     }
 
-    private static List<Device> buildDeviceList(DataMap dataMap) throws DeviceQueryException {
+    public static List<Device> buildDeviceList(DataMap dataMap) throws DeviceQueryException {
         List<Device> devices = new ArrayList<>();
         ArrayList<Integer> deviceIds = dataMap.getIntegerArrayList("deviceIds");
         ArrayList<String> deviceNames = dataMap.getStringArrayList("deviceNames");

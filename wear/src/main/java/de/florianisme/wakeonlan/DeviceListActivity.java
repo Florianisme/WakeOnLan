@@ -10,6 +10,9 @@ import androidx.wear.widget.WearableRecyclerView;
 import com.google.android.gms.wearable.DataClient;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.NodeClient;
 import com.google.android.gms.wearable.Wearable;
 
@@ -17,7 +20,7 @@ import java.util.List;
 
 import de.florianisme.wakeonlan.databinding.ActivityDeviceListBinding;
 
-public class DeviceListActivity extends Activity implements DataClient.OnDataChangedListener {
+public class DeviceListActivity extends Activity implements DataClient.OnDataChangedListener, OnDataReceivedListener {
 
     private ActivityDeviceListBinding binding;
     private WearDeviceListAdapter wearDeviceListAdapter;
@@ -39,21 +42,10 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         NodeClient nodeClient = Wearable.getNodeClient(this);
 
         dataClient.addListener(this);
-        DeviceFetcher.getDevicesList(nodeClient, dataClient, new OnDataReceivedListener() {
-            @Override
-            public void onDataReceived(List<Device> devices) {
-                populateRecyclerView(devices);
-            }
-
-            @Override
-            public void onError(Exception e) {
-                // TODO show error
-            }
-        });
+        DeviceFetcher.getDevicesList(nodeClient, dataClient, this);
     }
 
-
-    private void populateRecyclerView(List<Device> devices) {
+    private void updateRecyclerviewDataset(List<Device> devices) {
         wearDeviceListAdapter.updateDataset(devices);
         wearDeviceListAdapter.notifyDataSetChanged();
     }
@@ -61,7 +53,27 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
     @Override
     public void onDataChanged(@NonNull DataEventBuffer dataEventBuffer) {
         for (DataEvent dataEvent : dataEventBuffer) {
-            dataEvent.getType();
+            if (dataEvent.getType() == DataEvent.TYPE_CHANGED) {
+                DataItem item = dataEvent.getDataItem();
+                DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
+
+                try {
+                    List<Device> devices = DeviceFetcher.buildDeviceList(dataMap);
+                    onDataReceived(devices);
+                } catch (DeviceQueryException e) {
+                    onError(e);
+                }
+            }
         }
+    }
+
+    @Override
+    public void onDataReceived(List<Device> devices) {
+        updateRecyclerviewDataset(devices);
+    }
+
+    @Override
+    public void onError(Exception e) {
+
     }
 }
