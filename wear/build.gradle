@@ -5,7 +5,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 1
+        versionCode 5
     }
 }
 
