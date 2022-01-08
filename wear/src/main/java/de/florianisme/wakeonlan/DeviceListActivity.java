@@ -19,6 +19,12 @@ import com.google.android.gms.wearable.Wearable;
 import java.util.List;
 
 import de.florianisme.wakeonlan.databinding.ActivityDeviceListBinding;
+import de.florianisme.wakeonlan.list.CustomScrollingLayoutCallback;
+import de.florianisme.wakeonlan.list.WearDeviceListAdapter;
+import de.florianisme.wakeonlan.model.Device;
+import de.florianisme.wakeonlan.phone.DeviceFetcher;
+import de.florianisme.wakeonlan.phone.DeviceQueryException;
+import de.florianisme.wakeonlan.phone.OnDataReceivedListener;
 
 public class DeviceListActivity extends Activity implements DataClient.OnDataChangedListener, OnDataReceivedListener {
 

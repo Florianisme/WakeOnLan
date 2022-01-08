@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan;
+package de.florianisme.wakeonlan.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.florianisme.wakeonlan.viewholder.EmptyViewHolder;
-import de.florianisme.wakeonlan.viewholder.ListViewType;
-import de.florianisme.wakeonlan.viewholder.WearDeviceItemViewHolder;
+import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.list.viewholder.EmptyViewHolder;
+import de.florianisme.wakeonlan.list.viewholder.ListViewType;
+import de.florianisme.wakeonlan.list.viewholder.WearDeviceItemViewHolder;
+import de.florianisme.wakeonlan.model.Device;
 
 public class WearDeviceListAdapter extends RecyclerView.Adapter {
 

@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan;
+package de.florianisme.wakeonlan.phone;
 
 import android.net.Uri;
 
@@ -14,6 +14,8 @@ import com.google.android.gms.wearable.PutDataRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.florianisme.wakeonlan.model.Device;
 
 public class DeviceFetcher {
 

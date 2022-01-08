@@ -1,10 +1,11 @@
-package de.florianisme.wakeonlan;
+package de.florianisme.wakeonlan.list;
 
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.wear.widget.WearableLinearLayoutManager;
 
+// Copy from https://developer.android.com/training/wearables/overlays/lists#curved-layout
 public class CustomScrollingLayoutCallback extends WearableLinearLayoutManager.LayoutCallback {
     private static final float MAX_ICON_PROGRESS = 0.35f;
 

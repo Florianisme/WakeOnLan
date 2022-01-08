@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan;
+package de.florianisme.wakeonlan.model;
 
 public class Device {
 

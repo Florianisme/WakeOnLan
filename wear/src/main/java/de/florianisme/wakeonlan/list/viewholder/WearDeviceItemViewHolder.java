@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.viewholder;
+package de.florianisme.wakeonlan.list.viewholder;
 
 import android.view.View;
 import android.widget.TextView;
@@ -6,8 +6,8 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import de.florianisme.wakeonlan.Device;
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.model.Device;
 
 public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
 
