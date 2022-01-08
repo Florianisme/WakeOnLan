@@ -3,6 +3,6 @@
     android:id="@+id/device_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="86dp"
-    android:paddingBottom="86dp"
+    android:paddingTop="56dp"
+    android:paddingBottom="56dp"
     android:scrollbars="vertical" />

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Wake on Lan</string>
     <string name="sending_wol">"Sending WOL Packet to "</string>
+
+    <string name="device_list_empty_description">Please configure your devices through the \"Wake on Lan\" app on your phone</string>
+    <string name="device_list_empty_title">No devices found</string>
+    <string name="device_list_title">All devices</string>
 </resources>
