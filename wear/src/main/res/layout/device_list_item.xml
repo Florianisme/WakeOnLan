@@ -3,16 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp">
+    android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/device_name"
         style="Widget.MaterialComponents.Button.OutlinedButton"
         android:background="@drawable/item_button"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:textAllCaps="false"
         tools:text="Device 1" />
 
