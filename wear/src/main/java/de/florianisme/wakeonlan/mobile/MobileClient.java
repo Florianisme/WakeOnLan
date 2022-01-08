@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.phone;
+package de.florianisme.wakeonlan.mobile;
 
 import android.net.Uri;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 import de.florianisme.wakeonlan.model.Device;
 
-public class DeviceFetcher {
+public class MobileClient {
 
     private static final String DEVICE_LIST_PATH = "/device_list";
 

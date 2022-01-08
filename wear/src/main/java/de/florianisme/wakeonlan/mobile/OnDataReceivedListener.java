@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.phone;
+package de.florianisme.wakeonlan.mobile;
 
 import java.util.List;
 

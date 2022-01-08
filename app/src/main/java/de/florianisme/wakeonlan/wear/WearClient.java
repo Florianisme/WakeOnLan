@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.persistence.Device;
 
-public class WearUpdater implements DataClient.OnDataChangedListener {
+public class WearClient implements DataClient.OnDataChangedListener {
 
     private final String DEVICE_LIST_PATH = "/device_list";
     private DataClient dataClient;
 
-    public WearUpdater init(Context context) {
+    public WearClient init(Context context) {
         Wearable.getDataClient(context).addListener(this);
         dataClient = Wearable.getDataClient(context);
 
