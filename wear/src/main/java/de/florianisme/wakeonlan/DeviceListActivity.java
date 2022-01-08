@@ -33,7 +33,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         setContentView(binding.getRoot());
 
         WearableRecyclerView deviceList = binding.deviceList;
-        deviceList.setCircularScrollingGestureEnabled(false);
+        deviceList.setEdgeItemsCenteringEnabled(true);
         deviceList.setLayoutManager(new WearableLinearLayoutManager(this));
         wearDeviceListAdapter = new WearDeviceListAdapter();
         deviceList.setAdapter(wearDeviceListAdapter);
