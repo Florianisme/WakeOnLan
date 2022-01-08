@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdk 31
+
+    signingConfigs {
+        release {
+            storeFile file(project.property('UPLOAD_KEYSTORE_PATH'))
+            storePassword project.property('KEYSTORE_PASSWORD')
+            keyAlias project.property('KEY_ALIAS')
+            keyPassword project.property('KEY_PASSWORD')
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    defaultConfig {
+        applicationId "de.florianisme.wakeonlan"
+        minSdk 24
+        targetSdk 31
+        versionCode 4
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+    }
+}
+
+dependencies {
+
+    implementation 'com.google.android.support:wearable:2.8.1'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+    implementation 'com.google.android.gms:play-services-wearable:17.1.0'
+}
