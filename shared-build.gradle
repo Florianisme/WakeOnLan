@@ -1,5 +1,3 @@
-apply plugin: 'com.android.application'
-
 android {
     compileSdk 31
 

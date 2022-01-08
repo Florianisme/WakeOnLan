@@ -1,6 +1,4 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
 apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
