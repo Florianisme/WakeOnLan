@@ -32,5 +32,4 @@ dependencies {
 
     implementation 'com.google.guava:guava:31.0.1-jre'
     implementation 'androidx.wear:wear:1.2.0'
-    implementation project(path: ':models')
 }

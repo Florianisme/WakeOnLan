@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Wake on Lan</string>
+    <string name="sending_wol">"Sending WOL Packet to "</string>
 </resources>

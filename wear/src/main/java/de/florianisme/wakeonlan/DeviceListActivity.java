@@ -2,19 +2,25 @@ package de.florianisme.wakeonlan;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.wear.widget.WearableLinearLayoutManager;
 import androidx.wear.widget.WearableRecyclerView;
+
+import com.google.android.gms.wearable.DataClient;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.NodeClient;
+import com.google.android.gms.wearable.Wearable;
 
 import java.util.List;
 
 import de.florianisme.wakeonlan.databinding.ActivityDeviceListBinding;
-import de.florianisme.wakeonlan.models.Device;
 
-public class DeviceListActivity extends Activity {
+public class DeviceListActivity extends Activity implements DataClient.OnDataChangedListener {
 
-    private TextView mTextView;
     private ActivityDeviceListBinding binding;
+    private WearDeviceListAdapter wearDeviceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +30,38 @@ public class DeviceListActivity extends Activity {
         setContentView(binding.getRoot());
 
         WearableRecyclerView deviceList = binding.deviceList;
-        deviceList.setCircularScrollingGestureEnabled(true);
+        deviceList.setCircularScrollingGestureEnabled(false);
+        deviceList.setLayoutManager(new WearableLinearLayoutManager(this));
+        wearDeviceListAdapter = new WearDeviceListAdapter();
+        deviceList.setAdapter(wearDeviceListAdapter);
 
-        List<Device> devices = loadDevices();
-        populateRecyclerView(devices);
+        DataClient dataClient = Wearable.getDataClient(this);
+        NodeClient nodeClient = Wearable.getNodeClient(this);
+
+        dataClient.addListener(this);
+        DeviceFetcher.getDevicesList(nodeClient, dataClient, new OnDataReceivedListener() {
+            @Override
+            public void onDataReceived(List<Device> devices) {
+                populateRecyclerView(devices);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // TODO show error
+            }
+        });
     }
 
-    private List<Device> loadDevices() {
-        return null;
-    }
 
     private void populateRecyclerView(List<Device> devices) {
+        wearDeviceListAdapter.updateDataset(devices);
+        wearDeviceListAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onDataChanged(@NonNull DataEventBuffer dataEventBuffer) {
+        for (DataEvent dataEvent : dataEventBuffer) {
+            dataEvent.getType();
+        }
     }
 }

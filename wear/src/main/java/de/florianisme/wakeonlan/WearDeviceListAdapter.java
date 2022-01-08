@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.list;
+package de.florianisme.wakeonlan;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,30 +7,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.home.list.viewholder.DeviceItemViewHolder;
-import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
-import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.viewholder.EmptyViewHolder;
+import de.florianisme.wakeonlan.viewholder.ListViewType;
+import de.florianisme.wakeonlan.viewholder.WearDeviceItemViewHolder;
 
-public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WearDeviceListAdapter extends RecyclerView.Adapter {
 
-    private List<Device> devices;
-
-    public DeviceListAdapter(List<Device> devices) {
-        this.devices = devices;
-    }
-
-    public void updateDataset(List<Device> devices) {
-        this.devices = Collections.unmodifiableList(devices);
-    }
+    private List<Device> devices = new ArrayList<>();
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view;
         RecyclerView.ViewHolder viewHolder;
 
@@ -41,10 +32,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.device_list_item, viewGroup, false);
-            viewHolder = new DeviceItemViewHolder(view);
+            viewHolder = new WearDeviceItemViewHolder(view);
         }
 
         return viewHolder;
+    }
+
+    public void updateDataset(List<Device> devices) {
+        this.devices = Collections.unmodifiableList(devices);
     }
 
     @Override
@@ -67,17 +62,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == ListViewType.DEVICE.ordinal()) {
-            DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
+            WearDeviceItemViewHolder wearDeviceItemViewHolder = (WearDeviceItemViewHolder) viewHolder;
             Device device = devices.get(position);
 
-            deviceItemViewHolder.setDeviceName(device.name);
-            deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
-            deviceItemViewHolder.setOnClickHandler(device);
-            deviceItemViewHolder.setOnEditClickHandler(device);
+            wearDeviceItemViewHolder.setDeviceName(device.name);
+            wearDeviceItemViewHolder.setOnClickHandler(device);
         }
     }
 }
-
-
-
-
