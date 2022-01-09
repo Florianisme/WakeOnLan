@@ -28,7 +28,7 @@ public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 onDeviceClickedListener.onDeviceClicked(device);
-                Toast.makeText(view.getContext(), view.getContext().getString(R.string.sending_wol) + deviceButton.getText(), Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), view.getContext().getString(R.string.sending_magic_packet) + deviceButton.getText(), Toast.LENGTH_LONG).show();
             }
         });
     }
