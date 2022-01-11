@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,11 +19,7 @@ import de.florianisme.wakeonlan.persistence.Device;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Device> devices;
-
-    public DeviceListAdapter(List<Device> devices) {
-        this.devices = devices;
-    }
+    private List<Device> devices = new ArrayList<>();
 
     public void updateDataset(List<Device> devices) {
         this.devices = Collections.unmodifiableList(devices);

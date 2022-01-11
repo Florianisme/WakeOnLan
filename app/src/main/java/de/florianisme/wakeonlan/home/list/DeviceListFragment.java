@@ -10,12 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.Device;
 import de.florianisme.wakeonlan.wear.WearClient;
 
 
@@ -41,31 +38,25 @@ public class DeviceListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         wearClient = new WearClient().init(view.getContext());
-        populateRecyclerView();
+        instantiateRecyclerView();
+        registerLiveDataObserver();
     }
 
-    private void populateRecyclerView() {
-        List<Device> devices = loadMachines();
-        deviceListAdapter = new DeviceListAdapter(devices);
+    private void registerLiveDataObserver() {
+        databaseInstance.deviceDao().getAllAsObservable().observe(getViewLifecycleOwner(), devices -> {
+            wearClient.onDeviceListUpdated(devices);
+
+            deviceListAdapter.updateDataset(devices);
+            deviceListAdapter.notifyDataSetChanged();
+        });
+    }
+
+    private void instantiateRecyclerView() {
+        deviceListAdapter = new DeviceListAdapter();
         RecyclerView machinesRecyclerView = binding.machineList;
 
         machinesRecyclerView.setAdapter(deviceListAdapter);
         machinesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    private List<Device> loadMachines() {
-        return databaseInstance.deviceDao().getAll();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        List<Device> devices = loadMachines();
-
-        wearClient.onDeviceListUpdated(devices);
-        deviceListAdapter.updateDataset(devices);
-
-        deviceListAdapter.notifyDataSetChanged();
     }
 
     @Override
