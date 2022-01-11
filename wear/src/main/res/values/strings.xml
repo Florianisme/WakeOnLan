@@ -5,4 +5,5 @@
     <string name="device_list_empty_description">Please configure your devices through the \"Wake on Lan\" app on your phone</string>
     <string name="device_list_empty_title">No devices found</string>
     <string name="device_list_title">All devices</string>
+    <string name="device_list_no_data">No data received</string>
 </resources>
