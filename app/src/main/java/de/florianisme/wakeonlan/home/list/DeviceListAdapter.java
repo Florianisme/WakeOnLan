@@ -19,7 +19,12 @@ import de.florianisme.wakeonlan.persistence.Device;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final DeviceClickedCallback deviceClickedCallback;
     private List<Device> devices = new ArrayList<>();
+
+    public DeviceListAdapter(DeviceClickedCallback deviceClickedCallback) {
+        this.deviceClickedCallback = deviceClickedCallback;
+    }
 
     public void updateDataset(List<Device> devices) {
         this.devices = Collections.unmodifiableList(devices);
@@ -38,7 +43,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.device_list_item, viewGroup, false);
-            viewHolder = new DeviceItemViewHolder(view);
+            viewHolder = new DeviceItemViewHolder(view, deviceClickedCallback);
         }
 
         return viewHolder;

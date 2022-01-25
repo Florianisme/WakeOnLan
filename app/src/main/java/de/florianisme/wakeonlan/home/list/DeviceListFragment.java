@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
@@ -37,7 +40,7 @@ public class DeviceListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        wearClient = new WearClient().init(view.getContext());
+        wearClient = new WearClient().init(getContext());
         instantiateRecyclerView();
         registerLiveDataObserver();
     }
@@ -52,11 +55,21 @@ public class DeviceListFragment extends Fragment {
     }
 
     private void instantiateRecyclerView() {
-        deviceListAdapter = new DeviceListAdapter();
+        deviceListAdapter = new DeviceListAdapter(buildDeviceClickedCallback());
         RecyclerView machinesRecyclerView = binding.machineList;
 
         machinesRecyclerView.setAdapter(deviceListAdapter);
         machinesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @NonNull
+    private DeviceClickedCallback buildDeviceClickedCallback() {
+        return deviceName -> {
+            String snackbarText = getContext().getString(R.string.wol_toast_sending_packet, deviceName);
+            View coordinatorView = getActivity().findViewById(R.id.main_coordinator_layout);
+
+            Snackbar.make(coordinatorView, snackbarText, Snackbar.LENGTH_SHORT).show();
+        };
     }
 
     @Override

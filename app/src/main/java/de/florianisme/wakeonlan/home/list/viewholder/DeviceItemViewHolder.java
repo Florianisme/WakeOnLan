@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.home.deviceadd.EditDeviceActivity;
+import de.florianisme.wakeonlan.home.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.persistence.Device;
 import de.florianisme.wakeonlan.wol.WolSender;
 
@@ -22,14 +22,16 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
     private final Button editButton;
     private final Button sendWolButton;
+    private final DeviceClickedCallback deviceClickedCallback;
 
-    public DeviceItemViewHolder(View view) {
+    public DeviceItemViewHolder(View view, DeviceClickedCallback deviceClickedCallback) {
         super(view);
         deviceName = view.findViewById(R.id.machine_name);
         deviceMacAddress = view.findViewById(R.id.machine_mac);
 
         editButton = view.findViewById(R.id.edit);
         sendWolButton = view.findViewById(R.id.send_wol);
+        this.deviceClickedCallback = deviceClickedCallback;
     }
 
     public void setDeviceName(String name) {
@@ -45,7 +47,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 WolSender.sendWolPacket(device);
-                Toast.makeText(view.getContext(), view.getContext().getString(R.string.wol_toast_sending_packet) + deviceName.getText(), Toast.LENGTH_LONG).show();
+                deviceClickedCallback.onDeviceClicked(deviceName.getText().toString());
             }
         });
     }
