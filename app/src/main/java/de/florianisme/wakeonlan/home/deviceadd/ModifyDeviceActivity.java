@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
+import de.florianisme.wakeonlan.home.deviceadd.autocomplete.MacAddressAutocomplete;
 import de.florianisme.wakeonlan.home.deviceadd.validator.BroadcastValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.MacValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.NameValidator;
@@ -70,6 +71,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     private void addValidators() {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
+        deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
         deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
         deviceBroadcastInput.addTextChangedListener(new BroadcastValidator(deviceBroadcastInput));
     }
