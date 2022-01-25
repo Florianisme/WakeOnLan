@@ -27,4 +27,8 @@
     <string name="tile_no_device_found">Gerät nicht gefunden</string>
     <string name="tile_subtitle">Wake on Lan</string>
     <string name="wol_toast_sending_packet">"Magic Paket wird gesendet an "</string>
+    <string name="modify_device_unsaved_changes_title">Ungesicherte Änderungen</string>
+    <string name="modify_device_unsaved_changes_message">Möchten Sie die Änderungen speichern?</string>
+    <string name="modify_device_unsaved_changes_negative">Verwerfen</string>
+    <string name="modify_device_unsaved_changes_positive">Speichern</string>
 </resources>
