@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wake on Lan</string>
+    <string name="sending_magic_packet">"Magic Paket wird gesendet an "</string>
+    <string name="device_list_empty_description">Bitte konfigurieren Sie ihre Geräte in der \"Wake on Lan\" App auf ihrem Telefon</string>
+    <string name="device_list_empty_title">Keine Geräte gefunden</string>
+    <string name="device_list_title">Alle Geräte</string>
+    <string name="device_list_no_data">Keine Daten empfangen</string>
+</resources>

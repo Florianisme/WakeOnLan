@@ -14,6 +14,8 @@
         android:background="@drawable/item_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="16sp"
         android:textAllCaps="false"
         tools:text="Device 1" />
 

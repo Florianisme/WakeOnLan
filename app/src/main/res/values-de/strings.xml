@@ -26,5 +26,5 @@
     <string name="tile_name_device_three">WOL Gerät 3</string>
     <string name="tile_no_device_found">Gerät nicht gefunden</string>
     <string name="tile_subtitle">Wake on Lan</string>
-    <string name="wol_toast_sending_packet">"Magic Packet wird gesendet an "</string>
+    <string name="wol_toast_sending_packet">"Magic Paket wird gesendet an "</string>
 </resources>

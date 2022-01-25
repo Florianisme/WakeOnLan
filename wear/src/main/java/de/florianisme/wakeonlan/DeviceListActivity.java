@@ -2,6 +2,8 @@ package de.florianisme.wakeonlan;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.wear.widget.WearableLinearLayoutManager;
@@ -94,6 +96,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
 
     @Override
     public void onError(Exception e) {
-
+        Log.e(this.getClass().getName(), "Error while receiving data from mobile", e);
+        Toast.makeText(this, R.string.device_list_no_data, Toast.LENGTH_SHORT).show();
     }
 }

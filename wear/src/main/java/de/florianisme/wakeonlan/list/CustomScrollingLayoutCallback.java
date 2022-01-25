@@ -9,7 +9,7 @@ import de.florianisme.wakeonlan.R;
 
 // Copy from https://developer.android.com/training/wearables/overlays/lists#curved-layout and adjusted
 public class CustomScrollingLayoutCallback extends WearableLinearLayoutManager.LayoutCallback {
-    private static final float MAX_ICON_PROGRESS = 0.45f;
+    private static final float MAX_ICON_PROGRESS = 0.65f;
 
     private float progressToCenter;
 
@@ -28,7 +28,7 @@ public class CustomScrollingLayoutCallback extends WearableLinearLayoutManager.L
         // Adjust to the maximum scale
         progressToCenter = Math.min(progressToCenter, MAX_ICON_PROGRESS);
 
-        child.setScaleX(1 - progressToCenter / 2);
-        child.setScaleY(1 - progressToCenter / 2);
+        child.setScaleX(1 - progressToCenter / 3);
+        child.setScaleY(1 - progressToCenter / 3);
     }
 }
