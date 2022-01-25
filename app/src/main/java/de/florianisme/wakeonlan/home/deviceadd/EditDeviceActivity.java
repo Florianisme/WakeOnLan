@@ -54,31 +54,31 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.edit_machine_menu_save) {
-            if (assertInputsNotEmptyAndValid()) {
-                persistDevice();
-                finish();
-                return true;
-            } else {
-                Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
-            }
+            checkAndPersistDevice();
+            return true;
         } else if (item.getItemId() == R.id.edit_machine_menu_delete) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.edit_device_delete_title)
                     .setMessage(R.string.edit_device_delete_message)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         databaseInstance.deviceDao().delete(device);
-                        dialog.dismiss();
                         finish();
                     })
                     .setNegativeButton(android.R.string.no, (dialog, which) -> {
-                        dialog.dismiss();
-                        finish();
                     })
                     .show();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected boolean inputsHaveNotChanged() {
+        return device.name.equals(getDeviceNameInputText()) &&
+                device.broadcast_address.equals(getDeviceBroadcastAddressText()) &&
+                device.macAddress.equals(getDeviceMacInputText()) &&
+                device.port == getPort();
     }
 
     @Override
@@ -90,6 +90,5 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
 
         databaseInstance.deviceDao().update(device);
     }
-
 
 }

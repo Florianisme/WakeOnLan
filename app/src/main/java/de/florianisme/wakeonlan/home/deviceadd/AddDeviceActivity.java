@@ -2,7 +2,6 @@ package de.florianisme.wakeonlan.home.deviceadd;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -20,13 +19,8 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add_device_menu_save) {
-            if (assertInputsNotEmptyAndValid()) {
-                persistDevice();
-                finish();
-                return true;
-            } else {
-                Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
-            }
+            checkAndPersistDevice();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -44,4 +38,10 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         databaseInstance.deviceDao().insertAll(device);
     }
 
+    @Override
+    protected boolean inputsHaveNotChanged() {
+        // There is no persisted device yet, so we check if any of our inputs are edited
+        return getDeviceNameInputText().isEmpty() && getDeviceMacInputText().isEmpty()
+                && getDeviceBroadcastAddressText().isEmpty();
+    }
 }

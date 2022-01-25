@@ -27,6 +27,12 @@
     <string name="edit_device_delete_title">Delete device</string>
     <string name="edit_device_delete_message">Are you sure you want to delete this entry?</string>
 
+    <!-- Modify Device Activity -->
+    <string name="modify_device_unsaved_changes_title">Unsaved Changes</string>
+    <string name="modify_device_unsaved_changes_message">Do you want to save your changes?</string>
+    <string name="modify_device_unsaved_changes_negative">Discard</string>
+    <string name="modify_device_unsaved_changes_positive">Save</string>
+
     <!-- Device List -->
     <string name="device_list_startup">Turn on</string>
     <string name="device_list_empty_title">No devices available</string>

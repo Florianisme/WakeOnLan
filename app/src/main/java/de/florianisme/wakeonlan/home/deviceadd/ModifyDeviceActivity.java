@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -48,6 +50,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceBroadcastInput = binding.device.machineBroadcast;
 
         setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
         addValidators();
@@ -72,6 +76,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     private void addValidators() {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
+
         deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
         deviceBroadcastInput.addTextChangedListener(new BroadcastValidator(deviceBroadcastInput));
     }
@@ -89,7 +94,18 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         devicePorts.setText("9", false);
     }
 
+    protected void checkAndPersistDevice() {
+        if (assertInputsNotEmptyAndValid()) {
+            persistDevice();
+            finish();
+        } else {
+            Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
+        }
+    }
+
     abstract protected void persistDevice();
+
+    abstract protected boolean inputsHaveNotChanged();
 
     protected int getPort() {
         return "7".equals(binding.device.machinePorts.getText().toString()) ? 7 : 9;
@@ -115,5 +131,20 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         return getInputText(deviceNameInput);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (inputsHaveNotChanged()) {
+            finish();
+            return false;
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.modify_device_unsaved_changes_title)
+                    .setMessage(R.string.modify_device_unsaved_changes_message)
+                    .setPositiveButton(R.string.modify_device_unsaved_changes_positive, (dialog, which) -> checkAndPersistDevice())
+                    .setNegativeButton(R.string.modify_device_unsaved_changes_negative, (dialog, which) -> finish())
+                    .create().show();
+        }
 
+        return false;
+    }
 }
