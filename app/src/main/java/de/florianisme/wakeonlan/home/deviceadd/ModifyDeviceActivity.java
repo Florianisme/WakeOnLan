@@ -85,10 +85,14 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
-        return deviceMacInput.getError() == null && deviceMacInput.getText().length() != 0 &&
-                deviceNameInput.getError() == null && deviceNameInput.getText().length() != 0 &&
-                deviceBroadcastInput.getError() == null && deviceBroadcastInput.getText().length() != 0 &&
+        return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
+                deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
+                deviceBroadcastInput.getError() == null && isNotEmpty(deviceBroadcastInput) &&
                 deviceStatusIpInput.getError() == null;
+    }
+
+    private boolean isNotEmpty(TextInputEditText inputEditText) {
+        return inputEditText.getText() != null && inputEditText.getText().length() != 0;
     }
 
     private void addDevicePortsAdapter() {
@@ -103,8 +107,15 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
             persistDevice();
             finish();
         } else {
+            triggerValidators();
             Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void triggerValidators() {
+        deviceNameInput.setText(deviceNameInput.getText());
+        deviceBroadcastInput.setText(deviceBroadcastInput.getText());
+        deviceMacInput.setText(deviceMacInput.getText());
     }
 
     abstract protected void persistDevice();
