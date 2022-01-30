@@ -57,11 +57,10 @@ public class DeviceListFragment extends Fragment {
 
     private void instantiateRecyclerView() {
         deviceListAdapter = new DeviceListAdapter(buildDeviceClickedCallback());
-        deviceListAdapter.setHasStableIds(true);
-        RecyclerView machinesRecyclerView = binding.machineList;
+        RecyclerView devicesRecyclerView = binding.machineList;
 
-        machinesRecyclerView.setAdapter(deviceListAdapter);
-        machinesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        devicesRecyclerView.setAdapter(deviceListAdapter);
+        devicesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @NonNull

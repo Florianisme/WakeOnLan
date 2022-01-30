@@ -100,6 +100,8 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void cancelStatusUpdates() {
-        deviceStatusTester.stopDeviceStatusPings();
+        if (deviceStatusTester != null) {
+            deviceStatusTester.stopDeviceStatusPings();
+        }
     }
 }

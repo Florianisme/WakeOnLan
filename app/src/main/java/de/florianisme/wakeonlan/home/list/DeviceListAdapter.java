@@ -66,14 +66,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public long getItemId(int position) {
-        if (devices.isEmpty()) {
-            return RecyclerView.NO_ID;
-        }
-        return devices.get(position).id;
-    }
-
-    @Override
     public int getItemCount() {
         if (devices.isEmpty()) {
             return 1; // "Empty" item
