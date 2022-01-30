@@ -36,8 +36,8 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     public DeviceItemViewHolder(View view, DeviceClickedCallback deviceClickedCallback) {
         super(view);
         deviceStatus = view.findViewById(R.id.device_status);
-        deviceName = view.findViewById(R.id.machine_name);
-        deviceMacAddress = view.findViewById(R.id.machine_mac);
+        deviceName = view.findViewById(R.id.device_name);
+        deviceMacAddress = view.findViewById(R.id.device_mac);
 
         editButton = view.findViewById(R.id.edit);
         sendWolButton = view.findViewById(R.id.send_wol);

@@ -6,6 +6,9 @@ android {
         versionCode 12
         wearAppUnbundled true
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {

@@ -45,11 +45,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         binding = ActivityModifyDeviceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        devicePorts = binding.device.machinePorts;
-        deviceMacInput = binding.device.machineMac;
-        deviceNameInput = binding.device.machineName;
-        deviceStatusIpInput = binding.device.machineStatusIp;
-        deviceBroadcastInput = binding.device.machineBroadcast;
+        devicePorts = binding.device.devicePorts;
+        deviceMacInput = binding.device.deviceMac;
+        deviceNameInput = binding.device.deviceName;
+        deviceStatusIpInput = binding.device.deviceStatusIp;
+        deviceBroadcastInput = binding.device.deviceBroadcast;
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,7 +67,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> binding.device.machineBroadcast.setText(inetAddress.getHostAddress()));
+                    broadcastAddress.ifPresent(inetAddress -> binding.device.deviceBroadcast.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
                 }
@@ -112,7 +112,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     abstract protected boolean inputsHaveNotChanged();
 
     protected int getPort() {
-        return "7".equals(binding.device.machinePorts.getText().toString()) ? 7 : 9;
+        return "7".equals(binding.device.devicePorts.getText().toString()) ? 7 : 9;
     }
 
     @NonNull
