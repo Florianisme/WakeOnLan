@@ -6,8 +6,8 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.Device;
 import de.florianisme.wakeonlan.persistence.DeviceDao;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.wol.WolSender;
 
 public class WearDeviceClickedService extends WearableListenerService {
@@ -19,7 +19,7 @@ public class WearDeviceClickedService extends WearableListenerService {
         if (messageEvent.getPath().equals(DEVICE_CLICKED_PATH)) {
             int deviceId = messageEvent.getData()[0];
 
-            DeviceDao deviceDao = DatabaseInstanceManager.init(this).deviceDao();
+            DeviceDao deviceDao = DatabaseInstanceManager.getInstance(this).deviceDao();
             Device device = deviceDao.getById(deviceId);
 
             if (device != null) {

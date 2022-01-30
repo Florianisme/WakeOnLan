@@ -5,7 +5,7 @@ import android.util.Log;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class WolSender {
 

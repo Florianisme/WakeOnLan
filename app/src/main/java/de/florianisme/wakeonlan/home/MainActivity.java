@@ -10,7 +10,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseInstanceManager.init(this);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

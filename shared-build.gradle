@@ -18,7 +18,7 @@ android {
         minSdk 24
         targetSdk 31
         versionCode 4
-        versionName "1.1"
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,6 +45,9 @@ allprojects {
         jcenter()
         mavenCentral()
         google()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 

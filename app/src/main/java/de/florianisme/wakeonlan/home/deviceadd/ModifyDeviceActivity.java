@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -18,7 +20,7 @@ import java.util.Optional;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.home.deviceadd.autocomplete.MacAddressAutocomplete;
-import de.florianisme.wakeonlan.home.deviceadd.validator.BroadcastValidator;
+import de.florianisme.wakeonlan.home.deviceadd.validator.IpAddressValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.MacValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.NameValidator;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
@@ -32,6 +34,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     protected TextInputEditText deviceMacInput;
     protected TextInputEditText deviceNameInput;
+    protected TextInputEditText deviceStatusIpInput;
     protected TextInputEditText deviceBroadcastInput;
     protected MaterialAutoCompleteTextView devicePorts;
 
@@ -42,14 +45,17 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         binding = ActivityModifyDeviceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        devicePorts = binding.device.machinePorts;
-        deviceMacInput = binding.device.machineMac;
-        deviceNameInput = binding.device.machineName;
-        deviceBroadcastInput = binding.device.machineBroadcast;
+        devicePorts = binding.device.devicePorts;
+        deviceMacInput = binding.device.deviceMac;
+        deviceNameInput = binding.device.deviceName;
+        deviceStatusIpInput = binding.device.deviceStatusIp;
+        deviceBroadcastInput = binding.device.deviceBroadcast;
 
         setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
+        databaseInstance = DatabaseInstanceManager.getInstance(this);
         addValidators();
         addAutofillClickHandler();
         addDevicePortsAdapter();
@@ -61,7 +67,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> binding.device.machineBroadcast.setText(inetAddress.getHostAddress()));
+                    broadcastAddress.ifPresent(inetAddress -> binding.device.deviceBroadcast.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
                 }
@@ -72,14 +78,21 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     private void addValidators() {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
+
         deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
-        deviceBroadcastInput.addTextChangedListener(new BroadcastValidator(deviceBroadcastInput));
+        deviceBroadcastInput.addTextChangedListener(new IpAddressValidator(deviceBroadcastInput));
+        deviceStatusIpInput.addTextChangedListener(new IpAddressValidator(deviceStatusIpInput, true));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
-        return deviceMacInput.getError() == null && deviceMacInput.getText().length() != 0 &&
-                deviceNameInput.getError() == null && deviceNameInput.getText().length() != 0 &&
-                deviceBroadcastInput.getError() == null && deviceBroadcastInput.getText().length() != 0;
+        return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
+                deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
+                deviceBroadcastInput.getError() == null && isNotEmpty(deviceBroadcastInput) &&
+                deviceStatusIpInput.getError() == null;
+    }
+
+    private boolean isNotEmpty(TextInputEditText inputEditText) {
+        return inputEditText.getText() != null && inputEditText.getText().length() != 0;
     }
 
     private void addDevicePortsAdapter() {
@@ -89,10 +102,28 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         devicePorts.setText("9", false);
     }
 
+    protected void checkAndPersistDevice() {
+        if (assertInputsNotEmptyAndValid()) {
+            persistDevice();
+            finish();
+        } else {
+            triggerValidators();
+            Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void triggerValidators() {
+        deviceNameInput.setText(deviceNameInput.getText());
+        deviceBroadcastInput.setText(deviceBroadcastInput.getText());
+        deviceMacInput.setText(deviceMacInput.getText());
+    }
+
     abstract protected void persistDevice();
 
+    abstract protected boolean inputsHaveNotChanged();
+
     protected int getPort() {
-        return "7".equals(binding.device.machinePorts.getText().toString()) ? 7 : 9;
+        return "7".equals(binding.device.devicePorts.getText().toString()) ? 7 : 9;
     }
 
     @NonNull
@@ -115,5 +146,25 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         return getInputText(deviceNameInput);
     }
 
+    @NonNull
+    protected String getDeviceStatusIpText() {
+        return getInputText(deviceStatusIpInput);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (inputsHaveNotChanged()) {
+            finish();
+            return false;
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.modify_device_unsaved_changes_title)
+                    .setMessage(R.string.modify_device_unsaved_changes_message)
+                    .setPositiveButton(R.string.modify_device_unsaved_changes_positive, (dialog, which) -> checkAndPersistDevice())
+                    .setNegativeButton(R.string.modify_device_unsaved_changes_negative, (dialog, which) -> finish())
+                    .create().show();
+        }
+
+        return false;
+    }
 }

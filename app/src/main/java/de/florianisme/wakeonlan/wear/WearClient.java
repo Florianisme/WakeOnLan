@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class WearClient implements DataClient.OnDataChangedListener {
 

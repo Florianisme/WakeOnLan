@@ -5,7 +5,7 @@
     <item
         android:id="@+id/edit_machine_menu_delete"
         android:icon="@drawable/ic_delete"
-        android:title="@string/add_device_menu_save"
+        android:title="@string/add_device_menu_delete"
         app:showAsAction="ifRoom" />
 
     <item

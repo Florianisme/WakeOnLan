@@ -15,11 +15,16 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.home.list.viewholder.DeviceItemViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final DeviceClickedCallback deviceClickedCallback;
     private List<Device> devices = new ArrayList<>();
+
+    public DeviceListAdapter(DeviceClickedCallback deviceClickedCallback) {
+        this.deviceClickedCallback = deviceClickedCallback;
+    }
 
     public void updateDataset(List<Device> devices) {
         this.devices = Collections.unmodifiableList(devices);
@@ -27,7 +32,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view;
         RecyclerView.ViewHolder viewHolder;
 
@@ -38,7 +43,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.device_list_item, viewGroup, false);
-            viewHolder = new DeviceItemViewHolder(view);
+            viewHolder = new DeviceItemViewHolder(view, deviceClickedCallback);
         }
 
         return viewHolder;
@@ -51,6 +56,21 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             return ListViewType.DEVICE.ordinal();
         }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        if (holder instanceof DeviceItemViewHolder) {
+            ((DeviceItemViewHolder) holder).cancelStatusUpdates();
+        }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (devices.isEmpty()) {
+            return RecyclerView.NO_ID;
+        }
+        return devices.get(position).id;
     }
 
     @Override
@@ -71,6 +91,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
             deviceItemViewHolder.setOnClickHandler(device);
             deviceItemViewHolder.setOnEditClickHandler(device);
+            deviceItemViewHolder.startDeviceStatusQuery(device);
         }
     }
 }
