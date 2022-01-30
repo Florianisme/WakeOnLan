@@ -73,13 +73,15 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void startDeviceStatusQuery(Device device) {
-        setAlphaAnimation();
+        deviceStatus.clearAnimation();
         deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
 
         deviceStatusTester.scheduleDeviceStatusPings(device, status -> {
             if (status == DeviceStatus.ONLINE) {
+                setAlphaAnimationIfNotSet();
                 deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_online));
             } else if (status == DeviceStatus.OFFLINE) {
+                setAlphaAnimationIfNotSet();
                 deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_offline));
             } else {
                 deviceStatus.clearAnimation();
@@ -89,14 +91,15 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    private void setAlphaAnimation() {
-        deviceStatus.clearAnimation();
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.4f);
-        alphaAnimation.setDuration(1500);
-        alphaAnimation.setRepeatCount(Animation.INFINITE);
-        alphaAnimation.setInterpolator(new AccelerateInterpolator());
-        alphaAnimation.setRepeatMode(Animation.REVERSE);
-        deviceStatus.setAnimation(alphaAnimation);
+    private void setAlphaAnimationIfNotSet() {
+        if (deviceStatus.getAnimation() == null) {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.4f);
+            alphaAnimation.setDuration(1500);
+            alphaAnimation.setRepeatCount(Animation.INFINITE);
+            alphaAnimation.setInterpolator(new AccelerateInterpolator());
+            alphaAnimation.setRepeatMode(Animation.REVERSE);
+            deviceStatus.startAnimation(alphaAnimation);
+        }
     }
 
     public void cancelStatusUpdates() {

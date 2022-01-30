@@ -66,6 +66,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    public long getItemId(int position) {
+        if (devices.isEmpty()) {
+            return RecyclerView.NO_ID;
+        }
+        return devices.get(position).id;
+    }
+
+    @Override
     public int getItemCount() {
         if (devices.isEmpty()) {
             return 1; // "Empty" item
@@ -77,6 +85,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == ListViewType.DEVICE.ordinal()) {
             DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
+            deviceItemViewHolder.cancelStatusUpdates();
             Device device = devices.get(position);
 
             deviceItemViewHolder.setDeviceName(device.name);
