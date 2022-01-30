@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp"
         android:text="@string/device_list_empty_hint"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toEndOf="parent"

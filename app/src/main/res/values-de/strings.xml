@@ -18,7 +18,7 @@
     <string name="add_device_autofill_broadcast">Broadcast automatisch ausfüllen</string>
     <string name="edit_machine_error_loading">Fehler beim Zugriff auf die Maschine</string>
     <string name="device_list_startup">Einschalten</string>
-    <string name="device_list_empty_title">Keine Geräte verfügbar</string>
+    <string name="device_list_empty_title">Keine Geräte eingerichtet</string>
     <string name="device_list_empty_hint">Tippen Sie auf das \"+\" Icon um Ihr erstes Gerät hinzuzufügen</string>
     <string name="device_list_edit">Bearbeiten</string>
     <string name="edit_device_delete_title">Gerät löschen</string>
