@@ -45,9 +45,8 @@ public class PingDeviceStatusTester implements DeviceStatusTester {
                     }
                 });
                 ping.setCount(1);
-                ping.setTimeoutMs(2000);
+                ping.setTimeoutMs(1000);
                 ping.run();
-                Thread.sleep(2000);
             } catch (Exception e) {
                 Log.w(getClass().getSimpleName(), String.format("Error while pinging device with IP %s", device.statusIp), e);
                 onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.UNKNOWN);
