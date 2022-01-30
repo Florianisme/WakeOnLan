@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -18,7 +19,6 @@ import de.florianisme.wakeonlan.home.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.status.DeviceStatusTester;
-import de.florianisme.wakeonlan.status.OnDeviceStatusAvailable;
 import de.florianisme.wakeonlan.status.PingDeviceStatusTester;
 import de.florianisme.wakeonlan.wol.WolSender;
 
@@ -54,27 +54,21 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setOnClickHandler(Device device) {
-        sendWolButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WolSender.sendWolPacket(device);
-                deviceClickedCallback.onDeviceClicked(deviceName.getText().toString());
-            }
+        sendWolButton.setOnClickListener(view -> {
+            WolSender.sendWolPacket(device);
+            deviceClickedCallback.onDeviceClicked(deviceName.getText().toString());
         });
     }
 
     public void setOnEditClickHandler(Device device) {
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
+        editButton.setOnClickListener(view -> {
+            Context context = view.getContext();
 
-                Intent intent = new Intent(context, EditDeviceActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(EditDeviceActivity.MACHINE_ID_KEY, device.id);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+            Intent intent = new Intent(context, EditDeviceActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt(EditDeviceActivity.MACHINE_ID_KEY, device.id);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
     }
 
@@ -82,17 +76,14 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         setAlphaAnimation();
         deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
 
-        deviceStatusTester.scheduleDeviceStatusPings(device, new OnDeviceStatusAvailable() {
-            @Override
-            public void onStatusAvailable(DeviceStatus status) {
-                if (status == DeviceStatus.ONLINE) {
-                    deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_online));
-                } else if (status == DeviceStatus.OFFLINE) {
-                    deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_offline));
-                } else {
-                    deviceStatus.clearAnimation();
-                    deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
-                }
+        deviceStatusTester.scheduleDeviceStatusPings(device, status -> {
+            if (status == DeviceStatus.ONLINE) {
+                deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_online));
+            } else if (status == DeviceStatus.OFFLINE) {
+                deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_offline));
+            } else {
+                deviceStatus.clearAnimation();
+                deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
             }
         });
 
@@ -103,6 +94,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.4f);
         alphaAnimation.setDuration(1500);
         alphaAnimation.setRepeatCount(Animation.INFINITE);
+        alphaAnimation.setInterpolator(new AccelerateInterpolator());
         alphaAnimation.setRepeatMode(Animation.REVERSE);
         deviceStatus.setAnimation(alphaAnimation);
     }
