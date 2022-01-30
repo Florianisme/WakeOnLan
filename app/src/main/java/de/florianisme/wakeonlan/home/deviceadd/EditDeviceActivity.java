@@ -79,6 +79,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
         return device.name.equals(getDeviceNameInputText()) &&
                 device.broadcast_address.equals(getDeviceBroadcastAddressText()) &&
                 device.macAddress.equals(getDeviceMacInputText()) &&
+                device.statusIp.equals(getDeviceStatusIpText()) &&
                 device.port == getPort();
     }
 

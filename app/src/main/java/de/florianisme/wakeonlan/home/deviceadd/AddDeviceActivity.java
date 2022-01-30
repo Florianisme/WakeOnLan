@@ -43,6 +43,6 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     protected boolean inputsHaveNotChanged() {
         // There is no persisted device yet, so we check if any of our inputs are edited
         return getDeviceNameInputText().isEmpty() && getDeviceMacInputText().isEmpty()
-                && getDeviceBroadcastAddressText().isEmpty();
+                && getDeviceBroadcastAddressText().isEmpty() && getDeviceStatusIpText().isEmpty();
     }
 }
