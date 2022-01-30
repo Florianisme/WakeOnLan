@@ -55,7 +55,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
+        databaseInstance = DatabaseInstanceManager.getInstance(this);
         addValidators();
         addAutofillClickHandler();
         addDevicePortsAdapter();

@@ -27,7 +27,7 @@ public abstract class DeviceTileService extends TileService {
     }
 
     private void updateTileState() {
-        appDatabase = DatabaseInstanceManager.init(this.getApplicationContext());
+        appDatabase = DatabaseInstanceManager.getInstance(this);
         Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
         if (optionalMachine.isPresent()) {

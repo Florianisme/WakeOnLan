@@ -10,17 +10,12 @@ public class DatabaseInstanceManager {
 
     private static AppDatabase appDatabase;
 
-    public static AppDatabase init(Context context) {
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name")
-                .allowMainThreadQueries()
-                .addMigrations(new MigrationFrom1To2())
-                .build();
-        return appDatabase;
-    }
-
-    public static AppDatabase getDatabaseInstance() {
+    public static synchronized AppDatabase getInstance(Context context) {
         if (appDatabase == null) {
-            throw new IllegalStateException("AppDatabase has not been initialized");
+            appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name")
+                    .allowMainThreadQueries()
+                    .addMigrations(new MigrationFrom1To2())
+                    .build();
         }
         return appDatabase;
     }

@@ -19,7 +19,7 @@ public class WearDeviceClickedService extends WearableListenerService {
         if (messageEvent.getPath().equals(DEVICE_CLICKED_PATH)) {
             int deviceId = messageEvent.getData()[0];
 
-            DeviceDao deviceDao = DatabaseInstanceManager.init(this).deviceDao();
+            DeviceDao deviceDao = DatabaseInstanceManager.getInstance(this).deviceDao();
             Device device = deviceDao.getById(deviceId);
 
             if (device != null) {

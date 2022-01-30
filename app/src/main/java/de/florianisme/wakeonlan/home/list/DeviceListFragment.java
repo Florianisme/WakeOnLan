@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.wear.WearClient;
 
@@ -23,7 +22,6 @@ import de.florianisme.wakeonlan.wear.WearClient;
 public class DeviceListFragment extends Fragment {
 
     private FragmentListDevicesBinding binding;
-    private AppDatabase databaseInstance;
     private DeviceListAdapter deviceListAdapter;
 
     private WearClient wearClient;
@@ -32,7 +30,6 @@ public class DeviceListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        databaseInstance = DatabaseInstanceManager.getDatabaseInstance();
         binding = FragmentListDevicesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -48,12 +45,14 @@ public class DeviceListFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void registerLiveDataObserver() {
-        databaseInstance.deviceDao().getAllAsObservable().observe(getViewLifecycleOwner(), devices -> {
-            wearClient.onDeviceListUpdated(devices);
+        DatabaseInstanceManager.getInstance(getContext()).deviceDao()
+                .getAllAsObservable()
+                .observe(getViewLifecycleOwner(), devices -> {
+                    wearClient.onDeviceListUpdated(devices);
 
-            deviceListAdapter.updateDataset(devices);
-            deviceListAdapter.notifyDataSetChanged();
-        });
+                    deviceListAdapter.updateDataset(devices);
+                    deviceListAdapter.notifyDataSetChanged();
+                });
     }
 
     private void instantiateRecyclerView() {
