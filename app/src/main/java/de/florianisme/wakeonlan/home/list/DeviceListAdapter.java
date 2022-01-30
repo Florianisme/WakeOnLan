@@ -32,7 +32,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view;
         RecyclerView.ViewHolder viewHolder;
 
@@ -63,6 +63,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof DeviceItemViewHolder) {
             ((DeviceItemViewHolder) holder).cancelStatusUpdates();
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (devices.isEmpty()) {
+            return RecyclerView.NO_ID;
+        }
+        return devices.get(position).id;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.florianisme.wakeonlan.home.list;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class DeviceListFragment extends Fragment {
         registerLiveDataObserver();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void registerLiveDataObserver() {
         databaseInstance.deviceDao().getAllAsObservable().observe(getViewLifecycleOwner(), devices -> {
             wearClient.onDeviceListUpdated(devices);
@@ -56,6 +58,7 @@ public class DeviceListFragment extends Fragment {
 
     private void instantiateRecyclerView() {
         deviceListAdapter = new DeviceListAdapter(buildDeviceClickedCallback());
+        deviceListAdapter.setHasStableIds(true);
         RecyclerView machinesRecyclerView = binding.machineList;
 
         machinesRecyclerView.setAdapter(deviceListAdapter);
