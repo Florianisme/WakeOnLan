@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class AddDeviceActivity extends ModifyDeviceActivity {
 
@@ -31,6 +31,7 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     protected void persistDevice() {
         Device device = new Device();
         device.name = getDeviceNameInputText();
+        device.statusIp = getDeviceStatusIpText();
         device.macAddress = getDeviceMacInputText();
         device.broadcast_address = getDeviceBroadcastAddressText();
         device.port = getPort();

@@ -15,7 +15,7 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.home.list.viewholder.DeviceItemViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -59,6 +59,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        if (holder instanceof DeviceItemViewHolder) {
+            ((DeviceItemViewHolder) holder).cancelStatusUpdates();
+        }
+    }
+
+    @Override
     public int getItemCount() {
         if (devices.isEmpty()) {
             return 1; // "Empty" item
@@ -76,6 +83,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
             deviceItemViewHolder.setOnClickHandler(device);
             deviceItemViewHolder.setOnEditClickHandler(device);
+            deviceItemViewHolder.startDeviceStatusQuery(device);
         }
     }
 }

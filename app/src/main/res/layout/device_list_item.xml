@@ -16,14 +16,28 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/machine_name"
-                style="@style/FontMonospaced"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textStyle="bold"
-                tools:text="Device Name" />
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/device_status"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/device_status_unknown" />
+
+                <TextView
+                    android:id="@+id/machine_name"
+                    style="@style/FontMonospaced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textStyle="bold"
+                    tools:text="Device Name" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/machine_mac"

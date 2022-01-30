@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.Device;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class EditDeviceActivity extends ModifyDeviceActivity {
 
@@ -35,6 +35,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
             device = databaseInstance.deviceDao().getById(machineId);
 
             deviceNameInput.setText(device.name);
+            deviceStatusIpInput.setText(device.statusIp);
             deviceMacInput.setText(device.macAddress);
             deviceBroadcastInput.setText(device.broadcast_address);
             if (device.port == 9) {
@@ -84,6 +85,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     @Override
     protected void persistDevice() {
         device.name = getDeviceNameInputText();
+        device.statusIp = getDeviceStatusIpText();
         device.macAddress = getDeviceMacInputText();
         device.broadcast_address = getDeviceBroadcastAddressText();
         device.port = getPort();

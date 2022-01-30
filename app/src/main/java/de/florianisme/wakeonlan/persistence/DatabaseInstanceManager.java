@@ -4,12 +4,17 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import de.florianisme.wakeonlan.persistence.migrations.MigrationFrom1To2;
+
 public class DatabaseInstanceManager {
 
     private static AppDatabase appDatabase;
 
     public static AppDatabase init(Context context) {
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name").allowMainThreadQueries().build();
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name")
+                .allowMainThreadQueries()
+                .addMigrations(new MigrationFrom1To2())
+                .build();
         return appDatabase;
     }
 

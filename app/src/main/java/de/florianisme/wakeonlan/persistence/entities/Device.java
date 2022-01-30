@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.persistence;
+package de.florianisme.wakeonlan.persistence.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -23,12 +23,16 @@ public class Device {
     @ColumnInfo(name = "port")
     public int port;
 
+    @ColumnInfo(name = "status_ip")
+    public String statusIp;
+
     @Ignore
-    public Device(String name, String macAddress, String broadcast_address, int port) {
+    public Device(String name, String macAddress, String broadcast_address, int port, String statusIp) {
         this.name = name;
         this.macAddress = macAddress;
         this.broadcast_address = broadcast_address;
         this.port = port;
+        this.statusIp = statusIp;
     }
 
     public Device() {

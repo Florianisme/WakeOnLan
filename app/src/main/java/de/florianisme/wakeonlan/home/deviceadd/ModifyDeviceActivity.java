@@ -20,7 +20,7 @@ import java.util.Optional;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.home.deviceadd.autocomplete.MacAddressAutocomplete;
-import de.florianisme.wakeonlan.home.deviceadd.validator.BroadcastValidator;
+import de.florianisme.wakeonlan.home.deviceadd.validator.IpAddressValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.MacValidator;
 import de.florianisme.wakeonlan.home.deviceadd.validator.NameValidator;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
@@ -34,6 +34,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     protected TextInputEditText deviceMacInput;
     protected TextInputEditText deviceNameInput;
+    protected TextInputEditText deviceStatusIpInput;
     protected TextInputEditText deviceBroadcastInput;
     protected MaterialAutoCompleteTextView devicePorts;
 
@@ -47,6 +48,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         devicePorts = binding.device.machinePorts;
         deviceMacInput = binding.device.machineMac;
         deviceNameInput = binding.device.machineName;
+        deviceStatusIpInput = binding.device.machineStatusIp;
         deviceBroadcastInput = binding.device.machineBroadcast;
 
         setSupportActionBar(binding.toolbar);
@@ -78,13 +80,15 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
         deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
-        deviceBroadcastInput.addTextChangedListener(new BroadcastValidator(deviceBroadcastInput));
+        deviceBroadcastInput.addTextChangedListener(new IpAddressValidator(deviceBroadcastInput));
+        deviceStatusIpInput.addTextChangedListener(new IpAddressValidator(deviceStatusIpInput, true));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
         return deviceMacInput.getError() == null && deviceMacInput.getText().length() != 0 &&
                 deviceNameInput.getError() == null && deviceNameInput.getText().length() != 0 &&
-                deviceBroadcastInput.getError() == null && deviceBroadcastInput.getText().length() != 0;
+                deviceBroadcastInput.getError() == null && deviceBroadcastInput.getText().length() != 0 &&
+                deviceStatusIpInput.getError() == null;
     }
 
     private void addDevicePortsAdapter() {
@@ -129,6 +133,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     @NonNull
     protected String getDeviceNameInputText() {
         return getInputText(deviceNameInput);
+    }
+
+    @NonNull
+    protected String getDeviceStatusIpText() {
+        return getInputText(deviceStatusIpInput);
     }
 
     @Override
