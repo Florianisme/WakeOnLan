@@ -51,7 +51,6 @@ public class DeviceListFragment extends Fragment {
                     wearClient.onDeviceListUpdated(devices);
 
                     deviceListAdapter.updateDataset(devices);
-                    deviceListAdapter.notifyDataSetChanged();
                 });
     }
 

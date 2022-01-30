@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,8 +27,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.deviceClickedCallback = deviceClickedCallback;
     }
 
-    public void updateDataset(List<Device> devices) {
-        this.devices = Collections.unmodifiableList(devices);
+    public void updateDataset(List<Device> updatedDevices) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DeviceDiffCallback(updatedDevices, this.devices));
+        this.devices = Collections.unmodifiableList(updatedDevices);
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @NonNull
