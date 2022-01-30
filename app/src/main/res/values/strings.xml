@@ -13,6 +13,7 @@
     <string name="add_device_broadcast_address">Broadcast Address</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_device_menu_save">Save</string>
+    <string name="add_device_menu_delete">Delete</string>
     <string-array name="ports_selection">
         <item>9</item>
         <item>7</item>

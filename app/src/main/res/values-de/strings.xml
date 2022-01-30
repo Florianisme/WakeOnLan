@@ -10,6 +10,7 @@
     <string name="add_device_port">Port</string>
     <string name="add_device_broadcast_address">Broadcast Adresse</string>
     <string name="add_device_menu_save">Speichern</string>
+    <string name="add_device_menu_delete">Löschen</string>
     <string name="add_device_error_mac_invalid">Ungültige MAC Adresse</string>
     <string name="add_device_error_name_empty">Name darf nicht leer sein</string>
     <string name="add_device_error_ip_invalid">Ungültige IP Adresse</string>
@@ -27,7 +28,7 @@
     <string name="tile_name_device_three">WOL Gerät 3</string>
     <string name="tile_no_device_found">Gerät nicht gefunden</string>
     <string name="tile_subtitle">Wake on Lan</string>
-    <string name="wol_toast_sending_packet">Magic Paket wird gesendet an %1$s</string>
+    <string name="wol_toast_sending_packet">Magic Paket wird an %1$s gesendet</string>
     <string name="modify_device_unsaved_changes_title">Ungesicherte Änderungen</string>
     <string name="modify_device_unsaved_changes_message">Möchten Sie die Änderungen speichern?</string>
     <string name="modify_device_unsaved_changes_negative">Verwerfen</string>
