@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.deviceadd.autocomplete;
+package de.florianisme.wakeonlan.ui.home.modify.watcher.autocomplete;
 
 import android.text.Editable;
 import android.text.TextWatcher;

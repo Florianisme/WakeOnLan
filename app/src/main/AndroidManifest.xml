@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WakeOnLan">
         <activity
-            android:name=".home.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.WakeOnLan.NoActionBar">
@@ -23,10 +23,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.deviceadd.AddDeviceActivity"
+            android:name=".ui.home.modify.AddDeviceActivity"
             android:label="@string/title_activity_add_device" />
         <activity
-            android:name=".home.deviceadd.EditDeviceActivity"
+            android:name=".ui.home.modify.EditDeviceActivity"
             android:label="@string/title_activity_edit_device" />
 
         <service

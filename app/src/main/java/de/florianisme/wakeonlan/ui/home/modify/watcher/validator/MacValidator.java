@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.deviceadd.validator;
+package de.florianisme.wakeonlan.ui.home.modify.watcher.validator;
 
 import android.widget.EditText;
 

@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home;
+package de.florianisme.wakeonlan.ui;
 
 import android.os.Bundle;
 

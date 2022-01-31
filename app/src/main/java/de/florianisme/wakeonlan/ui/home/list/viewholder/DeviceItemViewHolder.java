@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.list.viewholder;
+package de.florianisme.wakeonlan.ui.home.list.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +14,12 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.home.deviceadd.EditDeviceActivity;
-import de.florianisme.wakeonlan.home.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.status.PingDeviceStatusTester;
+import de.florianisme.wakeonlan.ui.home.list.DeviceClickedCallback;
+import de.florianisme.wakeonlan.ui.home.modify.EditDeviceActivity;
 import de.florianisme.wakeonlan.wol.WolSender;
 
 public class DeviceItemViewHolder extends RecyclerView.ViewHolder {

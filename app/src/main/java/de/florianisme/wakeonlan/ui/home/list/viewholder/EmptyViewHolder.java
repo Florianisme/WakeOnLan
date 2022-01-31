@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.list.viewholder;
+package de.florianisme.wakeonlan.ui.home.list.viewholder;
 
 import android.view.View;
 

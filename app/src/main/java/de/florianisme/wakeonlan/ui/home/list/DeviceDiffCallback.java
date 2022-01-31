@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.list;
+package de.florianisme.wakeonlan.ui.home.list;
 
 import androidx.recyclerview.widget.DiffUtil;
 

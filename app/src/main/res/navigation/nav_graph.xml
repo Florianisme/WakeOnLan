@@ -7,7 +7,7 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="de.florianisme.wakeonlan.home.MainActivity"
+        android:name="de.florianisme.wakeonlan.ui.MainActivity"
         android:label="@string/title_activity_main"
         tools:layout="@layout/activity_main" />
 
@@ -16,13 +16,13 @@
 
     <activity
         android:id="@+id/addMachineActivity"
-        android:name="de.florianisme.wakeonlan.home.deviceadd.AddDeviceActivity"
+        android:name="de.florianisme.wakeonlan.ui.home.modify.AddDeviceActivity"
         android:label="@string/title_activity_add_device"
         tools:layout="@layout/activity_modify_device" />
 
     <fragment
         android:id="@+id/listMachines"
-        android:name="de.florianisme.wakeonlan.home.list.DeviceListFragment"
+        android:name="de.florianisme.wakeonlan.ui.home.list.DeviceListFragment"
         android:label="@string/title_activity_main"
         tools:layout="@layout/fragment_list_devices" />
 </navigation>

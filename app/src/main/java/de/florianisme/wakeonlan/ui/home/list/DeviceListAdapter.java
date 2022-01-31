@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.home.list;
+package de.florianisme.wakeonlan.ui.home.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.home.list.viewholder.DeviceItemViewHolder;
-import de.florianisme.wakeonlan.home.list.viewholder.EmptyViewHolder;
-import de.florianisme.wakeonlan.home.list.viewholder.ListViewType;
 import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.ui.home.list.viewholder.DeviceItemViewHolder;
+import de.florianisme.wakeonlan.ui.home.list.viewholder.EmptyViewHolder;
+import de.florianisme.wakeonlan.ui.home.list.viewholder.ListViewType;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
