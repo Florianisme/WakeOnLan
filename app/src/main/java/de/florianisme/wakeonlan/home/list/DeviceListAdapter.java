@@ -23,14 +23,19 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final DeviceClickedCallback deviceClickedCallback;
     private List<Device> devices = new ArrayList<>();
 
-    public DeviceListAdapter(DeviceClickedCallback deviceClickedCallback) {
+    public DeviceListAdapter(List<Device> initialDataset, DeviceClickedCallback deviceClickedCallback) {
+        updateDevicesList(initialDataset);
         this.deviceClickedCallback = deviceClickedCallback;
     }
 
     public void updateDataset(List<Device> updatedDevices) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DeviceDiffCallback(updatedDevices, this.devices));
-        this.devices = Collections.unmodifiableList(updatedDevices);
+        updateDevicesList(updatedDevices);
         diffResult.dispatchUpdatesTo(this);
+    }
+
+    private void updateDevicesList(List<Device> updatedDevices) {
+        this.devices = Collections.unmodifiableList(updatedDevices);
     }
 
     @NonNull

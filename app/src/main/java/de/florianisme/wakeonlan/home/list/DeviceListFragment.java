@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.wear.WearClient;
 
 
@@ -55,7 +58,8 @@ public class DeviceListFragment extends Fragment {
     }
 
     private void instantiateRecyclerView() {
-        deviceListAdapter = new DeviceListAdapter(buildDeviceClickedCallback());
+        List<Device> initialDataset = DatabaseInstanceManager.getInstance(getContext()).deviceDao().getAll();
+        deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback());
         deviceListAdapter.setHasStableIds(true);
         RecyclerView devicesRecyclerView = binding.machineList;
 
