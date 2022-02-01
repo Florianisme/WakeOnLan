@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -64,7 +63,7 @@ public class DeviceListFragment extends Fragment {
         RecyclerView devicesRecyclerView = binding.machineList;
 
         devicesRecyclerView.setAdapter(deviceListAdapter);
-        devicesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        devicesRecyclerView.setLayoutManager(new LinearLayoutManagerWrapper(getContext()));
     }
 
     @NonNull

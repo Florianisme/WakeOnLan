@@ -5,11 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
@@ -20,22 +18,16 @@ import de.florianisme.wakeonlan.ui.home.list.viewholder.ListViewType;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final AsyncListDiffer<Device> listDiffer = new AsyncListDiffer<>(this, new DeviceDiffCallback());
     private final DeviceClickedCallback deviceClickedCallback;
-    private List<Device> devices = new ArrayList<>();
 
     public DeviceListAdapter(List<Device> initialDataset, DeviceClickedCallback deviceClickedCallback) {
-        updateDevicesList(initialDataset);
         this.deviceClickedCallback = deviceClickedCallback;
+        updateDataset(initialDataset);
     }
 
     public void updateDataset(List<Device> updatedDevices) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DeviceDiffCallback(updatedDevices, this.devices));
-        updateDevicesList(updatedDevices);
-        diffResult.dispatchUpdatesTo(this);
-    }
-
-    private void updateDevicesList(List<Device> updatedDevices) {
-        this.devices = Collections.unmodifiableList(updatedDevices);
+        listDiffer.submitList(updatedDevices);
     }
 
     @NonNull
@@ -59,7 +51,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        if (devices.isEmpty()) {
+        if (listDiffer.getCurrentList().isEmpty()) {
             return ListViewType.EMPTY.ordinal();
         } else {
             return ListViewType.DEVICE.ordinal();
@@ -75,18 +67,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public long getItemId(int position) {
-        if (devices.isEmpty()) {
+        if (listDiffer.getCurrentList().isEmpty()) {
             return RecyclerView.NO_ID;
         }
-        return devices.get(position).id;
+        return listDiffer.getCurrentList().get(position).id;
     }
 
     @Override
     public int getItemCount() {
-        if (devices.isEmpty()) {
+        if (listDiffer.getCurrentList().isEmpty()) {
             return 1; // "Empty" item
         }
-        return devices.size();
+        return listDiffer.getCurrentList().size();
     }
 
     @Override
@@ -94,7 +86,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (getItemViewType(position) == ListViewType.DEVICE.ordinal()) {
             DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
             deviceItemViewHolder.cancelStatusUpdates();
-            Device device = devices.get(position);
+            Device device = listDiffer.getCurrentList().get(position);
 
             deviceItemViewHolder.setDeviceName(device.name);
             deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
