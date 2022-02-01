@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    tools:context=".ui.MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

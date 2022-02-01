@@ -3,9 +3,9 @@ package de.florianisme.wakeonlan.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,39 +17,40 @@ import com.google.android.material.navigation.NavigationView;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
 
+        initializeNavController();
+        bindNavigationDrawer();
+    }
+
+    private void initializeNavController() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         binding.addDeviceFab.setOnClickListener(view -> navController.navigate(R.id.MainActivity_to_AddMachineActivity));
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    private void bindNavigationDrawer() {
+        DrawerLayout drawer = binding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, binding.toolbar, 0, 0);
-        //drawer.setDrawerListener(toggle);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return false;
-            }
-        });
+        binding.navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -57,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = binding.drawerLayout;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }
