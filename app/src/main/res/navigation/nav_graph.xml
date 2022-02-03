@@ -25,4 +25,10 @@
         android:name="de.florianisme.wakeonlan.ui.home.list.DeviceListFragment"
         android:label="@string/title_activity_main"
         tools:layout="@layout/fragment_list_devices" />
+
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="de.florianisme.wakeonlan.ui.home.backup.BackupFragment"
+        android:label="@string/title_fragment_backup"
+        tools:layout="@layout/fragment_backup" />
 </navigation>

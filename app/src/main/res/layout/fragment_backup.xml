@@ -10,7 +10,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         app:tint="?android:attr/textColorPrimary"
-        android:src="@drawable/ic_backup"
+        android:src="@drawable/ic_import_export"
         android:contentDescription="Import/Export Icon" />
 
     <LinearLayout

@@ -3,6 +3,7 @@ package de.florianisme.wakeonlan.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -61,7 +62,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_drawer_device_list:
+                Navigation.findNavController(this, R.id.listMachines);
+                break;
+            case R.id.menu_drawer_backup:
+                Navigation.findNavController(this, R.id.backupFragment);
+                break;
+        }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
