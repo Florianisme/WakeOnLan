@@ -10,7 +10,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         app:tint="?android:attr/textColorPrimary"
-        android:src="@drawable/ic_import_export"
+        android:src="@drawable/ic_backup"
         android:contentDescription="Import/Export Icon" />
 
     <LinearLayout
@@ -23,21 +23,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/import_export_description"
+            android:text="@string/backup_description"
             android:textAppearance="?attr/textAppearanceBody1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/import_export_note"
+            android:text="@string/backup_note"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/import_export_note_content"
+            android:text="@string/backup_note_content"
             android:textAppearance="?attr/textAppearanceBody1" />
 
         <LinearLayout
@@ -49,13 +49,13 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/import_export_button_export" />
+                android:text="@string/backup_button_export" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="@string/import_export_button_import" />
+                android:text="@string/backup_button_import" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
