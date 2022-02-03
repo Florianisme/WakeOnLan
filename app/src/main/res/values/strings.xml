@@ -50,4 +50,11 @@
 
     <!-- Misc -->
     <string name="wol_toast_sending_packet">Magic Packet sent to %1$s</string>
+
+    <!-- Import/Export Fragment -->
+    <string name="import_export_description">Export your currently configured devices to a CSV file or import an existing list</string>
+    <string name="import_export_note">Note:</string>
+    <string name="import_export_note_content">Importing a list of devices will override all currently configured devices</string>
+    <string name="import_export_button_export">Export</string>
+    <string name="import_export_button_import">Import</string>
 </resources>
