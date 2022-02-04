@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/listMachines">
+    app:startDestination="@id/deviceListFragment">
 
     <activity
         android:id="@+id/mainActivity"
@@ -11,7 +11,8 @@
         android:label="@string/title_activity_main"
         tools:layout="@layout/activity_main" />
 
-    <action android:id="@+id/MainActivity_to_AddMachineActivity"
+    <action
+        android:id="@+id/MainActivity_to_AddMachineActivity"
         app:destination="@id/addMachineActivity" />
 
     <activity
@@ -21,7 +22,7 @@
         tools:layout="@layout/activity_modify_device" />
 
     <fragment
-        android:id="@+id/listMachines"
+        android:id="@+id/deviceListFragment"
         android:name="de.florianisme.wakeonlan.ui.home.list.DeviceListFragment"
         android:label="@string/title_activity_main"
         tools:layout="@layout/fragment_list_devices" />

@@ -2,11 +2,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_drawer_device_list"
+            android:id="@+id/deviceListFragment"
             android:icon="@drawable/ic_device_list"
             android:title="@string/drawer_menu_item_device_list" />
         <item
-            android:id="@+id/menu_drawer_backup"
+            android:id="@+id/backupFragment"
             android:icon="@drawable/ic_import_export"
             android:title="@string/drawer_menu_item_backup" />
 
