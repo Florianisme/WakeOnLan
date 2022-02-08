@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 import de.florianisme.wakeonlan.databinding.FragmentBackupBinding;
 
 public class BackupFragment extends Fragment {
@@ -24,6 +26,11 @@ public class BackupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        binding.buttonExport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DataExporter().exportDevices(new ArrayList<>(), getContext());
+            }
+        });
     }
 }
