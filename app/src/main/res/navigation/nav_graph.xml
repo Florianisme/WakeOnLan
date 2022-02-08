@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/deviceListFragment"
         android:name="de.florianisme.wakeonlan.ui.home.list.DeviceListFragment"
-        android:label="@string/title_activity_main"
+        android:label="@string/title_fragment_device_list"
         tools:layout="@layout/fragment_list_devices" />
 
     <fragment

@@ -5,6 +5,7 @@
     <string name="title_activity_add_device">Add Device</string>
     <string name="title_activity_edit_device">Edit Device</string>
     <string name="title_fragment_backup">Import/Export Data</string>
+    <string name="title_fragment_device_list">Device List</string>
 
     <!-- Add Device Activity -->
     <string name="add_device_name">Name</string>
