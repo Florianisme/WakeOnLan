@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(getMenuIds()).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
-
-        binding.addDeviceFab.setOnClickListener(view -> navController.navigate(R.id.MainActivity_to_AddMachineActivity));
     }
 
     private Set<Integer> getMenuIds() {

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +34,7 @@ public class DeviceListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentListDevicesBinding.inflate(inflater, container, false);
+        binding.addDeviceFab.setOnClickListener(view -> Navigation.findNavController(container).navigate(R.id.MainActivity_to_AddMachineActivity));
         return binding.getRoot();
     }
 
@@ -70,7 +72,7 @@ public class DeviceListFragment extends Fragment {
     private DeviceClickedCallback buildDeviceClickedCallback() {
         return deviceName -> {
             String snackbarText = getContext().getString(R.string.wol_toast_sending_packet, deviceName);
-            View coordinatorView = getActivity().findViewById(R.id.main_coordinator_layout);
+            View coordinatorView = getActivity().findViewById(R.id.device_list_coordinator_layout);
 
             Snackbar.make(coordinatorView, snackbarText, Snackbar.LENGTH_SHORT).show();
         };
