@@ -16,6 +16,11 @@ import de.florianisme.wakeonlan.persistence.entities.Device;
 public class DataExporter implements OnActivityResultListener {
 
     public static final String FILE_MODE_WRITE = "w";
+    private final List<Device> devices;
+
+    public DataExporter(List<Device> devices) {
+        this.devices = devices;
+    }
 
     public void exportDevices(BackupFragment fragment) {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -32,7 +37,7 @@ public class DataExporter implements OnActivityResultListener {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context, List<Device> devices) throws Exception {
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context) throws Exception {
         if (requestCode == RequestCode.CREATE_EXPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
 
             if (resultData != null) {

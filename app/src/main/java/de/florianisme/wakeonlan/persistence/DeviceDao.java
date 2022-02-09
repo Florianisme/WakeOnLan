@@ -31,4 +31,7 @@ public interface DeviceDao {
 
     @Delete
     void delete(Device device);
+
+    @Query("DELETE FROM Devices")
+    void deleteAll();
 }
