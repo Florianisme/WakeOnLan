@@ -1,48 +1,55 @@
 package de.florianisme.wakeonlan.ui.home.backup;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.ParcelFileDescriptor;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import androidx.annotation.NonNull;
+
+import java.io.FileOutputStream;
 import java.util.List;
 
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
-public class DataExporter {
+public class DataExporter implements OnActivityResultListener {
 
-    public void exportDevices(List<Device> deviceList, Context context) {
-        final ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "export.csv");
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
-        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS);
+    public static final String FILE_MODE_WRITE = "w";
 
-        final ContentResolver resolver = context.getContentResolver();
-        Uri uri = null;
+    public void exportDevices(BackupFragment fragment) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/json");
+        intent.putExtra(Intent.EXTRA_TITLE, getFileName());
 
-        try {
-            final Uri contentUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL);
-            uri = resolver.insert(contentUri, values);
+        fragment.startActivityForResult(intent, RequestCode.CREATE_EXPORT_FILE.getRequestCode());
+    }
 
-            if (uri == null)
-                throw new IOException("Failed to create new MediaStore record.");
+    @NonNull
+    private String getFileName() {
+        return "WakeOnLan_Export_" + System.currentTimeMillis() + ".json";
+    }
 
-            try (final OutputStream stream = resolver.openOutputStream(uri)) {
-                if (stream == null)
-                    throw new IOException("Failed to open output stream.");
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context, List<Device> devices) throws Exception {
+        if (requestCode == RequestCode.CREATE_EXPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
 
-        } catch (IOException e) {
-
-            if (uri != null) {
-                // Don't leave an orphan entry in the MediaStore
-                resolver.delete(uri, null, null);
+            if (resultData != null) {
+                byte[] content = JsonConverter.toJson(devices);
+                writeDevicesToFile(resultData.getData(), content, context);
+            } else {
+                throw new IllegalStateException("URI Request was not successful");
             }
         }
     }
 
+    private void writeDevicesToFile(Uri uri, byte[] content, Context context) throws Exception {
+        ParcelFileDescriptor fileDescriptor = context.getContentResolver().openFileDescriptor(uri, FILE_MODE_WRITE);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileDescriptor.getFileDescriptor());
+        fileOutputStream.write(content);
+
+        fileOutputStream.close();
+        fileDescriptor.close();
+    }
 }

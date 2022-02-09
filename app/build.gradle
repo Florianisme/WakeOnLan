@@ -29,4 +29,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation(name: 'android-ping', ext: 'aar')
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 }
