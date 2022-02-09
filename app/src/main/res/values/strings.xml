@@ -54,7 +54,7 @@
     <string name="wol_toast_sending_packet">Magic Packet sent to %1$s</string>
 
     <!-- Backup Fragment -->
-    <string name="backup_description">Export your currently configured devices to a CSV file or import an existing list</string>
+    <string name="backup_description">Export your currently configured devices to a JSON file or import an existing list</string>
     <string name="backup_note">Note:</string>
     <string name="backup_note_content">Importing a list of devices will override all currently configured devices</string>
     <string name="backup_button_export">Export</string>
