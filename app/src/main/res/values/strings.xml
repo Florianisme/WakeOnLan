@@ -59,6 +59,10 @@
     <string name="backup_note_content">Importing a list of devices will override all currently configured devices</string>
     <string name="backup_button_export">Export</string>
     <string name="backup_button_import">Import</string>
+    <string name="backup_message_import_success">Successfully imported %1$d devices</string>
+    <string name="backup_message_import_error">Error while importing devices</string>
+    <string name="backup_message_export_success">Successfully exported %1$d devices</string>
+    <string name="backup_message_export_error">Error while exporting devices</string>
 
     <!-- Main Activity Drawer -->
     <string name="drawer_menu_item_device_list">Device List</string>

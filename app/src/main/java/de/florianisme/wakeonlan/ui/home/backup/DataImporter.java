@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.google.common.io.ByteStreams;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class DataImporter implements OnActivityResultListener {
@@ -30,15 +32,20 @@ public class DataImporter implements OnActivityResultListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context) throws Exception {
-        if (requestCode == RequestCode.READ_IMPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
+        try {
+            if (requestCode == RequestCode.READ_IMPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
 
-            if (resultData != null) {
-                byte[] bytes = readContentFromFile(resultData.getData(), context);
-                Device[] devices = JsonConverter.toModel(bytes);
-                onDeviceListAvailable.onDeviceListAvailable(devices);
-            } else {
-                throw new IllegalStateException("URI Request was not successful");
+                if (resultData != null) {
+                    byte[] bytes = readContentFromFile(resultData.getData(), context);
+                    Device[] devices = JsonConverter.toModel(bytes);
+                    onDeviceListAvailable.onDeviceListAvailable(devices);
+                } else {
+                    throw new IllegalStateException("URI Request was not successful");
+                }
             }
+        } catch (Exception e) {
+            Toast.makeText(context, context.getString(R.string.backup_message_import_error), Toast.LENGTH_SHORT).show();
+            throw e;
         }
     }
 
