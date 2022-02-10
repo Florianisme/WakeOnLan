@@ -33,4 +33,15 @@
     <string name="modify_device_unsaved_changes_message">Möchten Sie die Änderungen speichern?</string>
     <string name="modify_device_unsaved_changes_negative">Verwerfen</string>
     <string name="modify_device_unsaved_changes_positive">Speichern</string>
+    <string name="title_fragment_backup">Daten Exportieren/Importieren</string>
+    <string name="title_fragment_device_list">Geräteübersicht</string>
+    <string name="backup_description">Exportieren Sie ihre konfigurierten Geräte in eine JSON Datei oder importieren Sie einen bestehenden Datensatz</string>
+    <string name="backup_note">Hinweis:</string>
+    <string name="backup_note_content">Beim Importieren werden alle konfigurierten Geräte überschrieben</string>
+    <string name="backup_button_export">Exportieren</string>
+    <string name="backup_button_import">Importieren</string>
+    <string name="backup_message_import_success">%1$d Geräte erfolgreich importiert</string>
+    <string name="backup_message_import_error">Fehler beim Importieren der Geräte</string>
+    <string name="backup_message_export_success">%1$d Geräte erfolgreich exportiert</string>
+    <string name="backup_message_export_error">Fehler beim Exportieren der Geräte</string>
 </resources>

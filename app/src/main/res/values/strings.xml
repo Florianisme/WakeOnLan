@@ -4,8 +4,8 @@
     <string name="title_activity_main">Wake on Lan</string>
     <string name="title_activity_add_device">Add Device</string>
     <string name="title_activity_edit_device">Edit Device</string>
-    <string name="title_fragment_backup">Import/Export Data</string>
-    <string name="title_fragment_device_list">Device List</string>
+    <string name="title_fragment_device_list">Devices</string>
+    <string name="title_fragment_backup">Export/Import Data</string>
 
     <!-- Add Device Activity -->
     <string name="add_device_name">Name</string>
@@ -54,7 +54,7 @@
     <string name="wol_toast_sending_packet">Magic Packet sent to %1$s</string>
 
     <!-- Backup Fragment -->
-    <string name="backup_description">Export your currently configured devices to a JSON file or import an existing list</string>
+    <string name="backup_description">Export your currently configured devices to a JSON file or import an existing dataset</string>
     <string name="backup_note">Note:</string>
     <string name="backup_note_content">Importing a list of devices will override all currently configured devices</string>
     <string name="backup_button_export">Export</string>
@@ -65,6 +65,6 @@
     <string name="backup_message_export_error">Error while exporting devices</string>
 
     <!-- Main Activity Drawer -->
-    <string name="drawer_menu_item_device_list">Device List</string>
-    <string name="drawer_menu_item_backup">Import/Export</string>
+    <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>
+    <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
 </resources>
