@@ -18,15 +18,12 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
-import de.florianisme.wakeonlan.wear.WearClient;
 
 
 public class DeviceListFragment extends Fragment {
 
     private FragmentListDevicesBinding binding;
     private DeviceListAdapter deviceListAdapter;
-
-    private WearClient wearClient;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -41,7 +38,6 @@ public class DeviceListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        wearClient = new WearClient().init(getContext());
         instantiateRecyclerView();
         registerLiveDataObserver();
     }
@@ -49,11 +45,7 @@ public class DeviceListFragment extends Fragment {
     private void registerLiveDataObserver() {
         DatabaseInstanceManager.getInstance(getContext()).deviceDao()
                 .getAllAsObservable()
-                .observe(getViewLifecycleOwner(), devices -> {
-                    wearClient.onDeviceListUpdated(devices);
-
-                    deviceListAdapter.updateDataset(devices);
-                });
+                .observe(getViewLifecycleOwner(), devices -> deviceListAdapter.updateDataset(devices));
     }
 
     private void instantiateRecyclerView() {
@@ -79,7 +71,6 @@ public class DeviceListFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        wearClient.destroy();
         binding = null;
     }
 

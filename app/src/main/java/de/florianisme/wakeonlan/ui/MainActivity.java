@@ -16,11 +16,15 @@ import java.util.Set;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
+import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.wear.WearClient;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private WearClient wearClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         initializeNavController();
+        initializeWearClient();
+    }
+
+    private void initializeWearClient() {
+        wearClient = new WearClient().init(this);
+        DatabaseInstanceManager.getInstance(this).deviceDao()
+                .getAllAsObservable()
+                .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
     }
 
     private void initializeNavController() {
@@ -61,4 +73,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wearClient.destroy();
+    }
 }
