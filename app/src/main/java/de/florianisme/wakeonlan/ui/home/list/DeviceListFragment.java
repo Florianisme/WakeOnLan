@@ -1,6 +1,5 @@
 package de.florianisme.wakeonlan.ui.home.list;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +46,6 @@ public class DeviceListFragment extends Fragment {
         registerLiveDataObserver();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private void registerLiveDataObserver() {
         DatabaseInstanceManager.getInstance(getContext()).deviceDao()
                 .getAllAsObservable()
