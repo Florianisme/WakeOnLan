@@ -9,8 +9,8 @@
     <color name="secondaryVariantColor">#aeaeae</color>
     <color name="secondaryVariantDarkColor">#424242</color>
 
-    <color name="primaryTextColor">#0E0E0E</color>
-    <color name="secondaryTextColor">#0E0E0E</color>
+    <color name="primaryTextColor">#DE000000</color>
+    <color name="primaryTextColorLight">#DEFFFFFF</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
