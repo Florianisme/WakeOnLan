@@ -7,8 +7,10 @@ import android.net.Uri;
 
 import com.google.common.io.ByteStreams;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class DataImporter implements OnActivityResultListener {
 
@@ -21,6 +23,7 @@ public class DataImporter implements OnActivityResultListener {
     public void importDevices(BackupFragment fragment) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
 
         fragment.startActivityForResult(intent, RequestCode.READ_IMPORT_FILE.getRequestCode());
     }
@@ -31,7 +34,8 @@ public class DataImporter implements OnActivityResultListener {
 
             if (resultData != null) {
                 byte[] bytes = readContentFromFile(resultData.getData(), context);
-                onDeviceListAvailable.onDeviceListAvailable(JsonConverter.toModel(bytes));
+                Device[] devices = JsonConverter.toModel(bytes);
+                onDeviceListAvailable.onDeviceListAvailable(devices);
             } else {
                 throw new IllegalStateException("URI Request was not successful");
             }
@@ -39,7 +43,7 @@ public class DataImporter implements OnActivityResultListener {
     }
 
     private byte[] readContentFromFile(Uri uri, Context context) throws IOException {
-        ByteArrayInputStream inputStream = (ByteArrayInputStream) context.getContentResolver().openInputStream(uri);
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
         byte[] content = ByteStreams.toByteArray(inputStream);
         inputStream.close();
 

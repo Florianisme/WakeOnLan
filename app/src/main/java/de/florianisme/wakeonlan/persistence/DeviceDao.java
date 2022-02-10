@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -34,4 +35,10 @@ public interface DeviceDao {
 
     @Query("DELETE FROM Devices")
     void deleteAll();
+
+    @Transaction
+    default void replaceAllDevices(Device... devices) {
+        deleteAll();
+        insertAll(devices);
+    }
 }

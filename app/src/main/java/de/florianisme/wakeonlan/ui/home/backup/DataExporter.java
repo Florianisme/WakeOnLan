@@ -11,21 +11,17 @@ import androidx.annotation.NonNull;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class DataExporter implements OnActivityResultListener {
 
     public static final String FILE_MODE_WRITE = "w";
-    private final List<Device> devices;
-
-    public DataExporter(List<Device> devices) {
-        this.devices = devices;
-    }
 
     public void exportDevices(BackupFragment fragment) {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/json");
+        intent.setType("application/json");
         intent.putExtra(Intent.EXTRA_TITLE, getFileName());
 
         fragment.startActivityForResult(intent, RequestCode.CREATE_EXPORT_FILE.getRequestCode());
@@ -41,6 +37,8 @@ public class DataExporter implements OnActivityResultListener {
         if (requestCode == RequestCode.CREATE_EXPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
 
             if (resultData != null) {
+
+                List<Device> devices = DatabaseInstanceManager.getInstance(context).deviceDao().getAll();
                 byte[] content = JsonConverter.toJson(devices);
                 writeDevicesToFile(resultData.getData(), content, context);
             } else {

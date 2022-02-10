@@ -14,7 +14,7 @@ public class JsonConverter {
         return new ObjectMapper().writeValueAsBytes(devices);
     }
 
-    public static List<Device> toModel(byte[] content) throws IOException {
-        return new ObjectMapper().readValue(content, List.class);
+    public static Device[] toModel(byte[] content) throws IOException {
+        return new ObjectMapper().readValue(content, Device[].class);
     }
 }
