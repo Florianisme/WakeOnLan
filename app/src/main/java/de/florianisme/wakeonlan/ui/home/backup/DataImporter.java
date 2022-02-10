@@ -1,52 +1,62 @@
 package de.florianisme.wakeonlan.ui.home.backup;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.fragment.app.Fragment;
 
 import com.google.common.io.ByteStreams;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.persistence.DeviceDao;
 import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.ui.home.backup.contracts.ChooseImportFileDestinationContract;
 
-public class DataImporter implements OnActivityResultListener {
+public class DataImporter implements ActivityResultCallback<Uri> {
 
-    private final OnDeviceListAvailable onDeviceListAvailable;
+    private final WeakReference<Context> contextWeakReference;
+    private final ActivityResultLauncher<Object> activityResultLauncher;
 
-    public DataImporter(OnDeviceListAvailable onDeviceListAvailable) {
-        this.onDeviceListAvailable = onDeviceListAvailable;
+    public DataImporter(Fragment fragment) {
+        this.contextWeakReference = new WeakReference<>(fragment.getContext());
+        activityResultLauncher = fragment.registerForActivityResult(new ChooseImportFileDestinationContract(), this);
     }
 
-    public void importDevices(BackupFragment fragment) {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/json");
-
-        fragment.startActivityForResult(intent, RequestCode.READ_IMPORT_FILE.getRequestCode());
+    public void importDevices() {
+        activityResultLauncher.launch(null);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context) throws Exception {
-        try {
-            if (requestCode == RequestCode.READ_IMPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
+    public void onActivityResult(Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        Context context = contextWeakReference.get();
 
-                if (resultData != null) {
-                    byte[] bytes = readContentFromFile(resultData.getData(), context);
-                    Device[] devices = JsonConverter.toModel(bytes);
-                    onDeviceListAvailable.onDeviceListAvailable(devices);
-                } else {
-                    throw new IllegalStateException("URI Request was not successful");
-                }
-            }
+        try {
+            byte[] bytes = readContentFromFile(uri, context);
+            Device[] devices = JsonConverter.toModel(bytes);
+
+            replaceDevicesInDatabase(devices, context);
+            Toast.makeText(context, context.getString(R.string.backup_message_import_success, devices.length), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(context, context.getString(R.string.backup_message_import_error), Toast.LENGTH_SHORT).show();
-            throw e;
+            Log.e(getClass().getSimpleName(), "Unable to import devices", e);
         }
+    }
+
+    private void replaceDevicesInDatabase(Device[] devices, Context context) {
+        DeviceDao deviceDao = DatabaseInstanceManager.getInstance(context).deviceDao();
+        deviceDao.replaceAllDevices(devices);
     }
 
     private byte[] readContentFromFile(Uri uri, Context context) throws IOException {

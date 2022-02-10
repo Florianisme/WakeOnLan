@@ -1,56 +1,56 @@
 package de.florianisme.wakeonlan.ui.home.backup;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.fragment.app.Fragment;
 
 import java.io.FileOutputStream;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.ui.home.backup.contracts.ChooseSaveFileDestinationContract;
 
-public class DataExporter implements OnActivityResultListener {
+public class DataExporter implements ActivityResultCallback<Uri> {
 
     public static final String FILE_MODE_WRITE = "w";
 
-    public void exportDevices(BackupFragment fragment) {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/json");
-        intent.putExtra(Intent.EXTRA_TITLE, getFileName());
+    private final WeakReference<Context> contextWeakReference;
+    private final ActivityResultLauncher<Object> activityResultLauncher;
 
-        fragment.startActivityForResult(intent, RequestCode.CREATE_EXPORT_FILE.getRequestCode());
+    public DataExporter(Fragment fragment) {
+        this.contextWeakReference = new WeakReference<>(fragment.getContext());
+        activityResultLauncher = fragment.registerForActivityResult(new ChooseSaveFileDestinationContract(), this);
     }
 
-    @NonNull
-    private String getFileName() {
-        return "WakeOnLan_Export_" + System.currentTimeMillis() + ".json";
+    public void exportDevices() {
+        activityResultLauncher.launch(null);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData, Context context) throws Exception {
-        try {
-            if (requestCode == RequestCode.CREATE_EXPORT_FILE.getRequestCode() && resultCode == Activity.RESULT_OK) {
-                if (resultData != null) {
-                    List<Device> devices = DatabaseInstanceManager.getInstance(context).deviceDao().getAll();
-                    byte[] content = JsonConverter.toJson(devices);
-                    writeDevicesToFile(resultData.getData(), content, context);
+    public void onActivityResult(Uri uri) {
+        if (uri == null) {
+            return;
+        }
 
-                    Toast.makeText(context, context.getString(R.string.backup_message_export_success, devices.size()), Toast.LENGTH_SHORT).show();
-                } else {
-                    throw new IllegalStateException("URI Request was not successful");
-                }
-            }
+        Context context = contextWeakReference.get();
+        try {
+            List<Device> devices = DatabaseInstanceManager.getInstance(context).deviceDao().getAll();
+            byte[] content = JsonConverter.toJson(devices);
+            writeDevicesToFile(uri, content, context);
+
+            Toast.makeText(context, context.getString(R.string.backup_message_export_success, devices.size()), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(context, context.getString(R.string.backup_message_export_error), Toast.LENGTH_SHORT).show();
-            throw e;
+            Log.e(getClass().getSimpleName(), "Unable to export devices", e);
         }
     }
 
@@ -62,4 +62,5 @@ public class DataExporter implements OnActivityResultListener {
         fileOutputStream.close();
         fileDescriptor.close();
     }
+
 }
