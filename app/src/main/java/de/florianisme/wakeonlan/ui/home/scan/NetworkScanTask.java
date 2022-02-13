@@ -56,9 +56,11 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
             }
         } catch (Exception e) {
             scanCallback.onError(R.string.network_scan_error_general);
+            scanCallback.onTaskEnd();
             Log.e(getClass().getSimpleName(), "Error while scanning network", e);
         }
 
+        scanCallback.onTaskEnd();
         return null;
     }
 }

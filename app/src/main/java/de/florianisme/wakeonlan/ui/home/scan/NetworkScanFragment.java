@@ -20,6 +20,7 @@ public class NetworkScanFragment extends Fragment {
 
     private FragmentNetworkScanBinding binding;
     private NetworkScanAdapter networkScanAdapter;
+    private NetworkScanTask networkScanTask;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -34,13 +35,23 @@ public class NetworkScanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setupRecyclerView();
+        setupSwipeToRefresh();
+
+        networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
         startNetworkScan();
     }
 
     private void startNetworkScan() {
+        binding.swipeRefresh.setRefreshing(true);
         networkScanAdapter.clearDataset();
-        NetworkScanTask networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
+
+        networkScanTask.cancel(true);
+        networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
         networkScanTask.execute();
+    }
+
+    private void setupSwipeToRefresh() {
+        binding.swipeRefresh.setOnRefreshListener(this::startNetworkScan);
     }
 
     private ScanCallback getScanCallback() {
@@ -56,6 +67,11 @@ public class NetworkScanFragment extends Fragment {
                 networkScanDevice.setIpAddress(ip);
 
                 networkScanAdapter.addItem(networkScanDevice);
+            }
+
+            @Override
+            public void onTaskEnd() {
+                binding.swipeRefresh.setRefreshing(false);
             }
         };
     }

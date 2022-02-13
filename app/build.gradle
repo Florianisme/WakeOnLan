@@ -19,6 +19,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.4.1'
     implementation 'androidx.navigation:navigation-ui:2.4.1'
     implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     def room_version = "2.4.1"
     implementation "androidx.room:room-runtime:$room_version"

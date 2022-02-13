@@ -6,4 +6,6 @@ public interface ScanCallback {
 
     void onDeviceFound(String ip);
 
+    void onTaskEnd();
+
 }
