@@ -69,6 +69,8 @@
     <string name="network_scan_button_add">Add Device</string>
     <string name="network_scan_no_devices_found">No devices found</string>
     <string name="network_scan_empty_title">Are you connected to a WiFI Network?</string>
+    <string name="network_scan_error_ip">Can not obtain IP Address</string>
+    <string name="network_scan_error_general">Error while scanning network</string>
 
     <!-- Main Activity Drawer -->
     <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>

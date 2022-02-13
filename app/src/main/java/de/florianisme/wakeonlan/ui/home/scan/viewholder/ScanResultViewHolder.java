@@ -13,7 +13,6 @@ import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
 public class ScanResultViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView deviceIp;
-    private final TextView deviceMac;
 
     private final Button addDevice;
 
@@ -21,16 +20,11 @@ public class ScanResultViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         deviceIp = itemView.findViewById(R.id.scan_device_ip);
-        deviceMac = itemView.findViewById(R.id.scan_device_mac);
         addDevice = itemView.findViewById(R.id.scan_device_add);
     }
 
     public void setIpAddress(String ipAddress) {
         deviceIp.setText(ipAddress);
-    }
-
-    public void setMacAddress(String macAddress) {
-        deviceMac.setText(macAddress);
     }
 
     public void setOnAddClickListener(NetworkScanDevice scanDevice) {

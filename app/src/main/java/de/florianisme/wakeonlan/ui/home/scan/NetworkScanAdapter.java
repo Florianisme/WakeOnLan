@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
@@ -20,12 +20,14 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private final AsyncListDiffer<NetworkScanDevice> listDiffer = new AsyncListDiffer<>(this, new NetworkScanDiffCallback());
 
-    public NetworkScanAdapter(List<NetworkScanDevice> initialDataset) {
-        updateDataset(initialDataset);
+    public void clearDataset() {
+        listDiffer.submitList(new ArrayList<>());
     }
 
-    public void updateDataset(List<NetworkScanDevice> updatedDevices) {
-        listDiffer.submitList(updatedDevices);
+    public void addItem(NetworkScanDevice networkScanDevice) {
+        ArrayList<NetworkScanDevice> updatedList = new ArrayList<>(listDiffer.getCurrentList());
+        updatedList.add(networkScanDevice);
+        listDiffer.submitList(updatedList);
     }
 
     @NonNull
@@ -64,7 +66,6 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             NetworkScanDevice networkScanDevice = listDiffer.getCurrentList().get(position);
 
             scanResultViewHolder.setIpAddress(networkScanDevice.getIpAddress());
-            scanResultViewHolder.setMacAddress(networkScanDevice.getMacAddress());
         }
     }
 
@@ -73,7 +74,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (listDiffer.getCurrentList().isEmpty()) {
             return RecyclerView.NO_ID;
         }
-        return listDiffer.getCurrentList().get(position).getMacAddress().hashCode();
+        return listDiffer.getCurrentList().get(position).getIpAddress().hashCode();
     }
 
     @Override

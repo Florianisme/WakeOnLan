@@ -11,12 +11,11 @@ public class NetworkScanDiffCallback extends DiffUtil.ItemCallback<NetworkScanDe
 
     @Override
     public boolean areItemsTheSame(@NonNull NetworkScanDevice oldItem, @NonNull NetworkScanDevice newItem) {
-        return Strings.nullToEmpty(oldItem.getMacAddress()).equals(newItem.getMacAddress());
+        return areContentsTheSame(oldItem, newItem);
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull NetworkScanDevice oldItem, @NonNull NetworkScanDevice newItem) {
-        return Strings.nullToEmpty(oldItem.getMacAddress()).equals(newItem.getMacAddress()) &&
-                Strings.nullToEmpty(oldItem.getIpAddress()).equals(newItem.getIpAddress());
+        return Strings.nullToEmpty(oldItem.getIpAddress()).equals(newItem.getIpAddress());
     }
 }
