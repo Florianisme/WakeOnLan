@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.ui.home.scan;
+package de.florianisme.wakeonlan.ui.home.scan.callbacks;
 
 public interface ScanCallback {
 

@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.ui.home.modify;
+package de.florianisme.wakeonlan.ui.home.details;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +21,10 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.autocomplete.MacAddressAutocomplete;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.IpAddressValidator;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.MacValidator;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.NameValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.autocomplete.MacAddressAutocomplete;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.IpAddressValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.MacValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.NameValidator;
 import de.florianisme.wakeonlan.util.BroadcastHelper;
 
 public abstract class ModifyDeviceActivity extends AppCompatActivity {

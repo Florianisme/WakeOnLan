@@ -23,12 +23,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.home.modify.AddDeviceActivity"
+            android:name=".ui.home.details.AddDeviceActivity"
             android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
         <activity
-            android:name=".ui.home.modify.EditDeviceActivity"
+            android:name=".ui.home.details.EditDeviceActivity"
             android:label="@string/title_activity_edit_device"
+            android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
+        <activity
+            android:name=".ui.home.details.AddNetworkScanDeviceActivity"
+            android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
 
         <service

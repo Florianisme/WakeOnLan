@@ -18,8 +18,8 @@ import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.status.PingDeviceStatusTester;
+import de.florianisme.wakeonlan.ui.home.details.EditDeviceActivity;
 import de.florianisme.wakeonlan.ui.home.list.DeviceClickedCallback;
-import de.florianisme.wakeonlan.ui.home.modify.EditDeviceActivity;
 import de.florianisme.wakeonlan.wol.WolSender;
 
 public class DeviceItemViewHolder extends RecyclerView.ViewHolder {

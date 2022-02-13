@@ -66,6 +66,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             NetworkScanDevice networkScanDevice = listDiffer.getCurrentList().get(position);
 
             scanResultViewHolder.setIpAddress(networkScanDevice.getIpAddress());
+            scanResultViewHolder.setOnAddClickListener(networkScanDevice);
         }
     }
 

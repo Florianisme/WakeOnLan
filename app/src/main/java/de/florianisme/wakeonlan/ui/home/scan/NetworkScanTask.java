@@ -11,13 +11,14 @@ import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.ui.home.scan.callbacks.ScanCallback;
 
-public class NetworkSniffTask extends AsyncTask<Void, Void, Void> {
+public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
 
     private final WeakReference<Context> contextWeakReference;
     private final ScanCallback scanCallback;
 
-    public NetworkSniffTask(Context context, ScanCallback scanCallback) {
+    public NetworkScanTask(Context context, ScanCallback scanCallback) {
         super();
         contextWeakReference = new WeakReference<>(context);
         this.scanCallback = scanCallback;
@@ -47,7 +48,6 @@ public class NetworkSniffTask extends AsyncTask<Void, Void, Void> {
 
                     InetAddress address = InetAddress.getByName(testIp);
                     boolean reachable = address.isReachable(20);
-                    String hostName = address.getCanonicalHostName();
 
                     if (reachable) {
                         scanCallback.onDeviceFound(address.getHostAddress());

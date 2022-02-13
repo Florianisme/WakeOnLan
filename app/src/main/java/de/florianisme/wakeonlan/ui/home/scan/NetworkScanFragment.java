@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.databinding.FragmentNetworkScanBinding;
 import de.florianisme.wakeonlan.ui.home.list.LinearLayoutManagerWrapper;
+import de.florianisme.wakeonlan.ui.home.scan.callbacks.ScanCallback;
 import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
 
 public class NetworkScanFragment extends Fragment {
@@ -38,8 +39,8 @@ public class NetworkScanFragment extends Fragment {
 
     private void startNetworkScan() {
         networkScanAdapter.clearDataset();
-        NetworkSniffTask networkSniffTask = new NetworkSniffTask(getContext(), getScanCallback());
-        networkSniffTask.execute();
+        NetworkScanTask networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
+        networkScanTask.execute();
     }
 
     private ScanCallback getScanCallback() {
@@ -65,5 +66,11 @@ public class NetworkScanFragment extends Fragment {
         networkScanAdapter = new NetworkScanAdapter();
         recyclerView.setAdapter(networkScanAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(getContext()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startNetworkScan();
     }
 }
