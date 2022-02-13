@@ -28,6 +28,12 @@
         tools:layout="@layout/fragment_list_devices" />
 
     <fragment
+        android:id="@+id/networkScanFragment"
+        android:name="de.florianisme.wakeonlan.ui.home.scan.NetworkScanFragment"
+        android:label="@string/title_fragment_network_scan"
+        tools:layout="@layout/fragment_network_scan" />
+
+    <fragment
         android:id="@+id/backupFragment"
         android:name="de.florianisme.wakeonlan.ui.home.backup.BackupFragment"
         android:label="@string/title_fragment_backup"

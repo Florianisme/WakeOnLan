@@ -5,6 +5,7 @@
     <string name="title_activity_add_device">Add Device</string>
     <string name="title_activity_edit_device">Edit Device</string>
     <string name="title_fragment_device_list">Devices</string>
+    <string name="title_fragment_network_scan">Network Scan</string>
     <string name="title_fragment_backup">Export/Import Data</string>
 
     <!-- Add Device Activity -->
@@ -64,7 +65,13 @@
     <string name="backup_message_export_success">Successfully exported %1$d devices</string>
     <string name="backup_message_export_error">Error while exporting devices</string>
 
+    <!-- Network Scan Fragment -->
+    <string name="network_scan_button_add">Add Device</string>
+    <string name="network_scan_no_devices_found">No devices found</string>
+    <string name="network_scan_empty_title">Are you connected to a WiFI Network?</string>
+
     <!-- Main Activity Drawer -->
     <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>
+    <string name="drawer_menu_item_scan" translatable="false">@string/title_fragment_network_scan</string>
     <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
 </resources>
