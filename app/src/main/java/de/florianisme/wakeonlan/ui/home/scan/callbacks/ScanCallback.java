@@ -4,7 +4,7 @@ public interface ScanCallback {
 
     void onError(int errorStringReference);
 
-    void onDeviceFound(String ip);
+    void onDeviceFound(String ip, String hostName);
 
     void onTaskEnd();
 

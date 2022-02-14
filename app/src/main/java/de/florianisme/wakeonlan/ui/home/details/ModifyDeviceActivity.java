@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceNameInput;
     protected TextInputEditText deviceStatusIpInput;
     protected TextInputEditText deviceBroadcastInput;
+    protected ImageButton broadcastAutofill;
     protected MaterialAutoCompleteTextView devicePorts;
 
     @Override
@@ -50,6 +52,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput = binding.device.deviceName;
         deviceStatusIpInput = binding.device.deviceStatusIp;
         deviceBroadcastInput = binding.device.deviceBroadcast;
+        broadcastAutofill = binding.device.broadcastAutofill;
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,12 +65,12 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     private void addAutofillClickHandler() {
-        binding.device.broadcastAutofill.setOnClickListener(new View.OnClickListener() {
+        broadcastAutofill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> binding.device.deviceBroadcast.setText(inetAddress.getHostAddress()));
+                    broadcastAddress.ifPresent(inetAddress -> deviceBroadcastInput.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
                 }

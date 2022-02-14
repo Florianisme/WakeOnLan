@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.florianisme.wakeonlan.databinding.FragmentNetworkScanBinding;
 import de.florianisme.wakeonlan.ui.home.list.LinearLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.home.scan.callbacks.ScanCallback;
@@ -55,6 +58,8 @@ public class NetworkScanFragment extends Fragment {
     }
 
     private ScanCallback getScanCallback() {
+        List<NetworkScanDevice> resultList = new ArrayList<>(15);
+
         return new ScanCallback() {
             @Override
             public void onError(int errorStringReference) {
@@ -62,11 +67,15 @@ public class NetworkScanFragment extends Fragment {
             }
 
             @Override
-            public void onDeviceFound(String ip) {
+            public void onDeviceFound(String ip, String hostName) {
                 NetworkScanDevice networkScanDevice = new NetworkScanDevice();
                 networkScanDevice.setIpAddress(ip);
+                if (!ip.equals(hostName)) {
+                    networkScanDevice.setName(hostName);
+                }
 
-                networkScanAdapter.addItem(networkScanDevice);
+                resultList.add(networkScanDevice);
+                networkScanAdapter.updateList(resultList);
             }
 
             @Override

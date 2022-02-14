@@ -8,7 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.base.Strings;
+
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
@@ -24,10 +29,22 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         listDiffer.submitList(new ArrayList<>());
     }
 
-    public void addItem(NetworkScanDevice networkScanDevice) {
-        ArrayList<NetworkScanDevice> updatedList = new ArrayList<>(listDiffer.getCurrentList());
-        updatedList.add(networkScanDevice);
-        listDiffer.submitList(updatedList);
+    public void updateList(List<NetworkScanDevice> updatedList) {
+        List<NetworkScanDevice> sortedList = updatedList.stream()
+                .distinct()
+                .sorted(getScanDeviceComparator())
+                .collect(Collectors.toList());
+
+        listDiffer.submitList(sortedList);
+    }
+
+    private Comparator<NetworkScanDevice> getScanDeviceComparator() {
+        Comparator<NetworkScanDevice> networkScanDeviceComparator =
+                Comparator.comparing(device ->
+                        Strings.nullToEmpty(device.getIpAddress())
+                                .substring(0, device.getIpAddress()
+                                        .lastIndexOf(".") + 1));
+        return networkScanDeviceComparator.reversed();
     }
 
     @NonNull
@@ -65,6 +82,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             NetworkScanDevice networkScanDevice = listDiffer.getCurrentList().get(position);
 
+            scanResultViewHolder.setNameIfPresent(networkScanDevice.getName());
             scanResultViewHolder.setIpAddress(networkScanDevice.getIpAddress());
             scanResultViewHolder.setOnAddClickListener(networkScanDevice);
         }
@@ -75,7 +93,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (listDiffer.getCurrentList().isEmpty()) {
             return RecyclerView.NO_ID;
         }
-        return listDiffer.getCurrentList().get(position).getIpAddress().hashCode();
+        return listDiffer.getCurrentList().get(position).hashCode();
     }
 
     @Override

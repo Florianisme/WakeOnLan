@@ -14,11 +14,21 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/scan_device_ip"
+            android:id="@+id/scan_device_name"
             style="@style/FontMonospaced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"
+            tools:text="Testdevice 1" />
+
+        <TextView
+            android:id="@+id/scan_device_ip"
+            style="@style/FontMonospaced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
             tools:text="127.0.0.1" />
 
     </LinearLayout>

@@ -34,7 +34,7 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
 
                 WifiInfo connectionInfo = wm.getConnectionInfo();
                 int ipAddress = connectionInfo.getIpAddress();
-                String ipString = Formatter.formatIpAddress(ipAddress);//InetAddress.getByName(String.valueOf(ipAddress)).getHostAddress();
+                String ipString = Formatter.formatIpAddress(ipAddress);
 
                 if (ipString == null) {
                     scanCallback.onError(R.string.network_scan_error_ip);
@@ -47,10 +47,14 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
                     String testIp = prefix + i;
 
                     InetAddress address = InetAddress.getByName(testIp);
-                    boolean reachable = address.isReachable(20);
+                    boolean reachable = address.isReachable(50);
 
                     if (reachable) {
-                        scanCallback.onDeviceFound(address.getHostAddress());
+                        scanCallback.onDeviceFound(address.getHostAddress(), address.getHostName());
+                    }
+
+                    if (isCancelled()) {
+                        return null;
                     }
                 }
             }

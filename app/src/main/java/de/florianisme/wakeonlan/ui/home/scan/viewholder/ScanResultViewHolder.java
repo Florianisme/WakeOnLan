@@ -10,12 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Optional;
+
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.ui.home.details.AddNetworkScanDeviceActivity;
 import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
 
 public class ScanResultViewHolder extends RecyclerView.ViewHolder {
 
+    private final TextView deviceName;
     private final TextView deviceIp;
 
     private final Button addDevice;
@@ -23,12 +26,22 @@ public class ScanResultViewHolder extends RecyclerView.ViewHolder {
     public ScanResultViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        deviceName = itemView.findViewById(R.id.scan_device_name);
         deviceIp = itemView.findViewById(R.id.scan_device_ip);
         addDevice = itemView.findViewById(R.id.scan_device_add);
     }
 
     public void setIpAddress(String ipAddress) {
         deviceIp.setText(ipAddress);
+    }
+
+    public void setNameIfPresent(Optional<String> name) {
+        if (name.isPresent()) {
+            deviceName.setVisibility(View.VISIBLE);
+            deviceName.setText(name.get());
+        } else {
+            deviceName.setVisibility(View.GONE);
+        }
     }
 
     public void setOnAddClickListener(NetworkScanDevice scanDevice) {
@@ -39,6 +52,7 @@ public class ScanResultViewHolder extends RecyclerView.ViewHolder {
 
                 Intent intent = new Intent(context, AddNetworkScanDeviceActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString(AddNetworkScanDeviceActivity.MACHINE_NAME_KEY, scanDevice.getName().orElse(null));
                 bundle.putString(AddNetworkScanDeviceActivity.MACHINE_IP_KEY, scanDevice.getIpAddress());
                 intent.putExtras(bundle);
                 context.startActivity(intent);

@@ -16,6 +16,7 @@ public class NetworkScanDiffCallback extends DiffUtil.ItemCallback<NetworkScanDe
 
     @Override
     public boolean areContentsTheSame(@NonNull NetworkScanDevice oldItem, @NonNull NetworkScanDevice newItem) {
-        return Strings.nullToEmpty(oldItem.getIpAddress()).equals(newItem.getIpAddress());
+        return Strings.nullToEmpty(oldItem.getIpAddress()).equals(newItem.getIpAddress())
+                && (oldItem.getName().isPresent() && newItem.getName().isPresent() && oldItem.getName().get().equals(newItem.getName().get()));
     }
 }
