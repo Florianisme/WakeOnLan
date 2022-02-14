@@ -70,7 +70,7 @@ public class NetworkScanFragment extends Fragment {
             public void onDeviceFound(String ip, String hostName) {
                 NetworkScanDevice networkScanDevice = new NetworkScanDevice();
                 networkScanDevice.setIpAddress(ip);
-                if (!ip.equals(hostName)) {
+                if (hostName != null && !ip.equals(hostName) && !hostName.isEmpty()) {
                     networkScanDevice.setName(hostName);
                 }
 

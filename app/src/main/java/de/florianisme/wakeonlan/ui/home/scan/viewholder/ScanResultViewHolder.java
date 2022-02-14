@@ -39,8 +39,10 @@ public class ScanResultViewHolder extends RecyclerView.ViewHolder {
         if (name.isPresent()) {
             deviceName.setVisibility(View.VISIBLE);
             deviceName.setText(name.get());
+            deviceIp.setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2);
         } else {
             deviceName.setVisibility(View.GONE);
+            deviceIp.setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6);
         }
     }
 
