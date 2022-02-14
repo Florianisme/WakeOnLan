@@ -43,9 +43,9 @@ public class NetworkScanFragment extends Fragment {
 
     private void startNetworkScan() {
         binding.swipeRefresh.setRefreshing(true);
-        networkScanAdapter.clearDataset();
 
         networkScanTask.cancel(true);
+        networkScanAdapter.clearDataset();
         networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
         networkScanTask.execute();
     }
