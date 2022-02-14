@@ -92,10 +92,4 @@ public class NetworkScanFragment extends Fragment {
         recyclerView.setAdapter(networkScanAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(getContext()));
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        startNetworkScan();
-    }
 }
