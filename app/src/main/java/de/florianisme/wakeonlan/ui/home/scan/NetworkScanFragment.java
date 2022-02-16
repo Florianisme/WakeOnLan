@@ -40,21 +40,33 @@ public class NetworkScanFragment extends Fragment {
         setupRecyclerView();
         setupSwipeToRefresh();
 
-        networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
         startNetworkScan();
     }
 
     private void startNetworkScan() {
         binding.swipeRefresh.setRefreshing(true);
-
-        networkScanTask.cancel(true);
         networkScanAdapter.clearDataset();
+
+        if (networkScanTask != null) {
+            networkScanTask.cancel();
+        }
+
         networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
-        networkScanTask.execute();
+        Thread networkScanThread = new Thread(networkScanTask);
+
+        networkScanThread.start();
     }
 
     private void setupSwipeToRefresh() {
         binding.swipeRefresh.setOnRefreshListener(this::startNetworkScan);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (networkScanTask != null) {
+            networkScanTask.cancel();
+        }
     }
 
     private ScanCallback getScanCallback() {

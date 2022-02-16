@@ -3,7 +3,6 @@ package de.florianisme.wakeonlan.ui.home.scan;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.text.format.Formatter;
 import android.util.Log;
 
@@ -13,19 +12,19 @@ import java.net.InetAddress;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.ui.home.scan.callbacks.ScanCallback;
 
-public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
+public class NetworkScanTask implements Runnable {
 
     private final WeakReference<Context> contextWeakReference;
     private final ScanCallback scanCallback;
+    private boolean canceled = false;
 
     public NetworkScanTask(Context context, ScanCallback scanCallback) {
-        super();
         contextWeakReference = new WeakReference<>(context);
         this.scanCallback = scanCallback;
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    public void run() {
         try {
             Context context = contextWeakReference.get();
 
@@ -38,7 +37,7 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
 
                 if (ipString == null) {
                     scanCallback.onError(R.string.network_scan_error_ip);
-                    return null;
+                    return;
                 }
 
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
@@ -53,8 +52,8 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
                         scanCallback.onDeviceFound(address.getHostAddress(), address.getHostName());
                     }
 
-                    if (isCancelled()) {
-                        return null;
+                    if (this.canceled) {
+                        return;
                     }
                 }
             }
@@ -65,6 +64,9 @@ public class NetworkScanTask extends AsyncTask<Void, Void, Void> {
         }
 
         scanCallback.onTaskEnd();
-        return null;
+    }
+
+    public void cancel() {
+        this.canceled = true;
     }
 }
