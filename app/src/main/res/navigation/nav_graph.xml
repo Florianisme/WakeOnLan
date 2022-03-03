@@ -17,7 +17,7 @@
 
     <activity
         android:id="@+id/addMachineActivity"
-        android:name="de.florianisme.wakeonlan.ui.home.modify.AddDeviceActivity"
+        android:name="de.florianisme.wakeonlan.ui.home.details.AddDeviceActivity"
         android:label="@string/title_activity_add_device"
         tools:layout="@layout/activity_modify_device" />
 
@@ -26,6 +26,12 @@
         android:name="de.florianisme.wakeonlan.ui.home.list.DeviceListFragment"
         android:label="@string/title_fragment_device_list"
         tools:layout="@layout/fragment_list_devices" />
+
+    <fragment
+        android:id="@+id/networkScanFragment"
+        android:name="de.florianisme.wakeonlan.ui.home.scan.NetworkScanFragment"
+        android:label="@string/title_fragment_network_scan"
+        tools:layout="@layout/fragment_network_scan" />
 
     <fragment
         android:id="@+id/backupFragment"

@@ -1,9 +1,10 @@
-package de.florianisme.wakeonlan.ui.home.modify;
+package de.florianisme.wakeonlan.ui.home.details;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,10 +22,10 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.autocomplete.MacAddressAutocomplete;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.IpAddressValidator;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.MacValidator;
-import de.florianisme.wakeonlan.ui.home.modify.watcher.validator.NameValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.autocomplete.MacAddressAutocomplete;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.IpAddressValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.MacValidator;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.NameValidator;
 import de.florianisme.wakeonlan.util.BroadcastHelper;
 
 public abstract class ModifyDeviceActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceNameInput;
     protected TextInputEditText deviceStatusIpInput;
     protected TextInputEditText deviceBroadcastInput;
+    protected ImageButton broadcastAutofill;
     protected MaterialAutoCompleteTextView devicePorts;
 
     @Override
@@ -50,6 +52,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput = binding.device.deviceName;
         deviceStatusIpInput = binding.device.deviceStatusIp;
         deviceBroadcastInput = binding.device.deviceBroadcast;
+        broadcastAutofill = binding.device.broadcastAutofill;
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,12 +65,12 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     private void addAutofillClickHandler() {
-        binding.device.broadcastAutofill.setOnClickListener(new View.OnClickListener() {
+        broadcastAutofill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> binding.device.deviceBroadcast.setText(inetAddress.getHostAddress()));
+                    broadcastAddress.ifPresent(inetAddress -> deviceBroadcastInput.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
                 }

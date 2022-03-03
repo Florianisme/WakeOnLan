@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Set<Integer> getMenuIds() {
-        return Sets.newHashSet(R.id.deviceListFragment, R.id.backupFragment);
+        return Sets.newHashSet(R.id.deviceListFragment, R.id.backupFragment, R.id.networkScanFragment);
     }
 
     @Override

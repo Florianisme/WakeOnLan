@@ -6,6 +6,10 @@
             android:icon="@drawable/ic_device_list"
             android:title="@string/drawer_menu_item_device_list" />
         <item
+            android:id="@+id/networkScanFragment"
+            android:icon="@drawable/ic_search_network"
+            android:title="@string/drawer_menu_item_scan" />
+        <item
             android:id="@+id/backupFragment"
             android:icon="@drawable/ic_import_export"
             android:title="@string/drawer_menu_item_backup" />

@@ -30,20 +30,22 @@ public abstract class DeviceTileService extends TileService {
         appDatabase = DatabaseInstanceManager.getInstance(this);
         Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
+        Tile tile = super.getQsTile();
+
         if (optionalMachine.isPresent()) {
             Device device = optionalMachine.get();
             this.device = device;
 
-            super.getQsTile().setLabel(device.name);
+            tile.setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                super.getQsTile().setSubtitle(getString(R.string.tile_subtitle));
+                tile.setSubtitle(getString(R.string.tile_subtitle));
             }
-            super.getQsTile().setState(Tile.STATE_ACTIVE);
+            tile.setState(Tile.STATE_ACTIVE);
         } else {
-            super.getQsTile().setLabel(getString(R.string.tile_no_device_found));
-            super.getQsTile().setState(Tile.STATE_UNAVAILABLE);
+            tile.setLabel(getString(R.string.tile_no_device_found));
+            tile.setState(Tile.STATE_UNAVAILABLE);
         }
-        super.getQsTile().updateTile();
+        tile.updateTile();
     }
 
     private Optional<Device> getMachineAtIndex(int index) {

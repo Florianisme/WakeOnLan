@@ -44,4 +44,10 @@
     <string name="backup_message_import_error">Fehler beim Importieren der Geräte</string>
     <string name="backup_message_export_success">%1$d Geräte erfolgreich exportiert</string>
     <string name="backup_message_export_error">Fehler beim Exportieren der Geräte</string>
+    <string name="title_fragment_network_scan">Netzwerk Scan</string>
+    <string name="network_scan_button_add">Gerät hinzufügen</string>
+    <string name="network_scan_no_devices_found">Keine Geräte gefunden</string>
+    <string name="network_scan_empty_title">Sind Sie mit einem WLAN Netzwerk verbunden?</string>
+    <string name="network_scan_error_ip">IP Addresse kann nicht abgefragt werden</string>
+    <string name="network_scan_error_general">Fehler beim Scannen des Netzwerks</string>
 </resources>
