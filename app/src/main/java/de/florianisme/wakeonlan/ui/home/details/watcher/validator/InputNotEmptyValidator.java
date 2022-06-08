@@ -4,9 +4,9 @@ import android.widget.EditText;
 
 import de.florianisme.wakeonlan.R;
 
-public class NameValidator extends Validator {
+public class InputNotEmptyValidator extends Validator {
 
-    public NameValidator(EditText editTextView) {
+    public InputNotEmptyValidator(EditText editTextView) {
         super(editTextView);
     }
 
