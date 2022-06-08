@@ -18,8 +18,7 @@ android {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
         targetSdk 31
-        versionCode 4
-        versionName "1.4.1"
+        versionName "1.4.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,7 +53,7 @@ allprojects {
 
 dependencies {
 
-    implementation 'com.google.android.support:wearable:2.8.1'
-    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+    implementation 'com.google.android.support:wearable:2.9.0'
+    compileOnly 'com.google.android.wearable:wearable:2.9.0'
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
 }

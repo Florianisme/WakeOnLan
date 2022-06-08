@@ -23,9 +23,9 @@ import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.ui.home.details.watcher.autocomplete.MacAddressAutocomplete;
+import de.florianisme.wakeonlan.ui.home.details.watcher.validator.InputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.home.details.watcher.validator.IpAddressValidator;
 import de.florianisme.wakeonlan.ui.home.details.watcher.validator.MacValidator;
-import de.florianisme.wakeonlan.ui.home.details.watcher.validator.NameValidator;
 import de.florianisme.wakeonlan.util.BroadcastHelper;
 
 public abstract class ModifyDeviceActivity extends AppCompatActivity {
@@ -82,9 +82,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
-        deviceNameInput.addTextChangedListener(new NameValidator(deviceNameInput));
+        deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput));
         deviceBroadcastInput.addTextChangedListener(new IpAddressValidator(deviceBroadcastInput));
-        deviceStatusIpInput.addTextChangedListener(new IpAddressValidator(deviceStatusIpInput, true));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
