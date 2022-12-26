@@ -35,6 +35,7 @@ public class Device {
         this.statusIp = statusIp;
     }
 
+
     public Device() {
     }
 }
