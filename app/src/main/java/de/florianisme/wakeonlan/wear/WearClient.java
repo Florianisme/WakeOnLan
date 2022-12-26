@@ -2,10 +2,7 @@ package de.florianisme.wakeonlan.wear;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.gms.wearable.DataClient;
-import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
@@ -16,16 +13,13 @@ import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
-public class WearClient implements DataClient.OnDataChangedListener {
+public class WearClient {
 
-    private final String DEVICE_LIST_PATH = "/device_list";
-    private DataClient dataClient;
+    private static final String DEVICE_LIST_PATH = "/device_list";
+    private final DataClient dataClient;
 
-    public WearClient init(Context context) {
-        Wearable.getDataClient(context).addListener(this);
+    public WearClient(Context context) {
         dataClient = Wearable.getDataClient(context);
-
-        return this;
     }
 
     public void onDeviceListUpdated(List<Device> deviceList) {
@@ -35,14 +29,5 @@ public class WearClient implements DataClient.OnDataChangedListener {
         PutDataRequest putDataReq = putDataMapRequest.asPutDataRequest();
 
         dataClient.putDataItem(putDataReq);
-    }
-
-    public void destroy() {
-        dataClient.removeListener(this);
-    }
-
-    @Override
-    public void onDataChanged(@NonNull DataEventBuffer dataEventBuffer) {
-
     }
 }
