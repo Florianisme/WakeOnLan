@@ -14,7 +14,7 @@
     <string name="add_device_error_mac_invalid">Ungültige MAC Adresse</string>
     <string name="add_device_error_name_empty">Name darf nicht leer sein</string>
     <string name="add_device_error_ip_invalid">Ungültige IP Adresse</string>
-    <string name="add_device_error_save_clicked">Bitte korrigieren Sie ihre Eingaben</string>
+    <string name="add_device_error_save_clicked">Bitte korrigieren Sie Ihre Eingaben</string>
     <string name="add_device_autofill_broadcast">Broadcast automatisch ausfüllen</string>
     <string name="edit_machine_error_loading">Fehler beim Zugriff auf die Maschine</string>
     <string name="device_list_startup">Einschalten</string>
@@ -23,7 +23,7 @@
     <string name="device_list_empty_image">Computer Illustration</string>
     <string name="device_list_edit">Bearbeiten</string>
     <string name="edit_device_delete_title">Gerät löschen</string>
-    <string name="edit_device_delete_message">Wollen Sie diese Gerät wirklich löschen?</string>
+    <string name="edit_device_delete_message">Möchten Sie dieses Gerät wirklich löschen?</string>
     <string name="tile_name_device_one">WOL Gerät 1</string>
     <string name="tile_name_device_two">WOL Gerät 2</string>
     <string name="tile_name_device_three">WOL Gerät 3</string>
@@ -36,7 +36,7 @@
     <string name="modify_device_unsaved_changes_positive">Speichern</string>
     <string name="title_fragment_backup">Exportieren/Importieren</string>
     <string name="title_fragment_device_list">Geräteübersicht</string>
-    <string name="backup_description">Exportieren Sie ihre konfigurierten Geräte in eine JSON Datei oder importieren Sie einen bestehenden Datensatz</string>
+    <string name="backup_description">Exportieren Sie Ihre konfigurierten Geräte in eine JSON Datei oder importieren Sie einen bestehenden Datensatz</string>
     <string name="backup_note">Hinweis:</string>
     <string name="backup_note_content">Beim Importieren werden alle konfigurierten Geräte überschrieben</string>
     <string name="backup_button_export">Exportieren</string>
