@@ -42,6 +42,7 @@
     <string name="device_list_startup">Turn on</string>
     <string name="device_list_empty_title">No devices set up</string>
     <string name="device_list_empty_hint">Tap the \"+\" icon to add your first device</string>
+    <string name="device_list_empty_image">Computer Illustration</string>
     <string name="device_list_edit">Edit</string>
 
     <!-- Tile -->
