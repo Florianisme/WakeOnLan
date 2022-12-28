@@ -2,6 +2,8 @@ package de.florianisme.wakeonlan.ui.home.list.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -79,16 +81,26 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         deviceStatusTester.scheduleDeviceStatusPings(device, status -> {
             if (status == DeviceStatus.ONLINE) {
                 setAlphaAnimationIfNotSet();
-                deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_online));
+                setStatusDrawable(R.drawable.device_status_online);
             } else if (status == DeviceStatus.OFFLINE) {
                 setAlphaAnimationIfNotSet();
-                deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_offline));
+                setStatusDrawable(R.drawable.device_status_offline);
             } else {
                 deviceStatus.clearAnimation();
                 deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
             }
         });
+    }
 
+    private void setStatusDrawable(int statusDrawable) {
+        Drawable[] drawables = {
+                deviceStatus.getBackground(),
+                AppCompatResources.getDrawable(itemView.getContext(), statusDrawable)
+        };
+
+        TransitionDrawable transitionDrawable = new TransitionDrawable(drawables);
+        deviceStatus.setBackground(transitionDrawable);
+        transitionDrawable.startTransition(600);
     }
 
     private void setAlphaAnimationIfNotSet() {

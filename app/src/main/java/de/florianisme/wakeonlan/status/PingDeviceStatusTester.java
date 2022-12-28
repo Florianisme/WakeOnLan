@@ -17,11 +17,11 @@ public class PingDeviceStatusTester implements DeviceStatusTester {
     private ScheduledExecutorService pingExecutor;
 
     @Override
-    public void scheduleDeviceStatusPings(Device device, OnDeviceStatusAvailable onDeviceStatusAvailable) {
+    public void scheduleDeviceStatusPings(Device device, DeviceStatusListener deviceStatusListener) {
         pingExecutor = Executors.newSingleThreadScheduledExecutor();
         pingExecutor.scheduleWithFixedDelay(() -> {
             if (device.statusIp == null || device.statusIp.isEmpty()) {
-                onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.UNKNOWN);
+                deviceStatusListener.onStatusAvailable(DeviceStatus.UNKNOWN);
                 return;
             }
 
@@ -32,16 +32,16 @@ public class PingDeviceStatusTester implements DeviceStatusTester {
                     public void onPing(final long timeMs, final int count) {
                         if (timeMs == -1L) {
                             Log.w(getClass().getSimpleName(), String.format("Ping timed out for IP %s", device.statusIp));
-                            onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.OFFLINE);
+                            deviceStatusListener.onStatusAvailable(DeviceStatus.OFFLINE);
                             return;
                         }
-                        onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.ONLINE);
+                        deviceStatusListener.onStatusAvailable(DeviceStatus.ONLINE);
                     }
 
                     @Override
                     public void onPingException(final Exception e, final int count) {
                         Log.w(getClass().getSimpleName(), String.format("Error while pinging device with IP %s", device.statusIp), e);
-                        onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.OFFLINE);
+                        deviceStatusListener.onStatusAvailable(DeviceStatus.OFFLINE);
                     }
                 });
                 ping.setCount(1);
@@ -49,7 +49,7 @@ public class PingDeviceStatusTester implements DeviceStatusTester {
                 ping.run();
             } catch (Exception e) {
                 Log.w(getClass().getSimpleName(), String.format("Error while pinging device with IP %s", device.statusIp), e);
-                onDeviceStatusAvailable.onStatusAvailable(DeviceStatus.UNKNOWN);
+                deviceStatusListener.onStatusAvailable(DeviceStatus.UNKNOWN);
             }
         }, 0, 4000, TimeUnit.MILLISECONDS);
     }
