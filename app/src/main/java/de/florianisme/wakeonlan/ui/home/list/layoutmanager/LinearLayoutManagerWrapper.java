@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.ui.home.list;
+package de.florianisme.wakeonlan.ui.home.list.layoutmanager;
 
 import android.content.Context;
 

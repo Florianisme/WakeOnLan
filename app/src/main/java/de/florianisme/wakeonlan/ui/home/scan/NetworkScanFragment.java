@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.florianisme.wakeonlan.databinding.FragmentNetworkScanBinding;
-import de.florianisme.wakeonlan.ui.home.list.LinearLayoutManagerWrapper;
+import de.florianisme.wakeonlan.ui.home.list.layoutmanager.LinearLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.home.scan.callbacks.ScanCallback;
 import de.florianisme.wakeonlan.ui.home.scan.model.NetworkScanDevice;
 

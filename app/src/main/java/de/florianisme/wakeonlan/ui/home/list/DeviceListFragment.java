@@ -18,6 +18,8 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.ui.home.list.layoutmanager.GridLayoutManagerWrapper;
+import de.florianisme.wakeonlan.ui.home.list.layoutmanager.LinearLayoutManagerWrapper;
 
 
 public class DeviceListFragment extends Fragment {
@@ -55,7 +57,16 @@ public class DeviceListFragment extends Fragment {
         RecyclerView devicesRecyclerView = binding.machineList;
 
         devicesRecyclerView.setAdapter(deviceListAdapter);
-        devicesRecyclerView.setLayoutManager(new LinearLayoutManagerWrapper(getContext()));
+        devicesRecyclerView.setLayoutManager(getLayoutManager());
+    }
+
+    @NonNull
+    private RecyclerView.LayoutManager getLayoutManager() {
+        if (getResources().getBoolean(R.bool.isTablet)) {
+            return new GridLayoutManagerWrapper(getContext(), 2);
+        } else {
+            return new LinearLayoutManagerWrapper(getContext());
+        }
     }
 
     @NonNull
