@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.home.details.AddDeviceActivity"
+            android:name=".ui.modify.AddDeviceActivity"
             android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
         <activity
-            android:name=".ui.home.details.EditDeviceActivity"
+            android:name=".ui.modify.EditDeviceActivity"
             android:label="@string/title_activity_edit_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
         <activity
-            android:name=".ui.home.details.AddNetworkScanDeviceActivity"
+            android:name=".ui.modify.AddNetworkScanDeviceActivity"
             android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
 
