@@ -21,7 +21,7 @@ public class SecureOnPasswordValidator extends Validator {
     ValidationResult validate(String text) {
         int passwordBytesLength = Strings.nullToEmpty(text).getBytes(CHARSET).length;
 
-        if (passwordBytesLength == 4 || passwordBytesLength == 6) {
+        if (passwordBytesLength == 0 || passwordBytesLength == 4 || passwordBytesLength == 6) {
             return ValidationResult.VALID;
         }
 
