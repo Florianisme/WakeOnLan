@@ -17,18 +17,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
-    implementation 'com.google.guava:guava:31.0.1-jre'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
     implementation(name: 'android-ping', ext: 'aar')
-
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation project(path: ':shared-models')
 }

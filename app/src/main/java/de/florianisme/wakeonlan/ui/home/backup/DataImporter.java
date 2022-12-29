@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class DataImporter implements ActivityResultCallback<Uri> {
 
         try {
             byte[] bytes = readContentFromFile(uri, context);
-            Device[] devices = JsonConverter.toModel(bytes);
+            Device[] devices = new ObjectMapper().readValue(bytes, Device[].class);
 
             replaceDevicesInDatabase(devices, context);
             Toast.makeText(context, context.getString(R.string.backup_message_import_success, devices.length), Toast.LENGTH_LONG).show();

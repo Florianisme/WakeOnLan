@@ -27,7 +27,7 @@ import de.florianisme.wakeonlan.list.WearDeviceListAdapter;
 import de.florianisme.wakeonlan.mobile.DeviceQueryException;
 import de.florianisme.wakeonlan.mobile.MobileClient;
 import de.florianisme.wakeonlan.mobile.OnDataReceivedListener;
-import de.florianisme.wakeonlan.model.Device;
+import de.florianisme.wakeonlan.models.DeviceDto;
 
 public class DeviceListActivity extends Activity implements DataClient.OnDataChangedListener, OnDataReceivedListener {
 
@@ -61,7 +61,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         MobileClient.getDevicesList(nodeClient, dataClient, this);
     }
 
-    private void updateRecyclerviewDataset(List<Device> devices) {
+    private void updateRecyclerviewDataset(List<DeviceDto> devices) {
         wearDeviceListAdapter.updateDataset(devices);
         wearDeviceListAdapter.notifyDataSetChanged();
     }
@@ -74,7 +74,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
                 DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
 
                 try {
-                    List<Device> devices = MobileClient.buildDeviceList(dataMap);
+                    List<DeviceDto> devices = MobileClient.buildDeviceList(dataMap);
                     onDataReceived(devices);
                 } catch (DeviceQueryException e) {
                     onError(e);
@@ -90,7 +90,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
     }
 
     @Override
-    public void onDataReceived(List<Device> devices) {
+    public void onDataReceived(List<DeviceDto> devices) {
         updateRecyclerviewDataset(devices);
     }
 

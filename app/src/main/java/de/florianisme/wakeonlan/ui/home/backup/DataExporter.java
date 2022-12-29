@@ -10,6 +10,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -44,7 +46,7 @@ public class DataExporter implements ActivityResultCallback<Uri> {
         Context context = contextWeakReference.get();
         try {
             List<Device> devices = DatabaseInstanceManager.getInstance(context).deviceDao().getAll();
-            byte[] content = JsonConverter.toJson(devices);
+            byte[] content = new ObjectMapper().writeValueAsBytes(devices);
             writeDevicesToFile(uri, content, context);
 
             Toast.makeText(context, context.getString(R.string.backup_message_export_success, devices.size()), Toast.LENGTH_SHORT).show();

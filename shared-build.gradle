@@ -40,20 +40,11 @@ android {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-        mavenCentral()
-        google()
-        flatDir {
-            dirs 'libs'
-        }
-    }
-}
-
 dependencies {
-
     implementation 'com.google.android.support:wearable:2.9.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
     implementation 'com.google.android.gms:play-services-wearable:18.0.0'
+
+    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 }
