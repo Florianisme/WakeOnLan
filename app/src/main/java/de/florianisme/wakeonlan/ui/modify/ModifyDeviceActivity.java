@@ -36,6 +36,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceNameInput;
     protected TextInputEditText deviceStatusIpInput;
     protected TextInputEditText deviceBroadcastInput;
+    protected TextInputEditText deviceSecureOnPassword;
     protected ImageButton broadcastAutofill;
     protected MaterialAutoCompleteTextView devicePorts;
 
@@ -51,6 +52,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput = binding.device.deviceName;
         deviceStatusIpInput = binding.device.deviceStatusIp;
         deviceBroadcastInput = binding.device.deviceBroadcast;
+        deviceSecureOnPassword = binding.device.deviceSecureOnPassword;
         broadcastAutofill = binding.device.broadcastAutofill;
 
         setSupportActionBar(binding.toolbar);
@@ -128,8 +130,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private String getInputText(TextInputEditText deviceBroadcastInput) {
-        return deviceBroadcastInput.getText().toString().trim();
+    private String getInputText(TextInputEditText testInput) {
+        return testInput.getText().toString().trim();
     }
 
     @NonNull
@@ -150,6 +152,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     @NonNull
     protected String getDeviceStatusIpText() {
         return getInputText(deviceStatusIpInput);
+    }
+
+    @NonNull
+    protected String getDeviceSecureOnPassword() {
+        return getInputText(deviceSecureOnPassword);
     }
 
     @Override

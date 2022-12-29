@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.common.base.Strings;
+
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
@@ -37,7 +39,8 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
             deviceNameInput.setText(device.name);
             deviceStatusIpInput.setText(device.statusIp);
             deviceMacInput.setText(device.macAddress);
-            deviceBroadcastInput.setText(device.broadcast_address);
+            deviceBroadcastInput.setText(device.broadcastAddress);
+            deviceSecureOnPassword.setText(device.secureOnPassword);
             if (device.port == 9) {
                 devicePorts.setText("9", false);
             } else {
@@ -77,10 +80,11 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     @Override
     protected boolean inputsHaveNotChanged() {
         return device.name.equals(getDeviceNameInputText()) &&
-                device.broadcast_address.equals(getDeviceBroadcastAddressText()) &&
+                device.broadcastAddress.equals(getDeviceBroadcastAddressText()) &&
                 device.macAddress.equals(getDeviceMacInputText()) &&
                 device.statusIp.equals(getDeviceStatusIpText()) &&
-                device.port == getPort();
+                device.port == getPort() &&
+                Strings.nullToEmpty(device.secureOnPassword).equals(getDeviceSecureOnPassword());
     }
 
     @Override
@@ -88,8 +92,9 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
         device.name = getDeviceNameInputText();
         device.statusIp = getDeviceStatusIpText();
         device.macAddress = getDeviceMacInputText();
-        device.broadcast_address = getDeviceBroadcastAddressText();
+        device.broadcastAddress = getDeviceBroadcastAddressText();
         device.port = getPort();
+        device.secureOnPassword = getDeviceSecureOnPassword();
 
         databaseInstance.deviceDao().update(device);
     }

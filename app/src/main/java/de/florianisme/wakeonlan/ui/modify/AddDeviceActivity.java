@@ -33,8 +33,9 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         device.name = getDeviceNameInputText();
         device.statusIp = getDeviceStatusIpText();
         device.macAddress = getDeviceMacInputText();
-        device.broadcast_address = getDeviceBroadcastAddressText();
+        device.broadcastAddress = getDeviceBroadcastAddressText();
         device.port = getPort();
+        device.secureOnPassword = getDeviceSecureOnPassword();
 
         databaseInstance.deviceDao().insertAll(device);
     }
@@ -43,6 +44,7 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     protected boolean inputsHaveNotChanged() {
         // There is no persisted device yet, so we check if any of our inputs are edited
         return getDeviceNameInputText().isEmpty() && getDeviceMacInputText().isEmpty()
-                && getDeviceBroadcastAddressText().isEmpty() && getDeviceStatusIpText().isEmpty();
+                && getDeviceBroadcastAddressText().isEmpty() && getDeviceStatusIpText().isEmpty()
+                && getDeviceSecureOnPassword().isEmpty();
     }
 }
