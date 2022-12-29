@@ -21,6 +21,7 @@ public class DeviceDiffCallback extends DiffUtil.ItemCallback<Device> {
                 stringMatches(oldDevice.broadcastAddress, newDevice.broadcastAddress) &&
                 stringMatches(oldDevice.statusIp, newDevice.statusIp) &&
                 stringMatches(oldDevice.macAddress, newDevice.macAddress) &&
+                stringMatches(oldDevice.secureOnPassword, newDevice.secureOnPassword) &&
                 oldDevice.port == newDevice.port;
     }
 
