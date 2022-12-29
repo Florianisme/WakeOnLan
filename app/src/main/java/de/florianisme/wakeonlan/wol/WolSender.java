@@ -19,7 +19,7 @@ public class WolSender {
             @Override
             public void run() {
                 try {
-                    DatagramPacket packet = PacketBuilder.buildMagicPacket(device.broadcast_address, device.macAddress, device.port);
+                    DatagramPacket packet = PacketBuilder.buildMagicPacket(device.broadcastAddress, device.macAddress, device.port, device.secureOnPassword);
                     DatagramSocket socket = new DatagramSocket();
                     socket.send(packet);
                     socket.close();

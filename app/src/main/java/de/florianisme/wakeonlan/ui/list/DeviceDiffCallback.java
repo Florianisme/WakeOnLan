@@ -18,9 +18,10 @@ public class DeviceDiffCallback extends DiffUtil.ItemCallback<Device> {
     @Override
     public boolean areContentsTheSame(@NonNull Device oldDevice, @NonNull Device newDevice) {
         return stringMatches(oldDevice.name, newDevice.name) &&
-                stringMatches(oldDevice.broadcast_address, newDevice.broadcast_address) &&
+                stringMatches(oldDevice.broadcastAddress, newDevice.broadcastAddress) &&
                 stringMatches(oldDevice.statusIp, newDevice.statusIp) &&
                 stringMatches(oldDevice.macAddress, newDevice.macAddress) &&
+                stringMatches(oldDevice.secureOnPassword, newDevice.secureOnPassword) &&
                 oldDevice.port == newDevice.port;
     }
 

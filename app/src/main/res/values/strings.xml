@@ -9,12 +9,16 @@
     <string name="title_fragment_backup">Export/Import Data</string>
 
     <!-- Add Device Activity -->
+    <string name="device_title_general">General</string>
+    <string name="device_title_connection">Connection</string>
+    <string name="device_title_security">Security</string>
     <string name="add_device_name">Name</string>
     <string name="add_device_status_ip">Status IP (optional)</string>
     <string name="add_device_mac_address">MAC Address</string>
     <string name="add_device_port">Port</string>
     <string name="add_device_broadcast_address">Broadcast Address</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
+    <string name="add_device_secure_on">SecureOn Password (optional)</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
     <string-array name="ports_selection">
@@ -25,6 +29,7 @@
     <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
     <string name="add_device_error_name_empty">Name must not be empty</string>
     <string name="add_device_error_ip_invalid">Invalid IP Address</string>
+    <string name="add_device_error_secure_on_password_invalid">Password must be exactly 4 or 6 characters long</string>
     <string name="add_device_error_save_clicked">Please correct your inputs first</string>
 
     <!-- Edit Device Activity-->
