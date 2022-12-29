@@ -4,13 +4,17 @@ import android.util.Log;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class WolSender {
 
+    public static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
+
     public static void sendWolPacket(Device device) {
-        Thread thread = new Thread(new Runnable() {
+        Runnable sendWolRunnable = new Runnable() {
 
             @Override
             public void run() {
@@ -23,11 +27,9 @@ public class WolSender {
                     Log.e(this.getClass().getName(), "Error while sending magic packet: ", e);
                 }
             }
-        });
+        };
 
-        thread.start();
-
-
+        EXECUTOR.execute(sendWolRunnable);
     }
 
 }
