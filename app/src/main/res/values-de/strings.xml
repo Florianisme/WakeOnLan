@@ -51,4 +51,8 @@
     <string name="network_scan_empty_title">Sind Sie mit einem WLAN Netzwerk verbunden?</string>
     <string name="network_scan_error_ip">IP Adresse kann nicht abgefragt werden</string>
     <string name="network_scan_error_general">Fehler beim Scannen des Netzwerks</string>
+    <string name="device_title_general">Allgemein</string>
+    <string name="device_title_connection">Verbindung</string>
+    <string name="device_title_security">Sicherheit</string>
+    <string name="add_device_secure_on">SecureOn Passwort (optional)</string>
 </resources>
