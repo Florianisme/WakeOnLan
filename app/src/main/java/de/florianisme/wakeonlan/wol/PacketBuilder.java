@@ -30,7 +30,7 @@ class PacketBuilder {
         }
 
         // Append Password
-        System.arraycopy(secureOnPasswordBytes, 0, bytes, macBytes.length - secureOnPasswordBytes.length, secureOnPasswordBytes.length);
+        System.arraycopy(secureOnPasswordBytes, 0, bytes, bytes.length - secureOnPasswordBytes.length, secureOnPasswordBytes.length);
 
         InetAddress address = InetAddress.getByName(broadcastAddress);
         return new DatagramPacket(bytes, bytes.length, address, port);
