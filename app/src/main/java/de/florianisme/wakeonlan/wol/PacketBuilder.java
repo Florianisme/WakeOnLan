@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 class PacketBuilder {
 
@@ -42,11 +43,25 @@ class PacketBuilder {
 
     private static byte[] getSecureOnPasswordBytes(String secureOnPassword) {
         byte[] bytes = Strings.nullToEmpty(secureOnPassword).getBytes(StandardCharsets.US_ASCII);
-        if (bytes.length != 0 && bytes.length != 4 && bytes.length != 6) {
-            throw new IllegalArgumentException("Invalid SecureOn Password: Has " + bytes.length + " characters");
+        if (bytes.length == 0) {
+            return new byte[0];
         }
 
-        return bytes;
+        if (passwordIsIpAddress(secureOnPassword)) {
+            return getIpBytes(secureOnPassword);
+        } else if (passwordIsMacAddress(secureOnPassword)) {
+            return getMacBytes(secureOnPassword);
+        } else {
+            throw new IllegalArgumentException("Invalid SecureOn Password: Has " + bytes.length + " characters");
+        }
+    }
+
+    private static boolean passwordIsMacAddress(String password) {
+        return Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$").matcher(password).matches();
+    }
+
+    private static boolean passwordIsIpAddress(String password) {
+        return Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$").matcher(password).matches();
     }
 
     private static byte[] getMacBytes(String macStr) throws IllegalArgumentException {
@@ -61,6 +76,24 @@ class PacketBuilder {
             }
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid hex digit in MAC address.");
+        }
+        return bytes;
+    }
+
+    private static byte[] getIpBytes(String ipString) throws IllegalArgumentException {
+        byte[] bytes = new byte[4];
+        String[] ipOctets = ipString.split("(\\.|\\-)");
+        if (ipOctets.length != 4) {
+            throw new IllegalArgumentException("Invalid IP address.");
+        }
+        try {
+            for (int i = 0; i < 4; i++) {
+                int ipOctetNumber = Integer.parseInt(ipOctets[i]);
+                String hexString = Integer.toHexString(ipOctetNumber);
+                bytes[i] = (byte) Integer.parseInt(hexString, 16);
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid hex digit in IP address.");
         }
         return bytes;
     }
