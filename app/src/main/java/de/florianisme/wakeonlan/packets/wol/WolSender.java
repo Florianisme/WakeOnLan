@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.wol;
+package de.florianisme.wakeonlan.packets.wol;
 
 import android.util.Log;
 

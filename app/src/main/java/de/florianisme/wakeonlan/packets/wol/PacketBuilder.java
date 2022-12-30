@@ -1,4 +1,4 @@
-package de.florianisme.wakeonlan.wol;
+package de.florianisme.wakeonlan.packets.wol;
 
 import androidx.annotation.Nullable;
 
@@ -10,11 +10,13 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
+import de.florianisme.wakeonlan.packets.AddressToHexConverter;
+
 class PacketBuilder {
 
     static DatagramPacket buildMagicPacket(String broadcastAddress, String macAddress, int port, @Nullable String secureOnPassword) throws UnknownHostException {
 
-        byte[] macBytes = getMacBytes(macAddress);
+        byte[] macBytes = AddressToHexConverter.getMacBytes(macAddress);
         byte[] secureOnPasswordBytes = getSecureOnPasswordBytes(secureOnPassword);
 
         // Packet is 6 times 0xff, 16 times MAC Address of target and 0, 4 or 6 character password
@@ -48,9 +50,9 @@ class PacketBuilder {
         }
 
         if (passwordIsIpAddress(secureOnPassword)) {
-            return getIpBytes(secureOnPassword);
+            return AddressToHexConverter.getIpBytes(secureOnPassword);
         } else if (passwordIsMacAddress(secureOnPassword)) {
-            return getMacBytes(secureOnPassword);
+            return AddressToHexConverter.getMacBytes(secureOnPassword);
         } else {
             throw new IllegalArgumentException("Invalid SecureOn Password: Has " + bytes.length + " characters");
         }
@@ -62,40 +64,6 @@ class PacketBuilder {
 
     private static boolean passwordIsIpAddress(String password) {
         return Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$").matcher(password).matches();
-    }
-
-    private static byte[] getMacBytes(String macStr) throws IllegalArgumentException {
-        byte[] bytes = new byte[6];
-        String[] hex = macStr.split("(\\:|\\-)");
-        if (hex.length != 6) {
-            throw new IllegalArgumentException("Invalid MAC address.");
-        }
-        try {
-            for (int i = 0; i < 6; i++) {
-                bytes[i] = (byte) Integer.parseInt(hex[i], 16);
-            }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid hex digit in MAC address.");
-        }
-        return bytes;
-    }
-
-    private static byte[] getIpBytes(String ipString) throws IllegalArgumentException {
-        byte[] bytes = new byte[4];
-        String[] ipOctets = ipString.split("(\\.|\\-)");
-        if (ipOctets.length != 4) {
-            throw new IllegalArgumentException("Invalid IP address.");
-        }
-        try {
-            for (int i = 0; i < 4; i++) {
-                int ipOctetNumber = Integer.parseInt(ipOctets[i]);
-                String hexString = Integer.toHexString(ipOctetNumber);
-                bytes[i] = (byte) Integer.parseInt(hexString, 16);
-            }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid hex digit in IP address.");
-        }
-        return bytes;
     }
 
 }

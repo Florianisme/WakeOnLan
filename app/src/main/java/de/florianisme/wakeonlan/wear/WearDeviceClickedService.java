@@ -5,10 +5,10 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import de.florianisme.wakeonlan.packets.wol.WolSender;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.DeviceDao;
 import de.florianisme.wakeonlan.persistence.entities.Device;
-import de.florianisme.wakeonlan.wol.WolSender;
 
 public class WearDeviceClickedService extends WearableListenerService {
 

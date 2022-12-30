@@ -10,6 +10,7 @@ import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.packets.arp.ArpPacketSender;
 import de.florianisme.wakeonlan.ui.scan.callbacks.ScanCallback;
 
 public class NetworkScanTask implements Runnable {
@@ -49,6 +50,7 @@ public class NetworkScanTask implements Runnable {
                     boolean reachable = address.isReachable(50);
 
                     if (reachable) {
+                        ArpPacketSender.sendArpPacket(address.getHostAddress());
                         scanCallback.onDeviceFound(address.getHostAddress(), address.getHostName());
                     }
 

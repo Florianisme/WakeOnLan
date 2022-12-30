@@ -16,13 +16,13 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.packets.wol.WolSender;
 import de.florianisme.wakeonlan.persistence.entities.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.ui.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
 import de.florianisme.wakeonlan.ui.modify.EditDeviceActivity;
-import de.florianisme.wakeonlan.wol.WolSender;
 
 public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 

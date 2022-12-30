@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
+import de.florianisme.wakeonlan.packets.wol.WolSender;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
-import de.florianisme.wakeonlan.wol.WolSender;
 
 public abstract class DeviceTileService extends TileService {
 
