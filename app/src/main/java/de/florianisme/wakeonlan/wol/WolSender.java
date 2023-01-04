@@ -4,18 +4,22 @@ import android.util.Log;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
 public class WolSender {
 
+    public static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
+
     public static void sendWolPacket(Device device) {
-        Thread thread = new Thread(new Runnable() {
+        Runnable sendWolRunnable = new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    DatagramPacket packet = PacketBuilder.buildMagicPacket(device.broadcast_address, device.macAddress, device.port);
+                    DatagramPacket packet = PacketBuilder.buildMagicPacket(device.broadcastAddress, device.macAddress, device.port, device.secureOnPassword);
                     DatagramSocket socket = new DatagramSocket();
                     socket.send(packet);
                     socket.close();
@@ -23,11 +27,9 @@ public class WolSender {
                     Log.e(this.getClass().getName(), "Error while sending magic packet: ", e);
                 }
             }
-        });
+        };
 
-        thread.start();
-
-
+        EXECUTOR.execute(sendWolRunnable);
     }
 
 }

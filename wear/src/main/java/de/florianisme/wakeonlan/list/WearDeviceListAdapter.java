@@ -16,11 +16,11 @@ import de.florianisme.wakeonlan.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.list.viewholder.ListViewType;
 import de.florianisme.wakeonlan.list.viewholder.TitleViewHolder;
 import de.florianisme.wakeonlan.list.viewholder.WearDeviceItemViewHolder;
-import de.florianisme.wakeonlan.model.Device;
+import de.florianisme.wakeonlan.models.DeviceDto;
 
 public class WearDeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Device> devices = new ArrayList<>();
+    private List<DeviceDto> devices = new ArrayList<>();
     private final OnDeviceClickedListener onDeviceClickedListener;
 
     public WearDeviceListAdapter(OnDeviceClickedListener onDeviceClickedListener) {
@@ -50,7 +50,7 @@ public class WearDeviceListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return viewHolder;
     }
 
-    public void updateDataset(List<Device> devices) {
+    public void updateDataset(List<DeviceDto> devices) {
         this.devices = Collections.unmodifiableList(devices);
     }
 
@@ -77,9 +77,9 @@ public class WearDeviceListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (isActualDeviceViewHolder(position)) {
             WearDeviceItemViewHolder wearDeviceItemViewHolder = (WearDeviceItemViewHolder) viewHolder;
-            Device device = devices.get(position - 1);
+            DeviceDto device = devices.get(position - 1);
 
-            wearDeviceItemViewHolder.setDeviceName(device.name);
+            wearDeviceItemViewHolder.setDeviceName(device.getName());
             wearDeviceItemViewHolder.setOnClickHandler(device, onDeviceClickedListener);
         }
     }

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import de.florianisme.wakeonlan.persistence.entities.Device;
 
-@Database(entities = {Device.class}, version = 2, exportSchema = false)
+@Database(entities = {Device.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DeviceDao deviceDao();
 }

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeWearClient() {
-        wearClient = new WearClient().init(this);
+        wearClient = new WearClient(this);
         DatabaseInstanceManager.getInstance(this).deviceDao()
                 .getAllAsObservable()
                 .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
@@ -71,11 +71,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        wearClient.destroy();
     }
 }

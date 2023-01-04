@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
+}

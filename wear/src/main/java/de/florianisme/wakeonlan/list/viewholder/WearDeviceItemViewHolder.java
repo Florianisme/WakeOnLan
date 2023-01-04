@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.list.OnDeviceClickedListener;
-import de.florianisme.wakeonlan.model.Device;
+import de.florianisme.wakeonlan.models.DeviceDto;
 
 public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -23,7 +23,7 @@ public class WearDeviceItemViewHolder extends RecyclerView.ViewHolder {
         deviceButton.setText(name);
     }
 
-    public void setOnClickHandler(Device device, OnDeviceClickedListener onDeviceClickedListener) {
+    public void setOnClickHandler(DeviceDto device, OnDeviceClickedListener onDeviceClickedListener) {
         deviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

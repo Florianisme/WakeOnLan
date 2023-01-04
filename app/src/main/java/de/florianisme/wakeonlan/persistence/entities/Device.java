@@ -18,7 +18,7 @@ public class Device {
     public String macAddress;
 
     @ColumnInfo(name = "broadcast_address")
-    public String broadcast_address;
+    public String broadcastAddress;
 
     @ColumnInfo(name = "port")
     public int port;
@@ -26,14 +26,19 @@ public class Device {
     @ColumnInfo(name = "status_ip")
     public String statusIp;
 
+    @ColumnInfo(name = "secure_on_password")
+    public String secureOnPassword;
+
     @Ignore
-    public Device(String name, String macAddress, String broadcast_address, int port, String statusIp) {
+    public Device(String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword) {
         this.name = name;
         this.macAddress = macAddress;
-        this.broadcast_address = broadcast_address;
+        this.broadcastAddress = broadcastAddress;
         this.port = port;
         this.statusIp = statusIp;
+        this.secureOnPassword = secureOnPassword;
     }
+
 
     public Device() {
     }

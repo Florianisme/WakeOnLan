@@ -3,7 +3,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 34
+        versionCode 44
     }
 }
 
@@ -11,6 +11,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    implementation 'com.google.guava:guava:31.0.1-jre'
     implementation 'androidx.wear:wear:1.2.0'
+
+    implementation project(path: ':shared-models')
 }

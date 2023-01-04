@@ -2,6 +2,7 @@ package de.florianisme.wakeonlan.mobile;
 
 import android.net.Uri;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.wearable.DataClient;
 import com.google.android.gms.wearable.DataItem;
@@ -13,10 +14,11 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeClient;
 import com.google.android.gms.wearable.PutDataRequest;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-import de.florianisme.wakeonlan.model.Device;
+import de.florianisme.wakeonlan.models.DeviceDto;
 
 public class MobileClient {
 
@@ -32,12 +34,12 @@ public class MobileClient {
         });
     }
 
-    public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, Device device) {
+    public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, DeviceDto device) {
         nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
             @Override
             public void onSuccess(List<Node> nodes) {
                 for (Node node : nodes) {
-                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.id});
+                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.getId()});
                 }
             }
         });
@@ -56,7 +58,7 @@ public class MobileClient {
                 for (DataItem item : dataItems) {
                     DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
                     try {
-                        List<Device> devices = buildDeviceList(dataMap);
+                        List<DeviceDto> devices = buildDeviceList(dataMap);
                         onDataReceivedListener.onDataReceived(devices);
                     } catch (DeviceQueryException e) {
                         onDataReceivedListener.onError(e);
@@ -67,23 +69,18 @@ public class MobileClient {
         });
     }
 
-    public static List<Device> buildDeviceList(DataMap dataMap) throws DeviceQueryException {
-        List<Device> devices = new ArrayList<>();
-        ArrayList<Integer> deviceIds = dataMap.getIntegerArrayList("deviceIds");
-        ArrayList<String> deviceNames = dataMap.getStringArrayList("deviceNames");
+    public static List<DeviceDto> buildDeviceList(DataMap dataMap) throws DeviceQueryException {
+        byte[] deviceListBytes = dataMap.getByteArray("devices");
 
-        if (deviceIds == null || deviceNames == null) {
-            throw new DeviceQueryException("deviceIds or deviceNames not existing");
+        if (deviceListBytes == null) {
+            throw new DeviceQueryException("No bytes received");
         }
 
-        for (int i = 0; i < deviceIds.size(); i++) {
-            Integer deviceId = deviceIds.get(i);
-            String deviceName = deviceNames.get(i);
-
-            devices.add(new Device(deviceId, deviceName));
+        try {
+            return Arrays.asList(new ObjectMapper().readValue(deviceListBytes, DeviceDto[].class));
+        } catch (IOException e) {
+            throw new DeviceQueryException("Devices can not be parsed", e);
         }
-
-        return devices;
     }
 
 }
