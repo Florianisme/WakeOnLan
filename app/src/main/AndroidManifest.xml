@@ -78,6 +78,16 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".quickaccess.QuickAccessProviderService"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:permission="android.permission.BIND_CONTROLS">
+            <intent-filter>
+                <action android:name="android.service.controls.ControlsProviderService" />
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
