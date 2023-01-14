@@ -84,5 +84,5 @@
     <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
 
     <!-- Quick Access -->
-    <string name="quick_access_device_subtitle">WoL: %1$s</string>
+    <string name="quick_access_device_subtitle">Wake device</string>
 </resources>

@@ -18,6 +18,8 @@ public class PingDeviceStatusTester implements DeviceStatusTester {
 
     @Override
     public void scheduleDeviceStatusPings(Device device, DeviceStatusListener deviceStatusListener) {
+        stopDeviceStatusPings();
+
         pingExecutor = Executors.newSingleThreadScheduledExecutor();
         pingExecutor.scheduleWithFixedDelay(() -> {
             if (device.statusIp == null || device.statusIp.isEmpty()) {
