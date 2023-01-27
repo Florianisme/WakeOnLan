@@ -1,6 +1,6 @@
 android {
     namespace 'de.florianisme.wakeonlan'
-    compileSdk 32
+    compileSdk 33
 
     signingConfigs {
         release {
@@ -17,8 +17,8 @@ android {
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
-        targetSdk 32
-        versionName "1.6.3"
+        targetSdk 33
+        versionName "1.6.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,9 +26,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
