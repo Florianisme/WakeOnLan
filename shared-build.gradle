@@ -1,6 +1,6 @@
 android {
     namespace 'de.florianisme.wakeonlan'
-    compileSdk 32
+    compileSdk 33
 
     signingConfigs {
         release {
@@ -17,8 +17,8 @@ android {
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
-        targetSdk 32
-        versionName "1.6.1"
+        targetSdk 33
+        versionName "1.6.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
