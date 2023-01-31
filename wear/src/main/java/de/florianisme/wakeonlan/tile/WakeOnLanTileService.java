@@ -22,6 +22,7 @@ import com.google.common.base.Strings;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +37,6 @@ public class WakeOnLanTileService extends TileService {
     private MessageClient messageClient;
     private DataClient dataClient;
     private NodeClient nodeClient;
-
-    ListenableFuture<TileBuilders.Tile> temporaryTileContent;
 
     @Override
     public void onCreate() {
@@ -68,6 +67,7 @@ public class WakeOnLanTileService extends TileService {
 
                     TileBuilders.Tile tile = new TileBuilders.Tile.Builder()
                             .setResourcesVersion(RESOURCES_VERSION)
+                            .setFreshnessIntervalMillis(Duration.ofMinutes(1).toMillis())
                             .setTimeline(new TimelineBuilders.Timeline.Builder()
                                     .addTimelineEntry(new TimelineBuilders.TimelineEntry.Builder()
                                             .setLayout(new LayoutElementBuilders.Layout.Builder()
