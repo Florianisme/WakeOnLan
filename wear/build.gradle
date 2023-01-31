@@ -11,6 +11,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
+    implementation "androidx.wear.tiles:tiles:1.1.0"
+    implementation "androidx.wear.tiles:tiles-material:1.1.0"
+
     implementation 'androidx.wear:wear:1.2.0'
 
     implementation project(path: ':shared-models')

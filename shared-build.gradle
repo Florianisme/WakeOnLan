@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionName "1.6.5"
 

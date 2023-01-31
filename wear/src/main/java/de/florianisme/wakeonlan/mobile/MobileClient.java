@@ -35,11 +35,15 @@ public class MobileClient {
     }
 
     public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, DeviceDto device) {
+        sendDeviceClickedMessage(nodeClient, messageClient, device.getId());
+    }
+
+    public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, int deviceId) {
         nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
             @Override
             public void onSuccess(List<Node> nodes) {
                 for (Node node : nodes) {
-                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.getId()});
+                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) deviceId});
                 }
             }
         });
