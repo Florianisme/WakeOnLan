@@ -18,10 +18,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
 import io.reactivex.processors.ReplayProcessor;
@@ -37,8 +36,8 @@ public class StatefulControlService {
     }
 
     static void createAndUpdateStatefulControls(List<String> deviceIds, ReplayProcessor<Control> processor, Context context) {
-        AppDatabase database = DatabaseInstanceManager.getInstance(context);
-        List<Device> filteredDevices = database.deviceDao().getAll().stream()
+        DeviceRepository deviceRepository = DeviceRepository.getInstance(context);
+        List<Device> filteredDevices = deviceRepository.getAll().stream()
                 .filter(device -> deviceIds.contains(String.valueOf(device.id)))
                 .collect(Collectors.toList());
 

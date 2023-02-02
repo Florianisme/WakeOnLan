@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class AddDeviceActivity extends ModifyDeviceActivity {
 
@@ -37,7 +37,7 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         device.port = getPort();
         device.secureOnPassword = getDeviceSecureOnPassword();
 
-        databaseInstance.deviceDao().insertAll(device);
+        deviceRepository.insertAll(device);
     }
 
     @Override

@@ -16,9 +16,8 @@ import java.util.Map;
 import java.util.concurrent.Flow;
 import java.util.function.Consumer;
 
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.DeviceDao;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.wol.WolSender;
 import io.reactivex.Flowable;
 import io.reactivex.processors.ReplayProcessor;
@@ -61,8 +60,8 @@ public class QuickAccessProviderService extends ControlsProviderService {
 
         consumer.accept(ControlAction.RESPONSE_OK);
 
-        DeviceDao deviceDao = DatabaseInstanceManager.getInstance(this).deviceDao();
-        Device device = deviceDao.getById(Integer.parseInt(controlId));
+        DeviceRepository deviceRepository = DeviceRepository.getInstance(this);
+        Device device = deviceRepository.getById(Integer.parseInt(controlId));
 
         if (device != null) {
             WolSender.sendWolPacket(device);

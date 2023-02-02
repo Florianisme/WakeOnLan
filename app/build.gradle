@@ -20,6 +20,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'org.reactivestreams:reactive-streams:1.0.3'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation 'android.arch.lifecycle:livedata:1.1.1'
 
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"

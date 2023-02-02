@@ -10,10 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
@@ -21,7 +20,7 @@ import de.florianisme.wakeonlan.wol.WolSender;
 
 public abstract class DeviceTileService extends TileService implements DeviceStatusListener {
 
-    private AppDatabase appDatabase;
+    private DeviceRepository deviceRepository;
     private Device device;
     private DeviceStatusTester deviceStatusTester;
 
@@ -32,7 +31,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     }
 
     private void updateTileState() {
-        appDatabase = DatabaseInstanceManager.getInstance(this);
+        deviceRepository = DeviceRepository.getInstance(this);
         Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
         Tile tile = getQsTile();
@@ -55,7 +54,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     }
 
     private Optional<Device> getMachineAtIndex(int index) {
-        List<Device> machineList = appDatabase.deviceDao().getAll();
+        List<Device> machineList = deviceRepository.getAll();
         if (machineList.size() <= index) {
             return Optional.empty();
         }

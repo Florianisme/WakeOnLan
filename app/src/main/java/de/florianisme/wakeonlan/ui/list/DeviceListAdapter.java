@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.ui.list.viewholder.DeviceItemViewHolder;
 import de.florianisme.wakeonlan.ui.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.ui.list.viewholder.ListViewType;

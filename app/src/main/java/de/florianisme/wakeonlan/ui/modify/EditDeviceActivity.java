@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.common.base.Strings;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class EditDeviceActivity extends ModifyDeviceActivity {
 
@@ -34,7 +34,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                 return;
             }
 
-            device = databaseInstance.deviceDao().getById(machineId);
+            device = deviceRepository.getById(machineId);
 
             deviceNameInput.setText(device.name);
             deviceStatusIpInput.setText(device.statusIp);
@@ -65,7 +65,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                     .setTitle(R.string.edit_device_delete_title)
                     .setMessage(R.string.edit_device_delete_message)
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        databaseInstance.deviceDao().delete(device);
+                        deviceRepository.delete(device);
                         finish();
                     })
                     .setNegativeButton(android.R.string.no, (dialog, which) -> {
@@ -96,7 +96,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
         device.port = getPort();
         device.secureOnPassword = getDeviceSecureOnPassword();
 
-        databaseInstance.deviceDao().update(device);
+        deviceRepository.update(device);
     }
 
 }

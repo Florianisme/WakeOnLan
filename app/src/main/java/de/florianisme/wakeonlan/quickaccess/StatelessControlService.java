@@ -13,16 +13,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 
 @RequiresApi(api = Build.VERSION_CODES.R)
 public class StatelessControlService {
 
     static List<Control> createStatelessControls(Context context) {
-        AppDatabase database = DatabaseInstanceManager.getInstance(context);
-        return database.deviceDao().getAll().stream()
+        DeviceRepository deviceRepository = DeviceRepository.getInstance(context);
+        return deviceRepository.getAll().stream()
                 .map(device -> mapDeviceToStatelessControl(device, context))
                 .collect(Collectors.toList());
     }

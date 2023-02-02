@@ -16,7 +16,7 @@ import java.util.Set;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.wear.WearClient;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeWearClient() {
         wearClient = new WearClient(this);
-        DatabaseInstanceManager.getInstance(this).deviceDao()
+        DeviceRepository.getInstance(this)
                 .getAllAsObservable()
                 .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
     }

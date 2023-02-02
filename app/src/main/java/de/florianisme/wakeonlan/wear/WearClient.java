@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.models.DeviceDto;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class WearClient {
 

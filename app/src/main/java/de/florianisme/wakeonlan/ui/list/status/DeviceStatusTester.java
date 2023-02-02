@@ -1,6 +1,6 @@
 package de.florianisme.wakeonlan.ui.list.status;
 
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public interface DeviceStatusTester {
 
