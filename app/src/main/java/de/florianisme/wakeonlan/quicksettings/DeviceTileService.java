@@ -13,12 +13,17 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.AppDatabase;
 import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
 import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
+import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
+import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
+import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
 import de.florianisme.wakeonlan.wol.WolSender;
 
-public abstract class DeviceTileService extends TileService {
+public abstract class DeviceTileService extends TileService implements DeviceStatusListener {
 
-    protected AppDatabase appDatabase;
-    protected Device device;
+    private AppDatabase appDatabase;
+    private Device device;
+    private DeviceStatusTester deviceStatusTester;
 
     @Override
     public void onTileAdded() {
@@ -30,11 +35,12 @@ public abstract class DeviceTileService extends TileService {
         appDatabase = DatabaseInstanceManager.getInstance(this);
         Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
-        Tile tile = super.getQsTile();
+        Tile tile = getQsTile();
 
         if (optionalMachine.isPresent()) {
             Device device = optionalMachine.get();
             this.device = device;
+            deviceStatusTester.scheduleDeviceStatusPings(device, this);
 
             tile.setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -57,6 +63,13 @@ public abstract class DeviceTileService extends TileService {
     }
 
     @Override
+    public void onStatusAvailable(DeviceStatus deviceStatus) {
+        Tile tile = getQsTile();
+        tile.setState(deviceStatus == DeviceStatus.ONLINE ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        tile.updateTile();
+    }
+
+    @Override
     public void onClick() {
         try {
             WolSender.sendWolPacket(device);
@@ -69,7 +82,14 @@ public abstract class DeviceTileService extends TileService {
     @Override
     public void onStartListening() {
         super.onStartListening();
+        deviceStatusTester = new PingDeviceStatusTester();
         updateTileState();
+    }
+
+    @Override
+    public void onStopListening() {
+        super.onStopListening();
+        deviceStatusTester.stopDeviceStatusPings();
     }
 
     abstract int machineAtIndex();
