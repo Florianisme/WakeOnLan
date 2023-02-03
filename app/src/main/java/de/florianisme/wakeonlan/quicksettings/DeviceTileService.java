@@ -73,7 +73,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     public void onClick() {
         try {
             WolSender.sendWolPacket(device);
-            Toast.makeText(this, getString(R.string.wol_toast_sending_packet) + device.name, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.wol_toast_sending_packet, device.name), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "Error while sending WOL Packet", e);
         }
