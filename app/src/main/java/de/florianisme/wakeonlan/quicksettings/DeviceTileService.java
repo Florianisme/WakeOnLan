@@ -20,9 +20,11 @@ import de.florianisme.wakeonlan.wol.WolSender;
 
 public abstract class DeviceTileService extends TileService implements DeviceStatusListener {
 
+    private final DeviceStatusTester deviceStatusTester = new PingDeviceStatusTester();
+
     private DeviceRepository deviceRepository;
     private Device device;
-    private DeviceStatusTester deviceStatusTester;
+
 
     @Override
     public void onTileAdded() {
@@ -45,7 +47,6 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 tile.setSubtitle(getString(R.string.tile_subtitle));
             }
-            tile.setState(Tile.STATE_ACTIVE);
         } else {
             tile.setLabel(getString(R.string.tile_no_device_found));
             tile.setState(Tile.STATE_UNAVAILABLE);
@@ -81,7 +82,6 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     @Override
     public void onStartListening() {
         super.onStartListening();
-        deviceStatusTester = new PingDeviceStatusTester();
         updateTileState();
     }
 
