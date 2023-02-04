@@ -59,7 +59,7 @@ public class NetworkScanFragment extends Fragment {
         return new ScanCallback() {
             @Override
             public void onError(int errorStringReference) {
-                getActivity().runOnUiThread(() ->
+                runOnUiThread(() ->
                         Toast.makeText(getContext(), errorStringReference, Toast.LENGTH_SHORT).show());
             }
 
@@ -73,8 +73,16 @@ public class NetworkScanFragment extends Fragment {
 
                 synchronized (resultList) {
                     resultList.add(networkScanDevice);
-                    getActivity().runOnUiThread(() -> networkScanAdapter.updateList(resultList));
+                    runOnUiThread(() -> networkScanAdapter.updateList(resultList));
                 }
+            }
+
+            private void runOnUiThread(Runnable runnable) {
+                if (getActivity() == null) {
+                    // Activity has already finished, Threads were still running. Do nothing
+                    return;
+                }
+                getActivity().runOnUiThread(runnable);
             }
 
             @Override
