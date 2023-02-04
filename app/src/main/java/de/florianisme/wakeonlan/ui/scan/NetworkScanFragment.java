@@ -23,7 +23,6 @@ public class NetworkScanFragment extends Fragment {
 
     private FragmentNetworkScanBinding binding;
     private NetworkScanAdapter networkScanAdapter;
-    private NetworkScanTask networkScanTask;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -47,35 +46,21 @@ public class NetworkScanFragment extends Fragment {
         binding.swipeRefresh.setRefreshing(true);
         networkScanAdapter.clearDataset();
 
-        if (networkScanTask != null) {
-            networkScanTask.cancel();
-        }
-
-        networkScanTask = new NetworkScanTask(getContext(), getScanCallback());
-        Thread networkScanThread = new Thread(networkScanTask);
-
-        networkScanThread.start();
+        new NetworkScanTask(getScanCallback()).startScan(getContext());
     }
 
     private void setupSwipeToRefresh() {
         binding.swipeRefresh.setOnRefreshListener(this::startNetworkScan);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (networkScanTask != null) {
-            networkScanTask.cancel();
-        }
-    }
-
     private ScanCallback getScanCallback() {
-        List<NetworkScanDevice> resultList = new ArrayList<>(15);
+        final List<NetworkScanDevice> resultList = new ArrayList<>(20);
 
         return new ScanCallback() {
             @Override
             public void onError(int errorStringReference) {
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(), errorStringReference, Toast.LENGTH_SHORT).show());
+                getActivity().runOnUiThread(() ->
+                        Toast.makeText(getContext(), errorStringReference, Toast.LENGTH_SHORT).show());
             }
 
             @Override
@@ -86,8 +71,10 @@ public class NetworkScanFragment extends Fragment {
                     networkScanDevice.setName(hostName);
                 }
 
-                resultList.add(networkScanDevice);
-                networkScanAdapter.updateList(resultList);
+                synchronized (resultList) {
+                    resultList.add(networkScanDevice);
+                    getActivity().runOnUiThread(() -> networkScanAdapter.updateList(resultList));
+                }
             }
 
             @Override
