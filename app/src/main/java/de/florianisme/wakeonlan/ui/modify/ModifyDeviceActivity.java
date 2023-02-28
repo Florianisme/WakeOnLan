@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocomplete;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.InputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.IpAddressValidator;
@@ -31,7 +30,7 @@ import de.florianisme.wakeonlan.ui.modify.watcher.validator.SecureOnPasswordVali
 public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     protected ActivityModifyDeviceBinding binding;
-    protected AppDatabase databaseInstance;
+    protected DeviceRepository deviceRepository;
 
     protected TextInputEditText deviceMacInput;
     protected TextInputEditText deviceNameInput;
@@ -60,7 +59,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        databaseInstance = DatabaseInstanceManager.getInstance(this);
+        deviceRepository = DeviceRepository.getInstance(this);
         addValidators();
         addAutofillClickHandler();
         addDevicePortsAdapter();

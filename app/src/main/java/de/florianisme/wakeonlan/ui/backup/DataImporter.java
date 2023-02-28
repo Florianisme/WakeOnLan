@@ -15,12 +15,13 @@ import com.google.common.io.ByteStreams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.DeviceDao;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.backup.contracts.ChooseImportFileDestinationContract;
+import de.florianisme.wakeonlan.ui.backup.model.DeviceBackupModel;
 
 public class DataImporter implements ActivityResultCallback<Uri> {
 
@@ -45,7 +46,9 @@ public class DataImporter implements ActivityResultCallback<Uri> {
 
         try {
             byte[] bytes = readContentFromFile(uri, context);
-            Device[] devices = new ObjectMapper().readValue(bytes, Device[].class);
+            Device[] devices = Arrays.stream(new ObjectMapper().readValue(bytes, DeviceBackupModel[].class))
+                    .map(DeviceBackupModel::toModel)
+                    .toArray(Device[]::new);
 
             replaceDevicesInDatabase(devices, context);
             Toast.makeText(context, context.getString(R.string.backup_message_import_success, devices.length), Toast.LENGTH_LONG).show();
@@ -56,8 +59,8 @@ public class DataImporter implements ActivityResultCallback<Uri> {
     }
 
     private void replaceDevicesInDatabase(Device[] devices, Context context) {
-        DeviceDao deviceDao = DatabaseInstanceManager.getInstance(context).deviceDao();
-        deviceDao.replaceAllDevices(devices);
+        DeviceRepository deviceRepository = DeviceRepository.getInstance(context);
+        deviceRepository.replaceAllDevices(devices);
     }
 
     private byte[] readContentFromFile(Uri uri, Context context) throws IOException {

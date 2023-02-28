@@ -16,8 +16,8 @@ import java.util.List;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.FragmentListDevicesBinding;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.GridLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.LinearLayoutManagerWrapper;
 
@@ -45,13 +45,13 @@ public class DeviceListFragment extends Fragment {
     }
 
     private void registerLiveDataObserver() {
-        DatabaseInstanceManager.getInstance(getContext()).deviceDao()
+        DeviceRepository.getInstance(getContext())
                 .getAllAsObservable()
                 .observe(getViewLifecycleOwner(), devices -> deviceListAdapter.updateDataset(devices));
     }
 
     private void instantiateRecyclerView() {
-        List<Device> initialDataset = DatabaseInstanceManager.getInstance(getContext()).deviceDao().getAll();
+        List<Device> initialDataset = DeviceRepository.getInstance(getContext()).getAll();
         deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback());
         deviceListAdapter.setHasStableIds(true);
         RecyclerView devicesRecyclerView = binding.machineList;

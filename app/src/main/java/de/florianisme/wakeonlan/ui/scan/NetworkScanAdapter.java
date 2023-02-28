@@ -5,12 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.common.base.Strings;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +22,10 @@ import de.florianisme.wakeonlan.ui.scan.viewholder.ScanResultViewHolder;
 
 public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final AsyncListDiffer<NetworkScanDevice> listDiffer = new AsyncListDiffer<>(this, new NetworkScanDiffCallback());
+    private List<NetworkScanDevice> deviceList = new ArrayList<>(0);
 
     public void clearDataset() {
-        listDiffer.submitList(new ArrayList<>());
+        updateList(new ArrayList<>());
     }
 
     public void updateList(List<NetworkScanDevice> updatedList) {
@@ -35,16 +34,23 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 .sorted(getScanDeviceComparator())
                 .collect(Collectors.toList());
 
-        listDiffer.submitList(sortedList);
+        NetworkScanDiffCallback diffCallback = new NetworkScanDiffCallback(Collections.unmodifiableList(deviceList), sortedList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.deviceList = sortedList;
+
+        diffResult.dispatchUpdatesTo(this);
     }
 
     private Comparator<NetworkScanDevice> getScanDeviceComparator() {
-        Comparator<NetworkScanDevice> networkScanDeviceComparator =
-                Comparator.comparing(device ->
-                        Strings.nullToEmpty(device.getIpAddress())
-                                .substring(0, device.getIpAddress()
-                                        .lastIndexOf(".") + 1));
-        return networkScanDeviceComparator.reversed();
+        return Comparator.comparingInt(device -> Integer.parseInt(getLastIpOctet(device)));
+    }
+
+    @NonNull
+    private String getLastIpOctet(NetworkScanDevice device) {
+        return device.getIpAddress()
+                .substring(device.getIpAddress()
+                        .lastIndexOf(".") + 1);
     }
 
     @NonNull
@@ -68,7 +74,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (listDiffer.getCurrentList().isEmpty()) {
+        if (deviceList.isEmpty()) {
             return ListViewType.EMPTY.ordinal();
         } else {
             return ListViewType.SCAN_DEVICE.ordinal();
@@ -80,7 +86,7 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (getItemViewType(position) == ListViewType.SCAN_DEVICE.ordinal()) {
             ScanResultViewHolder scanResultViewHolder = (ScanResultViewHolder) viewHolder;
 
-            NetworkScanDevice networkScanDevice = listDiffer.getCurrentList().get(position);
+            NetworkScanDevice networkScanDevice = deviceList.get(position);
 
             scanResultViewHolder.setNameIfPresent(networkScanDevice.getName());
             scanResultViewHolder.setIpAddress(networkScanDevice.getIpAddress());
@@ -90,17 +96,17 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public long getItemId(int position) {
-        if (listDiffer.getCurrentList().isEmpty()) {
+        if (deviceList.isEmpty()) {
             return RecyclerView.NO_ID;
         }
-        return listDiffer.getCurrentList().get(position).hashCode();
+        return deviceList.get(position).hashCode();
     }
 
     @Override
     public int getItemCount() {
-        if (listDiffer.getCurrentList().isEmpty()) {
+        if (deviceList.isEmpty()) {
             return 1; // "Empty" item
         }
-        return listDiffer.getCurrentList().size();
+        return deviceList.size();
     }
 }

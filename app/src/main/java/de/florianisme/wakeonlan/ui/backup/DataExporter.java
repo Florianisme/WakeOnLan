@@ -15,11 +15,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.backup.contracts.ChooseSaveFileDestinationContract;
+import de.florianisme.wakeonlan.ui.backup.model.DeviceBackupModel;
 
 public class DataExporter implements ActivityResultCallback<Uri> {
 
@@ -45,7 +46,10 @@ public class DataExporter implements ActivityResultCallback<Uri> {
 
         Context context = contextWeakReference.get();
         try {
-            List<Device> devices = DatabaseInstanceManager.getInstance(context).deviceDao().getAll();
+            List<DeviceBackupModel> devices = DeviceRepository.getInstance(context).getAll()
+                    .stream().map(DeviceBackupModel::new)
+                    .collect(Collectors.toList());
+
             byte[] content = new ObjectMapper().writeValueAsBytes(devices);
             writeDevicesToFile(uri, content, context);
 

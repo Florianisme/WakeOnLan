@@ -10,34 +10,34 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.entities.DeviceEntity;
 
 @Dao
 public interface DeviceDao {
 
     @Query("SELECT * FROM Devices")
-    List<Device> getAll();
+    List<DeviceEntity> getAll();
 
     @Query("SELECT * FROM Devices")
-    LiveData<List<Device>> getAllAsObservable();
+    LiveData<List<DeviceEntity>> getAllAsObservable();
 
     @Query("SELECT * FROM Devices WHERE id = :id")
-    Device getById(int id);
+    DeviceEntity getById(int id);
 
     @Insert
-    void insertAll(Device... devices);
+    void insertAll(DeviceEntity... devices);
 
     @Update
-    void update(Device device);
+    void update(DeviceEntity device);
 
     @Delete
-    void delete(Device device);
+    void delete(DeviceEntity device);
 
     @Query("DELETE FROM Devices")
     void deleteAll();
 
     @Transaction
-    default void replaceAllDevices(Device... devices) {
+    default void replaceAllDevices(DeviceEntity... devices) {
         deleteAll();
         insertAll(devices);
     }

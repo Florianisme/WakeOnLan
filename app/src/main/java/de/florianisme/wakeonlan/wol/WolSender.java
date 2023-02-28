@@ -7,7 +7,7 @@ import java.net.DatagramSocket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class WolSender {
 

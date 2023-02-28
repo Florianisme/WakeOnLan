@@ -56,4 +56,5 @@
     <string name="device_title_security">Sicherheit</string>
     <string name="add_device_secure_on">SecureOn Passwort (optional)</string>
     <string name="add_device_error_secure_on_password_invalid">Passwort muss entweder leer oder eine gültige MAC oder IP Adresse sein</string>
+    <string name="quick_access_device_subtitle">Gerät einschalten</string>
 </resources>

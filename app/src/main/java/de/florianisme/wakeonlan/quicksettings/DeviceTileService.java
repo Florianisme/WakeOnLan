@@ -10,15 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.AppDatabase;
-import de.florianisme.wakeonlan.persistence.DatabaseInstanceManager;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
+import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
+import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
+import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
+import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
 import de.florianisme.wakeonlan.wol.WolSender;
 
-public abstract class DeviceTileService extends TileService {
+public abstract class DeviceTileService extends TileService implements DeviceStatusListener {
 
-    protected AppDatabase appDatabase;
-    protected Device device;
+    private final DeviceStatusTester deviceStatusTester = new PingDeviceStatusTester();
+
+    private DeviceRepository deviceRepository;
+    private Device device;
+
 
     @Override
     public void onTileAdded() {
@@ -27,20 +33,20 @@ public abstract class DeviceTileService extends TileService {
     }
 
     private void updateTileState() {
-        appDatabase = DatabaseInstanceManager.getInstance(this);
+        deviceRepository = DeviceRepository.getInstance(this);
         Optional<Device> optionalMachine = getMachineAtIndex(machineAtIndex());
 
-        Tile tile = super.getQsTile();
+        Tile tile = getQsTile();
 
         if (optionalMachine.isPresent()) {
             Device device = optionalMachine.get();
             this.device = device;
+            deviceStatusTester.scheduleDeviceStatusPings(device, this);
 
             tile.setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 tile.setSubtitle(getString(R.string.tile_subtitle));
             }
-            tile.setState(Tile.STATE_ACTIVE);
         } else {
             tile.setLabel(getString(R.string.tile_no_device_found));
             tile.setState(Tile.STATE_UNAVAILABLE);
@@ -49,7 +55,7 @@ public abstract class DeviceTileService extends TileService {
     }
 
     private Optional<Device> getMachineAtIndex(int index) {
-        List<Device> machineList = appDatabase.deviceDao().getAll();
+        List<Device> machineList = deviceRepository.getAll();
         if (machineList.size() <= index) {
             return Optional.empty();
         }
@@ -57,10 +63,17 @@ public abstract class DeviceTileService extends TileService {
     }
 
     @Override
+    public void onStatusAvailable(DeviceStatus deviceStatus) {
+        Tile tile = getQsTile();
+        tile.setState(deviceStatus == DeviceStatus.ONLINE ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+        tile.updateTile();
+    }
+
+    @Override
     public void onClick() {
         try {
             WolSender.sendWolPacket(device);
-            Toast.makeText(this, getString(R.string.wol_toast_sending_packet) + device.name, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.wol_toast_sending_packet, device.name), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "Error while sending WOL Packet", e);
         }
@@ -70,6 +83,12 @@ public abstract class DeviceTileService extends TileService {
     public void onStartListening() {
         super.onStartListening();
         updateTileState();
+    }
+
+    @Override
+    public void onStopListening() {
+        super.onStopListening();
+        deviceStatusTester.stopDeviceStatusPings();
     }
 
     abstract int machineAtIndex();

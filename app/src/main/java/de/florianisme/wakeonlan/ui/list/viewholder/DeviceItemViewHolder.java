@@ -16,7 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.R;
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.ui.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;

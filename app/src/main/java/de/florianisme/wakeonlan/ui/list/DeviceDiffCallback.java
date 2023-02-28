@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.google.common.base.Strings;
 
-import de.florianisme.wakeonlan.persistence.entities.Device;
+import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class DeviceDiffCallback extends DiffUtil.ItemCallback<Device> {
 
