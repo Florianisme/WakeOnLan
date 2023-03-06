@@ -12,12 +12,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.common.collect.Sets;
 
-import java.util.List;
 import java.util.Set;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
-import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
 import de.florianisme.wakeonlan.wear.WearClient;
@@ -58,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeShortcuts() {
-        List<Device> devices = DeviceRepository.getInstance(this).getAll();
-        new DynamicShortcutManager().updateShortcuts(this, devices);
+        DynamicShortcutManager dynamicShortcutManager = new DynamicShortcutManager();
+        DeviceRepository.getInstance(this)
+                .getAllAsObservable()
+                .observe(this, devices -> dynamicShortcutManager.updateShortcuts(this, devices));
     }
 
     private Set<Integer> getMenuIds() {

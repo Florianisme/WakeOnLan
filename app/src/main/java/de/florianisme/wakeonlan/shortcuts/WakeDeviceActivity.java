@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.common.base.Strings;
+
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
@@ -33,8 +35,13 @@ public class WakeDeviceActivity extends AppCompatActivity {
             }
 
             Device device = DeviceRepository.getInstance(this).getById(machineId);
-            WolSender.sendWolPacket(device);
-            Toast.makeText(this, getString(R.string.wol_toast_sending_packet, device.name), Toast.LENGTH_LONG).show();
+
+            if (!Strings.isNullOrEmpty(device.macAddress)) {
+                WolSender.sendWolPacket(device);
+                Toast.makeText(this, getString(R.string.wol_toast_sending_packet, device.name), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, R.string.shortcut_wake_device_error, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
