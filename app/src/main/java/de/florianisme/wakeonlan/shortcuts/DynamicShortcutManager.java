@@ -3,7 +3,6 @@ package de.florianisme.wakeonlan.shortcuts;
 import android.content.Context;
 import android.os.Build;
 
-import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 
 import java.util.List;
@@ -22,11 +21,10 @@ public class DynamicShortcutManager {
     }
 
     private void publishShortcuts(Context context, List<Device> devices) {
-        for (Device device : devices) {
-            ShortcutInfoCompat shortcutInfo = new DeviceShortcutFactory(device).buildShortcut(context);
-
-            ShortcutManagerCompat.pushDynamicShortcut(context, shortcutInfo);
-        }
+        devices.stream()
+                .sorted((device1, device2) -> Integer.compare(device2.id, device1.id))
+                .map(device -> DeviceShortcutMapper.buildShortcut(device, context))
+                .forEach(shortcut -> ShortcutManagerCompat.pushDynamicShortcut(context, shortcut));
     }
 
     private void removeOldShortcuts(Context context) {
