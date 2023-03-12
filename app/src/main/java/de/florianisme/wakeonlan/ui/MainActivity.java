@@ -17,6 +17,7 @@ import java.util.Set;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
+import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
 import de.florianisme.wakeonlan.wear.WearClient;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeNavController();
         initializeWearClient();
+        initializeShortcuts();
     }
 
     private void initializeWearClient() {
@@ -51,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(getMenuIds()).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
+    }
+
+    private void initializeShortcuts() {
+        DynamicShortcutManager dynamicShortcutManager = new DynamicShortcutManager();
+        DeviceRepository.getInstance(this)
+                .getAllAsObservable()
+                .observe(this, devices -> dynamicShortcutManager.updateShortcuts(this, devices));
     }
 
     private Set<Integer> getMenuIds() {

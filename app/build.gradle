@@ -3,7 +3,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 63
+        versionCode 65
         wearAppUnbundled true
     }
     buildFeatures {
@@ -21,6 +21,9 @@ dependencies {
     implementation 'org.reactivestreams:reactive-streams:1.0.3'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'android.arch.lifecycle:livedata:1.1.1'
+
+    implementation "androidx.core:core:1.9.0"
+    implementation 'androidx.core:core-google-shortcuts:1.1.0'
 
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
