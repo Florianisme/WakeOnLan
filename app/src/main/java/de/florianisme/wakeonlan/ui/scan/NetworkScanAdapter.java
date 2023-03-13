@@ -25,11 +25,17 @@ public class NetworkScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<NetworkScanDevice> deviceList = new ArrayList<>(0);
 
     public void clearDataset() {
-        updateList(new ArrayList<>());
+        deviceList = new ArrayList<>();
+        updateDeviceList();
     }
 
-    public void updateList(List<NetworkScanDevice> updatedList) {
-        List<NetworkScanDevice> sortedList = updatedList.stream()
+    public synchronized void addDevice(NetworkScanDevice networkScanDevice) {
+        deviceList.add(networkScanDevice);
+        updateDeviceList();
+    }
+
+    private void updateDeviceList() {
+        List<NetworkScanDevice> sortedList = deviceList.stream()
                 .distinct()
                 .sorted(getScanDeviceComparator())
                 .collect(Collectors.toList());
