@@ -4,10 +4,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(project.property('UPLOAD_KEYSTORE_PATH'))
-            storePassword project.property('KEYSTORE_PASSWORD')
-            keyAlias project.property('KEY_ALIAS')
-            keyPassword project.property('KEY_PASSWORD')
+            storeFile file(project.findProperty('UPLOAD_KEYSTORE_PATH') ?: " ")
+            storePassword project.findProperty('KEYSTORE_PASSWORD') ?: ""
+            keyAlias project.findProperty('KEY_ALIAS') ?: ""
+            keyPassword project.findProperty('KEY_PASSWORD') ?: ""
 
             v1SigningEnabled true
             v2SigningEnabled true
