@@ -29,6 +29,21 @@ public class DeviceEntity {
     @ColumnInfo(name = "secure_on_password")
     public String secureOnPassword;
 
+    @ColumnInfo(name = "ssh_ip")
+    public String sshIp;
+
+    @ColumnInfo(name = "ssh_port")
+    public Integer sshPort;
+
+    @ColumnInfo(name = "ssh_user")
+    public String sshUsername;
+
+    @ColumnInfo(name = "ssh_password")
+    public String sshPassword;
+
+    @ColumnInfo(name = "ssh_command")
+    public String sshCommand;
+
     @Ignore
     public DeviceEntity(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword) {
         this.id = id;
