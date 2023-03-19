@@ -19,6 +19,13 @@
     <string name="add_device_broadcast_address">Broadcast Address</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_device_secure_on">SecureOn Password (optional)</string>
+    <string name="add_device_shutdown">Remote Shutdown</string>
+    <string name="add_device_shutdown_enable">Enable Remote Shutdown</string>
+    <string name="add_device_shutdown_ip">SSH Address</string>
+    <string name="add_device_shutdown_port">SSH Port</string>
+    <string name="add_device_shutdown_username">Username</string>
+    <string name="add_device_shutdown_password">Password</string>
+    <string name="add_device_shutdown_command">Shutdown Command</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
     <string-array name="ports_selection">
