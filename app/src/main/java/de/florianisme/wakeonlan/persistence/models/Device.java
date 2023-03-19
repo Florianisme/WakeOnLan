@@ -16,6 +16,8 @@ public class Device {
 
     public String secureOnPassword;
 
+    public boolean remoteShutdownEnabled;
+
     public String sshAddress;
 
     public int sshPort;
@@ -27,7 +29,7 @@ public class Device {
     public String sshCommand;
 
     public Device(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword,
-                  String sshAddress, int sshPort, String sshUsername, String sshPassword, String sshCommand) {
+                  boolean remoteShutdownEnabled, String sshAddress, int sshPort, String sshUsername, String sshPassword, String sshCommand) {
         this.id = id;
         this.name = name;
         this.macAddress = macAddress;
@@ -35,6 +37,7 @@ public class Device {
         this.port = port;
         this.statusIp = statusIp;
         this.secureOnPassword = secureOnPassword;
+        this.remoteShutdownEnabled = remoteShutdownEnabled;
         this.sshAddress = sshAddress;
         this.sshPort = sshPort;
         this.sshUsername = sshUsername;

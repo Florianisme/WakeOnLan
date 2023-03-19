@@ -11,7 +11,7 @@ public class DeviceEntityMapper implements EntityMapper<Device, DeviceEntity> {
             return new Device();
         }
         return new Device(entity.id, entity.name, entity.macAddress, entity.broadcastAddress, entity.port, entity.statusIp, entity.secureOnPassword,
-                entity.sshAddress, entity.sshPort, entity.sshUsername, entity.sshPassword, entity.sshCommand);
+                entity.enableRemoteShutdown, entity.sshAddress, entity.sshPort, entity.sshUsername, entity.sshPassword, entity.sshCommand);
     }
 
     @Override
