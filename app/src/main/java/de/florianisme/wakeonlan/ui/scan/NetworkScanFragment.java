@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.florianisme.wakeonlan.databinding.FragmentNetworkScanBinding;
@@ -71,16 +72,17 @@ public class NetworkScanFragment extends Fragment {
             }
 
             private void runOnUiThread(Runnable runnable) {
-                if (getActivity() == null) {
+                FragmentActivity activity = getActivity();
+                if (activity == null) {
                     // Activity has already finished, Threads were still running. Do nothing
                     return;
                 }
-                getActivity().runOnUiThread(runnable);
+                activity.runOnUiThread(runnable);
             }
 
             @Override
             public void onTaskEnd() {
-                binding.swipeRefresh.setRefreshing(false);
+                runOnUiThread(() -> binding.swipeRefresh.setRefreshing(false));
             }
         };
     }
