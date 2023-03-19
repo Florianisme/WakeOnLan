@@ -10,18 +10,25 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocomplete;
+import de.florianisme.wakeonlan.ui.modify.watcher.validator.ConditionalInputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.InputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.MacValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.SecureOnPasswordValidator;
@@ -38,6 +45,13 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceSecureOnPassword;
     protected ImageButton broadcastAutofill;
     protected MaterialAutoCompleteTextView devicePorts;
+    protected ConstraintLayout deviceRemoteShutdownContainer;
+    protected SwitchCompat deviceEnableRemoteShutdown;
+    protected TextInputEditText deviceSshAddressInput;
+    protected TextInputEditText deviceSshPortInput;
+    protected TextInputEditText deviceSshUsernameInput;
+    protected TextInputEditText deviceSshPasswordInput;
+    protected TextInputEditText deviceSshCommandInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +68,14 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceSecureOnPassword = binding.device.deviceSecureOnPassword;
         broadcastAutofill = binding.device.broadcastAutofill;
 
+        deviceRemoteShutdownContainer = binding.device.deviceRemoteShutdownContainer;
+        deviceEnableRemoteShutdown = binding.device.deviceSwitchRemoteShutdown;
+        deviceSshAddressInput = binding.device.deviceShutdownAddress;
+        deviceSshPortInput = binding.device.deviceShutdownPort;
+        deviceSshUsernameInput = binding.device.deviceShutdownUsername;
+        deviceSshPasswordInput = binding.device.deviceShutdownPassword;
+        deviceSshCommandInput = binding.device.deviceShutdownCommand;
+
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
@@ -61,6 +83,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceRepository = DeviceRepository.getInstance(this);
         addValidators();
         addAutofillClickHandler();
+        setRemoteDeviceShutdownSwitchListener();
         addDevicePortsAdapter();
     }
 
@@ -78,6 +101,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         });
     }
 
+    private void setRemoteDeviceShutdownSwitchListener() {
+        deviceEnableRemoteShutdown.setOnCheckedChangeListener((buttonView, isChecked) ->
+                deviceRemoteShutdownContainer.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+    }
+
     private void addValidators() {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
@@ -85,17 +113,35 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput));
         deviceBroadcastInput.addTextChangedListener(new InputNotEmptyValidator(deviceBroadcastInput));
         deviceSecureOnPassword.addTextChangedListener(new SecureOnPasswordValidator(deviceSecureOnPassword));
+
+        List<Supplier<Boolean>> remoteShutdownEnabledSupplier = Collections.singletonList(() -> deviceEnableRemoteShutdown.isChecked());
+        List<Supplier<Boolean>> statusIpFallbackAvailable =
+                Lists.newArrayList(() -> deviceEnableRemoteShutdown.isChecked(), () -> isEmpty(deviceStatusIpInput));
+
+        deviceSshAddressInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshAddressInput, statusIpFallbackAvailable));
+        deviceSshUsernameInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshUsernameInput, remoteShutdownEnabledSupplier));
+        deviceSshPasswordInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshPasswordInput, remoteShutdownEnabledSupplier));
+        deviceSshCommandInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshCommandInput, remoteShutdownEnabledSupplier));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
         return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
                 deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
                 deviceBroadcastInput.getError() == null && isNotEmpty(deviceBroadcastInput) &&
-                deviceStatusIpInput.getError() == null && deviceSecureOnPassword.getError() == null;
+                deviceStatusIpInput.getError() == null &&
+                deviceSecureOnPassword.getError() == null &&
+                deviceSshAddressInput.getError() == null &&
+                deviceSshUsernameInput.getError() == null &&
+                deviceSshPasswordInput.getError() == null &&
+                deviceSshCommandInput.getError() == null;
     }
 
     private boolean isNotEmpty(TextInputEditText inputEditText) {
-        return inputEditText.getText() != null && inputEditText.getText().length() != 0;
+        return !isEmpty(inputEditText);
+    }
+
+    private boolean isEmpty(TextInputEditText inputEditText) {
+        return inputEditText.getText() == null || inputEditText.getText().length() == 0;
     }
 
     private void addDevicePortsAdapter() {
@@ -119,6 +165,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput.setText(deviceNameInput.getText());
         deviceBroadcastInput.setText(deviceBroadcastInput.getText());
         deviceMacInput.setText(deviceMacInput.getText());
+        deviceSecureOnPassword.setText(deviceSecureOnPassword.getText());
+        deviceSshAddressInput.setText(deviceSshAddressInput.getText());
+        deviceSshUsernameInput.setText(deviceSshUsernameInput.getText());
+        deviceSshPasswordInput.setText(deviceSshPasswordInput.getText());
+        deviceSshCommandInput.setText(deviceSshCommandInput.getText());
     }
 
     abstract protected void persistDevice();
