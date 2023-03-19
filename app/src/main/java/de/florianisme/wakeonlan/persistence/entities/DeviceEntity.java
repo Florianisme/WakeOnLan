@@ -29,8 +29,8 @@ public class DeviceEntity {
     @ColumnInfo(name = "secure_on_password")
     public String secureOnPassword;
 
-    @ColumnInfo(name = "ssh_ip")
-    public String sshIp;
+    @ColumnInfo(name = "ssh_address")
+    public String sshAddress;
 
     @ColumnInfo(name = "ssh_port")
     public Integer sshPort;

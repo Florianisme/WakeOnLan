@@ -10,7 +10,8 @@ public class DeviceEntityMapper implements EntityMapper<Device, DeviceEntity> {
         if (entity == null) {
             return new Device();
         }
-        return new Device(entity.id, entity.name, entity.macAddress, entity.broadcastAddress, entity.port, entity.statusIp, entity.secureOnPassword);
+        return new Device(entity.id, entity.name, entity.macAddress, entity.broadcastAddress, entity.port, entity.statusIp, entity.secureOnPassword,
+                entity.sshAddress, entity.sshPort, entity.sshUsername, entity.sshPassword, entity.sshCommand);
     }
 
     @Override

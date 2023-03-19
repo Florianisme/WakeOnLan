@@ -43,6 +43,21 @@ public class DeviceBackupModel {
     @JsonAlias("g")
     public String secureOnPassword;
 
+    @JsonProperty("ssh_address")
+    public String sshAddress;
+
+    @JsonProperty("ssh_port")
+    public int sshPort;
+
+    @JsonProperty("ssh_username")
+    public String sshUsername;
+
+    @JsonProperty("ssh_password")
+    public String sshPassword;
+
+    @JsonProperty("ssh_command")
+    public String sshCommand;
+
     public DeviceBackupModel(Device device) {
         this.id = device.id;
         this.name = device.name;
@@ -51,10 +66,16 @@ public class DeviceBackupModel {
         this.port = device.port;
         this.statusIp = device.statusIp;
         this.secureOnPassword = device.secureOnPassword;
+        this.sshAddress = device.sshAddress;
+        this.sshPort = device.sshPort;
+        this.sshUsername = device.sshUsername;
+        this.sshPassword = device.sshPassword;
+        this.sshCommand = device.sshCommand;
     }
 
     public Device toModel() {
-        return new Device(this.id, this.name, this.macAddress, this.broadcastAddress, this.port, this.statusIp, this.secureOnPassword);
+        return new Device(this.id, this.name, this.macAddress, this.broadcastAddress, this.port, this.statusIp, this.secureOnPassword,
+                this.sshAddress, this.sshPort, this.sshUsername, this.sshPassword, this.sshCommand);
     }
 
     @SuppressWarnings("unused")

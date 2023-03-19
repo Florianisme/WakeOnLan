@@ -16,7 +16,18 @@ public class Device {
 
     public String secureOnPassword;
 
-    public Device(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword) {
+    public String sshAddress;
+
+    public int sshPort;
+
+    public String sshUsername;
+
+    public String sshPassword;
+
+    public String sshCommand;
+
+    public Device(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword,
+                  String sshAddress, int sshPort, String sshUsername, String sshPassword, String sshCommand) {
         this.id = id;
         this.name = name;
         this.macAddress = macAddress;
@@ -24,6 +35,11 @@ public class Device {
         this.port = port;
         this.statusIp = statusIp;
         this.secureOnPassword = secureOnPassword;
+        this.sshAddress = sshAddress;
+        this.sshPort = sshPort;
+        this.sshUsername = sshUsername;
+        this.sshPassword = sshPassword;
+        this.sshCommand = sshCommand;
     }
 
 
