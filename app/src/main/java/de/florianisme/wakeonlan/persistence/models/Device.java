@@ -20,7 +20,7 @@ public class Device {
 
     public String sshAddress;
 
-    public int sshPort;
+    public Integer sshPort;
 
     public String sshUsername;
 
@@ -29,7 +29,7 @@ public class Device {
     public String sshCommand;
 
     public Device(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword,
-                  boolean remoteShutdownEnabled, String sshAddress, int sshPort, String sshUsername, String sshPassword, String sshCommand) {
+                  boolean remoteShutdownEnabled, String sshAddress, Integer sshPort, String sshUsername, String sshPassword, String sshCommand) {
         this.id = id;
         this.name = name;
         this.macAddress = macAddress;
