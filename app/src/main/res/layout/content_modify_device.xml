@@ -88,13 +88,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/device_mac_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="8dp"
             android:hint="@string/add_device_mac_address"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/device_port_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/device_title_connectivity"
             app:placeholderText="AB:12:CD:34:EF:56">
@@ -108,6 +108,27 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/device_port_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/add_device_port"
+            app:layout_constraintStart_toEndOf="@id/device_mac_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_title_connectivity">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/device_ports"
+                style="@style/FontMonospaced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:minHeight="48dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -147,28 +168,6 @@
             app:layout_constraintTop_toTopOf="@id/device_broadcast_layout"
             app:srcCompat="@drawable/ic_autofill_broadcast" />
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/device_port_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:hint="@string/add_device_port"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/device_broadcast_layout">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/device_ports"
-                style="@style/FontMonospaced"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:minHeight="48dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <TextView
             android:id="@+id/device_title_remote_shutdown"
             style="@style/FontMonospaced"
@@ -178,7 +177,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/add_device_shutdown"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/device_port_layout" />
+            app:layout_constraintTop_toBottomOf="@id/device_broadcast_layout" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/device_switch_remote_shutdown"
