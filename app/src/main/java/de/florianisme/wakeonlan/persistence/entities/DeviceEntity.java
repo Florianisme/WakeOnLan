@@ -48,7 +48,8 @@ public class DeviceEntity {
     public String sshCommand;
 
     @Ignore
-    public DeviceEntity(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword) {
+    public DeviceEntity(int id, String name, String macAddress, String broadcastAddress, int port, String statusIp, String secureOnPassword,
+                        boolean enableRemoteShutdown, String sshAddress, Integer sshPort, String sshUsername, String sshPassword, String sshCommand) {
         this.id = id;
         this.name = name;
         this.macAddress = macAddress;
@@ -56,6 +57,12 @@ public class DeviceEntity {
         this.port = port;
         this.statusIp = statusIp;
         this.secureOnPassword = secureOnPassword;
+        this.enableRemoteShutdown = enableRemoteShutdown;
+        this.sshAddress = sshAddress;
+        this.sshPort = sshPort;
+        this.sshUsername = sshUsername;
+        this.sshPassword = sshPassword;
+        this.sshCommand = sshCommand;
     }
 
 

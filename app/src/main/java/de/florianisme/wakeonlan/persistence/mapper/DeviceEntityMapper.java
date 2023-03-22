@@ -19,6 +19,7 @@ public class DeviceEntityMapper implements EntityMapper<Device, DeviceEntity> {
         if (model == null) {
             return new DeviceEntity();
         }
-        return new DeviceEntity(model.id, model.name, model.macAddress, model.broadcastAddress, model.port, model.statusIp, model.secureOnPassword);
+        return new DeviceEntity(model.id, model.name, model.macAddress, model.broadcastAddress, model.port, model.statusIp, model.secureOnPassword,
+                model.remoteShutdownEnabled, model.sshAddress, model.sshPort, model.sshUsername, model.sshPassword, model.sshCommand);
     }
 }
