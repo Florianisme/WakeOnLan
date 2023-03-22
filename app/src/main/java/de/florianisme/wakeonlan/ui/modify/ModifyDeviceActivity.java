@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
@@ -102,8 +103,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     private void setRemoteDeviceShutdownSwitchListener() {
-        deviceEnableRemoteShutdown.setOnCheckedChangeListener((buttonView, isChecked) ->
-                deviceRemoteShutdownContainer.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        deviceEnableRemoteShutdown.setOnCheckedChangeListener((buttonView, isChecked) -> triggerRemoteShutdownLayoutVisibility(isChecked));
+    }
+
+    protected void triggerRemoteShutdownLayoutVisibility(boolean isEnabled) {
+        deviceRemoteShutdownContainer.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
     }
 
     private void addValidators() {
@@ -208,6 +212,43 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     @NonNull
     protected String getDeviceSecureOnPassword() {
         return getInputText(deviceSecureOnPassword);
+    }
+
+    protected boolean getDeviceRemoteShutdownEnabled() {
+        return deviceEnableRemoteShutdown.isChecked();
+    }
+
+    @NonNull
+    protected String getDeviceSshAddress() {
+        return getInputText(deviceSshAddressInput);
+    }
+
+    @NonNull
+    protected Integer getDeviceSshPort() {
+        try {
+            String sshPort = getInputText(deviceSshPortInput);
+            if (Strings.nullToEmpty(sshPort).isEmpty()) {
+                return -1;
+            }
+            return Integer.parseInt(sshPort);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    @NonNull
+    protected String getDeviceSshUsername() {
+        return getInputText(deviceSshUsernameInput);
+    }
+
+    @NonNull
+    protected String getDeviceSshPassword() {
+        return getInputText(deviceSshPasswordInput);
+    }
+
+    @NonNull
+    protected String getDeviceSshCommand() {
+        return getInputText(deviceSshCommandInput);
     }
 
     @Override

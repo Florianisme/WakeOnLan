@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.google.common.base.Strings;
 
+import java.util.Objects;
+
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
 
@@ -40,13 +42,26 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
             deviceStatusIpInput.setText(device.statusIp);
             deviceMacInput.setText(device.macAddress);
             deviceBroadcastInput.setText(device.broadcastAddress);
-            deviceSecureOnPassword.setText(device.secureOnPassword);
             if (device.port == 9) {
                 devicePorts.setText("9", false);
             } else {
                 devicePorts.setText("7", false);
             }
+            deviceSecureOnPassword.setText(device.secureOnPassword);
+
+            deviceEnableRemoteShutdown.setChecked(device.remoteShutdownEnabled);
+            triggerRemoteShutdownLayoutVisibility(device.remoteShutdownEnabled);
+            deviceSshAddressInput.setText(device.sshAddress);
+            deviceSshPortInput.setText(getSshPortFallback());
+            deviceSshUsernameInput.setText(device.sshUsername);
+            deviceSshPasswordInput.setText(device.sshPassword);
+            deviceSshCommandInput.setText(device.sshCommand);
         }
+    }
+
+    @NonNull
+    private String getSshPortFallback() {
+        return device.sshPort == null || device.sshPort < 0 ? "" : String.valueOf(device.sshPort);
     }
 
     @Override
@@ -84,7 +99,14 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                 device.macAddress.equals(getDeviceMacInputText()) &&
                 device.statusIp.equals(getDeviceStatusIpText()) &&
                 device.port == getPort() &&
-                Strings.nullToEmpty(device.secureOnPassword).equals(getDeviceSecureOnPassword());
+                Strings.nullToEmpty(device.secureOnPassword).equals(getDeviceSecureOnPassword()) &&
+                device.remoteShutdownEnabled == getDeviceRemoteShutdownEnabled() &&
+                Strings.nullToEmpty(device.sshAddress).equals(getDeviceSshAddress()) &&
+                Objects.equals(device.sshPort, getDeviceSshPort()) &&
+                Strings.nullToEmpty(device.sshUsername).equals(getDeviceSshUsername()) &&
+                Strings.nullToEmpty(device.sshPassword).equals(getDeviceSshPassword()) &&
+                Strings.nullToEmpty(device.sshCommand).equals(getDeviceSshCommand());
+
     }
 
     @Override
@@ -95,6 +117,12 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
         device.broadcastAddress = getDeviceBroadcastAddressText();
         device.port = getPort();
         device.secureOnPassword = getDeviceSecureOnPassword();
+        device.remoteShutdownEnabled = getDeviceRemoteShutdownEnabled();
+        device.sshAddress = getDeviceSshAddress();
+        device.sshPort = getDeviceSshPort();
+        device.sshUsername = getDeviceSshUsername();
+        device.sshPassword = getDeviceSshPassword();
+        device.sshCommand = getDeviceSshCommand();
 
         deviceRepository.update(device);
     }

@@ -1,5 +1,6 @@
 package de.florianisme.wakeonlan.ui.modify;
 
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,6 +10,12 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class AddDeviceActivity extends ModifyDeviceActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        triggerRemoteShutdownLayoutVisibility(false);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,6 +43,12 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         device.broadcastAddress = getDeviceBroadcastAddressText();
         device.port = getPort();
         device.secureOnPassword = getDeviceSecureOnPassword();
+        device.remoteShutdownEnabled = getDeviceRemoteShutdownEnabled();
+        device.sshAddress = getDeviceSshAddress();
+        device.sshPort = getDeviceSshPort();
+        device.sshUsername = getDeviceSshUsername();
+        device.sshPassword = getDeviceSshPassword();
+        device.sshCommand = getDeviceSshCommand();
 
         deviceRepository.insertAll(device);
     }
@@ -45,6 +58,8 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         // There is no persisted device yet, so we check if any of our inputs are edited
         return getDeviceNameInputText().isEmpty() && getDeviceMacInputText().isEmpty()
                 && getDeviceBroadcastAddressText().isEmpty() && getDeviceStatusIpText().isEmpty()
-                && getDeviceSecureOnPassword().isEmpty();
+                && getDeviceSecureOnPassword().isEmpty() && !getDeviceRemoteShutdownEnabled() &&
+                getDeviceSshAddress().isEmpty() && getDeviceSshPort() == -1 && getDeviceSshUsername().isEmpty() &&
+                getDeviceSshPassword().isEmpty() && getDeviceSshCommand().isEmpty();
     }
 }
