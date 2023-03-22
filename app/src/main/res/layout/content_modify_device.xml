@@ -321,18 +321,18 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/device_title_security"
-                style="@style/FontMonospaced"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/device_title_security"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_command" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/device_title_security"
+            style="@style/FontMonospaced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/device_title_security"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_container" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/device_secure_on_password_layout"
@@ -345,7 +345,7 @@
             android:hint="@string/add_device_secure_on"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_container">
+            app:layout_constraintTop_toBottomOf="@id/device_title_security">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/device_secure_on_password"
