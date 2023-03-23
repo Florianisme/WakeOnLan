@@ -304,10 +304,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:hint="@string/add_device_shutdown_command"
+                app:helperText="@string/add_device_shutdown_command_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_password"
-                app:placeholderText="/bin/shutdown -h now">
+                app:placeholderText="/usr/sbin/shutdown -h now">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/device_shutdown_command"

@@ -26,6 +26,7 @@
     <string name="add_device_shutdown_username">Username</string>
     <string name="add_device_shutdown_password">Password</string>
     <string name="add_device_shutdown_command">Shutdown Command</string>
+    <string name="add_device_shutdown_command_helper">Command must be executable without triggering sudo-password-prompt</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
     <string-array name="ports_selection">
