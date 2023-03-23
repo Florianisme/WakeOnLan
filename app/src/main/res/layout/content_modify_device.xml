@@ -308,7 +308,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_password"
-                app:placeholderText="/usr/sbin/shutdown -h now">
+                app:placeholderText="sudo /usr/sbin/shutdown -h now">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/device_shutdown_command"
