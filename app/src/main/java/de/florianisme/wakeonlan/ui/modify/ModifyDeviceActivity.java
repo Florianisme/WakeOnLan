@@ -114,18 +114,22 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
-        deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput));
-        deviceBroadcastInput.addTextChangedListener(new InputNotEmptyValidator(deviceBroadcastInput));
+        deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput, R.string.add_device_error_name_empty));
+        deviceBroadcastInput.addTextChangedListener(new InputNotEmptyValidator(deviceBroadcastInput, R.string.add_device_error_broadcast_empty));
         deviceSecureOnPassword.addTextChangedListener(new SecureOnPasswordValidator(deviceSecureOnPassword));
 
         List<Supplier<Boolean>> remoteShutdownEnabledSupplier = Collections.singletonList(() -> deviceEnableRemoteShutdown.isChecked());
         List<Supplier<Boolean>> statusIpFallbackAvailable =
                 Lists.newArrayList(() -> deviceEnableRemoteShutdown.isChecked(), () -> isEmpty(deviceStatusIpInput));
 
-        deviceSshAddressInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshAddressInput, statusIpFallbackAvailable));
-        deviceSshUsernameInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshUsernameInput, remoteShutdownEnabledSupplier));
-        deviceSshPasswordInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshPasswordInput, remoteShutdownEnabledSupplier));
-        deviceSshCommandInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshCommandInput, remoteShutdownEnabledSupplier));
+        deviceSshAddressInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshAddressInput,
+                R.string.add_device_error_ssh_address_empty, statusIpFallbackAvailable));
+        deviceSshUsernameInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshUsernameInput,
+                R.string.add_device_error_ssh_username_empty, remoteShutdownEnabledSupplier));
+        deviceSshPasswordInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshPasswordInput,
+                R.string.add_device_error_ssh_password_empty, remoteShutdownEnabledSupplier));
+        deviceSshCommandInput.addTextChangedListener(new ConditionalInputNotEmptyValidator(deviceSshCommandInput,
+                R.string.add_device_error_ssh_command_empty, remoteShutdownEnabledSupplier));
     }
 
     protected boolean assertInputsNotEmptyAndValid() {
@@ -156,11 +160,11 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     protected void checkAndPersistDevice() {
+        triggerValidators();
         if (assertInputsNotEmptyAndValid()) {
             persistDevice();
             finish();
         } else {
-            triggerValidators();
             Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
         }
     }

@@ -5,14 +5,12 @@ import android.widget.EditText;
 import java.util.List;
 import java.util.function.Supplier;
 
-import de.florianisme.wakeonlan.R;
-
-public class ConditionalInputNotEmptyValidator extends Validator {
+public class ConditionalInputNotEmptyValidator extends InputNotEmptyValidator {
 
     private final List<Supplier<Boolean>> conditionalSupplierList;
 
-    public ConditionalInputNotEmptyValidator(EditText editTextView, List<Supplier<Boolean>> conditionalSupplierList) {
-        super(editTextView);
+    public ConditionalInputNotEmptyValidator(EditText editTextView, int errorMessageStringId, List<Supplier<Boolean>> conditionalSupplierList) {
+        super(editTextView, errorMessageStringId);
         this.conditionalSupplierList = conditionalSupplierList;
     }
 
@@ -27,11 +25,6 @@ public class ConditionalInputNotEmptyValidator extends Validator {
 
     private boolean inputShouldBeValidated() {
         return conditionalSupplierList.stream().allMatch(Supplier::get);
-    }
-
-    @Override
-    int getErrorMessageStringId() {
-        return R.string.add_device_error_name_empty;
     }
 
 }
