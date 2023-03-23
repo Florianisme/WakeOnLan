@@ -2,12 +2,10 @@ package de.florianisme.wakeonlan.shutdown;
 
 import android.util.Log;
 
-import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.connection.channel.direct.Session;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.Security;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -24,17 +22,16 @@ public class ShutdownExecutor {
     }
 
     public static void shutdownDevice(Device device) {
-        try (SSHClient sshClient = new SSHClient()) {
-            sshClient.addHostKeyVerifier((hostname, port, key) -> true);
-            sshClient.connect(device.sshAddress, device.sshPort);
-            sshClient.authPassword(device.sshUsername, device.sshPassword);
-            Session session = sshClient.startSession();
+        Optional<ShutdownModel> optionalShutdownModel = ShutdownModelFactory.fromDevice(device);
 
-            session.allocateDefaultPTY();
-            Session.Command exec = session.exec(device.sshCommand);
-            exec.wait(2000);
-        } catch (Exception e) {
-            Log.e(ShutdownExecutor.class.getSimpleName(), "Error during SSH execution", e);
+        if (!optionalShutdownModel.isPresent()) {
+            Log.w(ShutdownExecutor.class.getSimpleName(), "Can not shutdown device. Not all required fields were set");
+            return;
         }
+
+        ShutdownModel shutdownModel = optionalShutdownModel.get();
+        ShutdownRunnable shutdownRunnable = new ShutdownRunnable(shutdownModel);
+
+        executor.execute(shutdownRunnable);
     }
 }
