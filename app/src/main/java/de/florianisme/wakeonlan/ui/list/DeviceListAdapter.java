@@ -92,7 +92,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
             deviceItemViewHolder.setOnClickHandler(device);
             deviceItemViewHolder.setOnEditClickHandler(device);
-            deviceItemViewHolder.setOnShutdownClickHandler(device);
+            deviceItemViewHolder.setShutdownVisibilityAndClickHandler(device);
             deviceItemViewHolder.startDeviceStatusQuery(device);
         }
     }

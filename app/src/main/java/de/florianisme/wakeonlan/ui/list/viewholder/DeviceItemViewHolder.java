@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.shutdown.ShutdownExecutor;
+import de.florianisme.wakeonlan.shutdown.ShutdownModelFactory;
 import de.florianisme.wakeonlan.ui.list.DeviceClickedCallback;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
 import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
@@ -77,8 +79,17 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setOnShutdownClickHandler(Device device) {
-        shutdownButton.setOnClickListener(v -> ShutdownExecutor.shutdownDevice(device));
+    public void setShutdownVisibilityAndClickHandler(Device device) {
+        boolean shutdownConfigurationValid = ShutdownModelFactory.fromDevice(device).isPresent();
+
+        shutdownButton.setVisibility(shutdownConfigurationValid ? View.VISIBLE : View.GONE);
+
+        if (shutdownConfigurationValid) {
+            shutdownButton.setOnClickListener(v -> {
+                ShutdownExecutor.shutdownDevice(device);
+                Toast.makeText(v.getContext(), v.getContext().getString(R.string.remote_shutdown_send_command, device.name), Toast.LENGTH_LONG).show();
+            });
+        }
     }
 
     public void startDeviceStatusQuery(Device device) {
