@@ -321,7 +321,18 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Button
+                android:id="@+id/device_button_test_shutdown"
+                app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_command"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="Test Shutdown" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/device_title_security"
