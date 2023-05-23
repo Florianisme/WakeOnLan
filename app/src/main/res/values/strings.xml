@@ -85,4 +85,7 @@
 
     <!-- Quick Access -->
     <string name="quick_access_device_subtitle">Wake device</string>
+
+    <!-- Shortcut Wake Device Activity -->
+    <string name="shortcut_wake_device_error">Could not wake device</string>
 </resources>

@@ -3,7 +3,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 69
+        versionCode 71
         wearAppUnbundled true
     }
     buildFeatures {
@@ -12,8 +12,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
@@ -21,6 +21,9 @@ dependencies {
     implementation 'org.reactivestreams:reactive-streams:1.0.3'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'android.arch.lifecycle:livedata:1.1.1'
+
+    implementation "androidx.core:core:1.9.0"
+    implementation 'androidx.core:core-google-shortcuts:1.1.0'
 
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"

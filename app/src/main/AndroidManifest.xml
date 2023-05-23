@@ -35,6 +35,8 @@
             android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
 
+        <activity android:name=".shortcuts.WakeDeviceActivity" />
+
         <service
             android:name=".quicksettings.DeviceOneTileService"
             android:label="@string/tile_name_device_one"
