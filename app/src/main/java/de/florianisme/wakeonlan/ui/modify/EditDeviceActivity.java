@@ -110,7 +110,12 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     }
 
     @Override
-    protected void persistDevice() {
+    protected void persistDevice(Device device) {
+        deviceRepository.update(device);
+    }
+
+    @Override
+    protected Device buildDeviceFromInputs() {
         device.name = getDeviceNameInputText();
         device.statusIp = getDeviceStatusIpText();
         device.macAddress = getDeviceMacInputText();
@@ -124,7 +129,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
         device.sshPassword = getDeviceSshPassword();
         device.sshCommand = getDeviceSshCommand();
 
-        deviceRepository.update(device);
+        return device;
     }
 
 }

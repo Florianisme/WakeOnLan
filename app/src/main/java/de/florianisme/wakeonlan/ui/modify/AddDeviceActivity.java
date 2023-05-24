@@ -35,7 +35,12 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
     }
 
     @Override
-    protected void persistDevice() {
+    protected void persistDevice(Device device) {
+        deviceRepository.insertAll(device);
+    }
+
+    @Override
+    protected Device buildDeviceFromInputs() {
         Device device = new Device();
         device.name = getDeviceNameInputText();
         device.statusIp = getDeviceStatusIpText();
@@ -50,7 +55,7 @@ public class AddDeviceActivity extends ModifyDeviceActivity {
         device.sshPassword = getDeviceSshPassword();
         device.sshCommand = getDeviceSshCommand();
 
-        deviceRepository.insertAll(device);
+        return device;
     }
 
     @Override

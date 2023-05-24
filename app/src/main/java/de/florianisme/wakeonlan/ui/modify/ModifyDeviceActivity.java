@@ -3,13 +3,17 @@ package de.florianisme.wakeonlan.ui.modify;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -27,7 +31,10 @@ import java.util.function.Supplier;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
+import de.florianisme.wakeonlan.shutdown.listener.ShutdownExecutorListener;
+import de.florianisme.wakeonlan.shutdown.test.ShutdownCommandTester;
 import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocomplete;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.ConditionalInputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.InputNotEmptyValidator;
@@ -53,6 +60,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceSshUsernameInput;
     protected TextInputEditText deviceSshPasswordInput;
     protected TextInputEditText deviceSshCommandInput;
+    protected Button sshTestShutdownButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceSshPasswordInput = binding.device.deviceShutdownPassword;
         deviceSshCommandInput = binding.device.deviceShutdownCommand;
 
+        sshTestShutdownButton = binding.device.deviceButtonTestShutdown;
+
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
@@ -86,6 +96,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         addAutofillClickHandler();
         setRemoteDeviceShutdownSwitchListener();
         addDevicePortsAdapter();
+        setOnTestSshShutdownListenerClickedListener();
     }
 
     private void addAutofillClickHandler() {
@@ -162,7 +173,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected void checkAndPersistDevice() {
         triggerValidators();
         if (assertInputsNotEmptyAndValid()) {
-            persistDevice();
+            persistDevice(buildDeviceFromInputs());
             finish();
         } else {
             Toast.makeText(this, R.string.add_device_error_save_clicked, Toast.LENGTH_LONG).show();
@@ -180,7 +191,59 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceSshCommandInput.setText(deviceSshCommandInput.getText());
     }
 
-    abstract protected void persistDevice();
+    private void setOnTestSshShutdownListenerClickedListener() {
+        sshTestShutdownButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                triggerValidators();
+                if (assertInputsNotEmptyAndValid()) {
+                    Device device = buildDeviceFromInputs();
+
+                    final AppCompatDialog dialog = new AppCompatDialog(ModifyDeviceActivity.this);
+                    dialog.setContentView(R.layout.dialog_test_remote_shutdown);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                    new ShutdownCommandTester(new ShutdownExecutorListener() {
+                        @Override
+                        public void onTargetHostReached() {
+                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_destination_reached)).setText("Host reached"));
+                        }
+
+                        @Override
+                        public void onLoginSuccessful() {
+                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_login_successful)).setText("Login Successful"));
+                        }
+
+                        @Override
+                        public void onSessionStartSuccessful() {
+                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_session_created)).setText("Session start Successful"));
+                        }
+
+                        @Override
+                        public void onCommandExecuteSuccessful() {
+                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_command_executed)).setText("Command exec Successful"));
+                        }
+
+                        @Override
+                        public void onError(Exception exception) {
+
+                        }
+
+                        private void runOnUiThread(Runnable runnable) {
+                            ModifyDeviceActivity.this.runOnUiThread(runnable);
+                        }
+
+                    }).startShutdownCommandTest(device);
+
+                    dialog.show();
+                }
+            }
+        });
+    }
+
+    abstract protected void persistDevice(Device device);
+
+    abstract protected Device buildDeviceFromInputs();
 
     abstract protected boolean inputsHaveNotChanged();
 
