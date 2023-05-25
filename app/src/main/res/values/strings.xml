@@ -108,15 +108,15 @@
     <string name="remote_shutdown_send_command">Sending shutdown command to %1$s</string>
     <string name="test_shutdown_initial_destination">Connecting to target…</string>
     <string name="test_shutdown_successful_destination">Connection to target successful</string>
-    <string name="test_shutdown_initial_authorization">Authorizing user…</string>
-    <string name="test_shutdown_successful_authorization">Successfully authorized user</string>
+    <string name="test_shutdown_initial_authorization">Authenticating user…</string>
+    <string name="test_shutdown_successful_authorization">Successfully authenticated user</string>
     <string name="test_shutdown_initial_session">Creating session on target…</string>
     <string name="test_shutdown_successful_session">User session successfully created</string>
     <string name="test_shutdown_initial_command_execute">Executing shutdown command…</string>
     <string name="test_shutdown_successful_command_execute">Command execution successful</string>
 
-    <string name="test_shutdown_error_connect_exception">Failed to connect to host %1$s at port %2$d</string>
-    <string name="test_shutdown_error_auth_exception">Failed to authorize user %1$s at host %2$s</string>
+    <string name="test_shutdown_error_connect_exception">Failed to connect to target %1$s at port %2$d</string>
+    <string name="test_shutdown_error_auth_exception">Failed to authenticate user %1$s at host %2$s</string>
     <string name="test_shutdown_error_execution_exception">Command \"%1$s\" exited with status code %2$d</string>
     <string name="test_shutdown_error_unknown_exception">Encountered unknown error: %1$s</string>
 </resources>
