@@ -38,7 +38,7 @@
     <string name="title_fragment_device_list">Geräteübersicht</string>
     <string name="backup_description">Exportieren Sie Ihre konfigurierten Geräte in eine JSON Datei oder importieren Sie einen bestehenden Datensatz</string>
     <string name="backup_note">Hinweis:</string>
-    <string name="backup_note_content">Beim Importieren werden alle konfigurierten Geräte überschrieben</string>
+    <string name="backup_note_content">Das Passwort, welches zur Authentifizierung von Benutzern während des Herunterfahrens per SSH genutzt wird, ist im Klartext in dem exportierten Datensatz enthalten.\n\nBeim Importieren werden alle konfigurierten Geräte überschrieben</string>
     <string name="backup_button_export">Exportieren</string>
     <string name="backup_button_import">Importieren</string>
     <string name="backup_message_import_success">%1$d Geräte erfolgreich importiert</string>

@@ -78,7 +78,7 @@
     <!-- Backup Fragment -->
     <string name="backup_description">Export your currently configured devices to a JSON file or import an existing dataset</string>
     <string name="backup_note">Note:</string>
-    <string name="backup_note_content">Importing a list of devices will override all currently configured devices</string>
+    <string name="backup_note_content">Exports will contain the password used to authenticate the user for SSH remote shutdown in plain text.\n\nImporting a list of devices will override all currently configured devices</string>
     <string name="backup_button_export">Export</string>
     <string name="backup_button_import">Import</string>
     <string name="backup_message_import_success">Successfully imported %1$d devices</string>
