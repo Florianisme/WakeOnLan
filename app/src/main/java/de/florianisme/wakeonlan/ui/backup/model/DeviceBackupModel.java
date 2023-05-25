@@ -50,7 +50,7 @@ public class DeviceBackupModel {
     public String sshAddress;
 
     @JsonProperty("ssh_port")
-    public int sshPort;
+    public Integer sshPort;
 
     @JsonProperty("ssh_username")
     public String sshUsername;
