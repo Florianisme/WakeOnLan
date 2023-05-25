@@ -1,5 +1,7 @@
 package de.florianisme.wakeonlan.shutdown.listener;
 
+import de.florianisme.wakeonlan.shutdown.ShutdownModel;
+
 public class IgnoringShutdownExecutorListener implements ShutdownExecutorListener {
 
     @Override
@@ -23,7 +25,7 @@ public class IgnoringShutdownExecutorListener implements ShutdownExecutorListene
     }
 
     @Override
-    public void onError(Exception exception) {
+    public void onError(Exception exception, ShutdownModel shutdownModel) {
         // Ignore
     }
 }

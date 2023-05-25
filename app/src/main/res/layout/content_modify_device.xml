@@ -329,7 +329,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:text="Test Shutdown" />
+                android:text="@string/modify_device_test_shutdown" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

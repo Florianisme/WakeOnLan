@@ -7,6 +7,7 @@ import net.schmizz.sshj.connection.channel.direct.Session;
 
 import java.util.concurrent.TimeUnit;
 
+import de.florianisme.wakeonlan.shutdown.exception.CommandExecuteException;
 import de.florianisme.wakeonlan.shutdown.listener.ShutdownExecutorListener;
 
 public class ShutdownRunnable implements Runnable {
@@ -37,10 +38,16 @@ public class ShutdownRunnable implements Runnable {
             session.allocateDefaultPTY();
             Session.Command exec = session.exec(shutdownModel.getCommand());
             exec.join(500, TimeUnit.MILLISECONDS);
+
+            Integer exitStatus = exec.getExitStatus();
+            if (exitStatus != 0) {
+                throw new CommandExecuteException("Command exited with status code " + exitStatus, exitStatus);
+            }
+
             shutdownExecutorListener.onCommandExecuteSuccessful();
         } catch (Exception e) {
             Log.e(ShutdownRunnable.class.getSimpleName(), "Error during SSH execution", e);
-            shutdownExecutorListener.onError(e);
+            shutdownExecutorListener.onError(e, shutdownModel);
         }
     }
 }

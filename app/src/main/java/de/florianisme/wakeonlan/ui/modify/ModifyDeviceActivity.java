@@ -4,10 +4,12 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +26,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
+import net.schmizz.sshj.userauth.UserAuthException;
+
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +40,8 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityModifyDeviceBinding;
 import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
+import de.florianisme.wakeonlan.shutdown.ShutdownModel;
+import de.florianisme.wakeonlan.shutdown.exception.CommandExecuteException;
 import de.florianisme.wakeonlan.shutdown.listener.ShutdownExecutorListener;
 import de.florianisme.wakeonlan.shutdown.test.ShutdownCommandTester;
 import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocomplete;
@@ -201,60 +208,50 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
                 if (assertInputsNotEmptyAndValid()) {
                     Device device = buildDeviceFromInputs();
 
+                    View view = LayoutInflater.from(ModifyDeviceActivity.this).inflate(R.layout.dialog_test_remote_shutdown, null);
                     AlertDialog dialog = new MaterialAlertDialogBuilder(ModifyDeviceActivity.this)
-                            .setView(R.layout.dialog_test_remote_shutdown)
+                            .setView(view)
                             .setTitle("SSH Shutdown Test")
                             .setPositiveButton("Ok", (dlg, which) -> dlg.dismiss())
                             .create();
 
-                    //final AppCompatDialog dialog = new AppCompatDialog(ModifyDeviceActivity.this);
-                    //dialog.setContentView(R.layout.dialog_test_remote_shutdown);
-                    //dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    final LinearLayout destinationReachedResult = view.findViewById(R.id.result_destination_reached);
+                    final LinearLayout authorizationResult = view.findViewById(R.id.result_authorization);
+                    final LinearLayout sessionCreatedResult = view.findViewById(R.id.result_session);
+                    final LinearLayout commandExecutedResult = view.findViewById(R.id.result_command_execute);
+
+                    final TextView optionalErrorMessage = view.findViewById(R.id.result_optional_error_message);
+                    optionalErrorMessage.setVisibility(View.GONE);
+
+                    setInitialDialogTexts(destinationReachedResult, authorizationResult, sessionCreatedResult, commandExecutedResult);
 
                     new ShutdownCommandTester(new ShutdownExecutorListener() {
                         @Override
                         public void onTargetHostReached() {
-                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_destination_reached)).setText("Host reached"));
-                            RadioButton radioButton = (RadioButton) dialog.findViewById(R.id.test_shutdown_destination_reached_radio);
-
-                            runOnUiThread(() -> radioButton.setChecked(true));
-                            runOnUiThread(() -> radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#479c44"))));
+                            setStepSuccessfullyCompleted(destinationReachedResult, R.string.test_shutdown_successful_destination);
                         }
 
                         @Override
                         public void onLoginSuccessful() {
-                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_login_successful)).setText("Login Successful"));
-                            RadioButton radioButton = (RadioButton) dialog.findViewById(R.id.test_shutdown_login_successful_radio);
-
-                            runOnUiThread(() -> radioButton.setChecked(true));
-                            runOnUiThread(() -> radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#479c44"))));
+                            setStepSuccessfullyCompleted(authorizationResult, R.string.test_shutdown_successful_authorization);
                         }
 
                         @Override
                         public void onSessionStartSuccessful() {
-                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_session_created)).setText("Session start Successful"));
-                            RadioButton radioButton = (RadioButton) dialog.findViewById(R.id.test_shutdown_session_created_radio);
-
-                            runOnUiThread(() -> radioButton.setChecked(true));
-                            runOnUiThread(() -> radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#479c44"))));
+                            setStepSuccessfullyCompleted(sessionCreatedResult, R.string.test_shutdown_successful_session);
                         }
 
                         @Override
                         public void onCommandExecuteSuccessful() {
-                            runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.test_shutdown_command_executed)).setText("Command exec Successful"));
-                            RadioButton radioButton = (RadioButton) dialog.findViewById(R.id.test_shutdown_command_executed_radio);
-
-                            runOnUiThread(() -> radioButton.setChecked(true));
-                            runOnUiThread(() -> radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#479c44"))));
+                            setStepSuccessfullyCompleted(commandExecutedResult, R.string.test_shutdown_successful_command_execute);
                         }
 
                         @Override
-                        public void onError(Exception exception) {
-
-                        }
-
-                        private void runOnUiThread(Runnable runnable) {
-                            ModifyDeviceActivity.this.runOnUiThread(runnable);
+                        public void onError(Exception exception, ShutdownModel shutdownModel) {
+                            runOnUiThread(() -> {
+                                optionalErrorMessage.setVisibility(View.VISIBLE);
+                                optionalErrorMessage.setText(getTextByExceptionType(exception, shutdownModel));
+                            });
                         }
 
                     }).startShutdownCommandTest(device);
@@ -262,7 +259,55 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
                     dialog.show();
                 }
             }
+
+            private String getTextByExceptionType(Exception exception, ShutdownModel shutdownModel) {
+                if (exception instanceof ConnectException) {
+                    return getString(R.string.test_shutdown_error_connect_exception, shutdownModel.getSshAddress(), shutdownModel.getSshPort());
+                } else if (exception instanceof UserAuthException) {
+                    return getString(R.string.test_shutdown_error_auth_exception, shutdownModel.getUsername(), shutdownModel.getSshAddress());
+                } else if (exception instanceof CommandExecuteException) {
+                    Integer exitStatus = ((CommandExecuteException) exception).getExitStatus();
+                    return getString(R.string.test_shutdown_error_execution_exception, shutdownModel.getCommand(), exitStatus);
+                }
+
+                return getString(R.string.test_shutdown_error_unknown_exception, exception.getMessage());
+            }
+
+            private void runOnUiThread(Runnable runnable) {
+                ModifyDeviceActivity.this.runOnUiThread(runnable);
+            }
+
+            private void setStepSuccessfullyCompleted(LinearLayout layout, int stringResourceId) {
+                runOnUiThread(() -> {
+                    TextView resultMessage = getResultMessageView(layout);
+                    RadioButton resultIndicator = getResultRadioButton(layout);
+
+                    resultMessage.setText(stringResourceId);
+                    resultIndicator.setChecked(true);
+                    resultIndicator.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#479c44")));
+                });
+            }
         });
+    }
+
+    private void setInitialDialogTexts(LinearLayout destinationReachedResult, LinearLayout authorizationResult,
+                                       LinearLayout sessionCreatedResult, LinearLayout commandExecutedResult) {
+        setTexts(getResultMessageView(destinationReachedResult), R.string.test_shutdown_initial_destination);
+        setTexts(getResultMessageView(authorizationResult), R.string.test_shutdown_initial_authorization);
+        setTexts(getResultMessageView(sessionCreatedResult), R.string.test_shutdown_initial_session);
+        setTexts(getResultMessageView(commandExecutedResult), R.string.test_shutdown_initial_command_execute);
+    }
+
+    private void setTexts(TextView resultMessageView, int stringResourceId) {
+        resultMessageView.setText(stringResourceId);
+    }
+
+    private RadioButton getResultRadioButton(LinearLayout layout) {
+        return layout.findViewById(R.id.test_shutdown_item_radio);
+    }
+
+    private TextView getResultMessageView(LinearLayout layout) {
+        return layout.findViewById(R.id.test_shutdown_item_result_message);
     }
 
     abstract protected void persistDevice(Device device);

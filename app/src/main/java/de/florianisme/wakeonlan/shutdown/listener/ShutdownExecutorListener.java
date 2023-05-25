@@ -1,5 +1,9 @@
 package de.florianisme.wakeonlan.shutdown.listener;
 
+import androidx.annotation.Nullable;
+
+import de.florianisme.wakeonlan.shutdown.ShutdownModel;
+
 public interface ShutdownExecutorListener {
 
     void onTargetHostReached();
@@ -10,6 +14,6 @@ public interface ShutdownExecutorListener {
 
     void onCommandExecuteSuccessful();
 
-    void onError(Exception exception);
+    void onError(Exception exception, @Nullable ShutdownModel shutdownModel);
 
 }
