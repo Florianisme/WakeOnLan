@@ -10,16 +10,18 @@ import de.florianisme.wakeonlan.persistence.migrations.MigrationFrom3To4;
 
 public class DatabaseInstanceManager {
 
-    private static AppDatabase appDatabase;
+    private static AppDatabase INSTANCE;
 
-    public static synchronized AppDatabase getInstance(Context context) {
-        if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database-name")
-                    .allowMainThreadQueries()
-                    .addMigrations(new MigrationFrom1To2(), new MigrationFrom2To3(), new MigrationFrom3To4())
-                    .build();
+    public static synchronized AppDatabase getInstance(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                INSTANCE = Room.databaseBuilder(context, AppDatabase.class, "database-name")
+                        .allowMainThreadQueries()
+                        .addMigrations(new MigrationFrom1To2(), new MigrationFrom2To3(), new MigrationFrom3To4())
+                        .build();
+            }
         }
-        return appDatabase;
+        return INSTANCE;
     }
 
 }
