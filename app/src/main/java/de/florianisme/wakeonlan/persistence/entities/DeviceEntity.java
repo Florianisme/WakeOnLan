@@ -29,7 +29,7 @@ public class DeviceEntity {
     @ColumnInfo(name = "secure_on_password")
     public String secureOnPassword;
 
-    @ColumnInfo(name = "enable_remote_shutdown", defaultValue = "false")
+    @ColumnInfo(name = "enable_remote_shutdown", defaultValue = "0")
     public boolean enableRemoteShutdown;
 
     @ColumnInfo(name = "ssh_address")
