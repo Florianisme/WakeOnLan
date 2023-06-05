@@ -89,4 +89,6 @@
     <string name="execution_error_unknown">Unbekannter Fehler</string>
     <string name="execution_error_command_not_found">Kommando nicht gefunden</string>
     <string name="execution_error_command_not_executable">Kommando nicht ausführbar</string>
+    <string name="test_shutdown_error_execution_timeout">Ausführung des Kommandos \"%1$s\" dauerte zu lange oder sudo Passwort-Aufforderung wurde gestartet</string>
+    <string name="test_shutdown_error_unknown_host">Unbekannter Hostname \"%1$s\"</string>
 </resources>

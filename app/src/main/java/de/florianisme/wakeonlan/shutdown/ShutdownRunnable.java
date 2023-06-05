@@ -12,9 +12,11 @@ import de.florianisme.wakeonlan.shutdown.listener.ShutdownExecutorListener;
 
 public class ShutdownRunnable implements Runnable {
 
+    private static final int CONNECT_TIMEOUT = 5000;
+    private static final int EXECUTE_TIMEOUT = 500;
+
     private final ShutdownModel shutdownModel;
     private final ShutdownExecutorListener shutdownExecutorListener;
-    private static final int CONNECT_TIMEOUT = 5000;
 
     public ShutdownRunnable(ShutdownModel shutdownModel, ShutdownExecutorListener shutdownExecutorListener) {
         this.shutdownModel = shutdownModel;
@@ -37,7 +39,7 @@ public class ShutdownRunnable implements Runnable {
 
             session.allocateDefaultPTY();
             Session.Command exec = session.exec(shutdownModel.getCommand());
-            exec.join(500, TimeUnit.MILLISECONDS);
+            exec.join(EXECUTE_TIMEOUT, TimeUnit.MILLISECONDS);
 
             Integer exitStatus = exec.getExitStatus();
             if (exitStatus != 0) {

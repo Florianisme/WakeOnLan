@@ -24,16 +24,20 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 
+import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.userauth.UserAuthException;
 
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 import de.florianisme.wakeonlan.R;
@@ -263,8 +267,12 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
             private String getTextByExceptionType(Exception exception, ShutdownModel shutdownModel) {
                 if (exception instanceof ConnectException) {
                     return getString(R.string.test_shutdown_error_connect_exception, shutdownModel.getSshAddress(), shutdownModel.getSshPort());
+                } else if (exception instanceof UnknownHostException) {
+                    return getString(R.string.test_shutdown_error_unknown_host, shutdownModel.getSshAddress());
                 } else if (exception instanceof UserAuthException) {
                     return getString(R.string.test_shutdown_error_auth_exception, shutdownModel.getUsername(), shutdownModel.getSshAddress());
+                } else if (exception instanceof ConnectionException && Throwables.getRootCause(exception) instanceof TimeoutException) {
+                    return getString(R.string.test_shutdown_error_execution_timeout, shutdownModel.getCommand());
                 } else if (exception instanceof CommandExecuteException) {
                     Integer exitStatus = ((CommandExecuteException) exception).getExitStatus();
                     String explanationString = getExitCodeExplanationStringRes(exitStatus);
