@@ -102,7 +102,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
                 Strings.nullToEmpty(device.secureOnPassword).equals(getDeviceSecureOnPassword()) &&
                 device.remoteShutdownEnabled == getDeviceRemoteShutdownEnabled() &&
                 Strings.nullToEmpty(device.sshAddress).equals(getDeviceSshAddress()) &&
-                Objects.equals(device.sshPort, getDeviceSshPort()) &&
+                Objects.equals(device.sshPort == null ? -1 : device.sshPort, getDeviceSshPort()) &&
                 Strings.nullToEmpty(device.sshUsername).equals(getDeviceSshUsername()) &&
                 Strings.nullToEmpty(device.sshPassword).equals(getDeviceSshPassword()) &&
                 Strings.nullToEmpty(device.sshCommand).equals(getDeviceSshCommand());
