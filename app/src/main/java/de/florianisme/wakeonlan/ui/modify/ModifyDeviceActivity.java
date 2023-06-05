@@ -267,10 +267,22 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
                     return getString(R.string.test_shutdown_error_auth_exception, shutdownModel.getUsername(), shutdownModel.getSshAddress());
                 } else if (exception instanceof CommandExecuteException) {
                     Integer exitStatus = ((CommandExecuteException) exception).getExitStatus();
-                    return getString(R.string.test_shutdown_error_execution_exception, shutdownModel.getCommand(), exitStatus);
+                    String explanationString = getExitCodeExplanationStringRes(exitStatus);
+                    return getString(R.string.test_shutdown_error_execution_exception, shutdownModel.getCommand(), exitStatus, explanationString);
                 }
 
                 return getString(R.string.test_shutdown_error_unknown_exception, exception.getMessage());
+            }
+
+            private String getExitCodeExplanationStringRes(Integer exitStatus) {
+                switch (exitStatus) {
+                    case 127:
+                        return getString(R.string.execution_error_command_not_found);
+                    case 126:
+                        return getString(R.string.execution_error_command_not_executable);
+                    default:
+                        return getString(R.string.execution_error_unknown);
+                }
             }
 
             private void runOnUiThread(Runnable runnable) {
