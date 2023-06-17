@@ -12,6 +12,7 @@
     <string name="device_title_general">General</string>
     <string name="device_title_connection">Connection</string>
     <string name="device_title_security">Security</string>
+    <string name="device_title_status">Status</string>
     <string name="add_device_name">Name</string>
     <string name="add_device_status_ip">Status IP (optional)</string>
     <string name="add_device_mac_address">MAC Address</string>

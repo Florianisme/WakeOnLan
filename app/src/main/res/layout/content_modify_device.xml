@@ -41,33 +41,6 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/device_status_ip_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/add_device_status_ip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/device_name_layout"
-        app:placeholderText="192.168.0.100">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/device_status_ip"
-            style="@style/FontMonospaced"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
     <TextView
         android:id="@+id/device_title_connectivity"
         android:layout_width="wrap_content"
@@ -76,7 +49,7 @@
         android:text="@string/device_title_connection"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/device_status_ip_layout"
+        app:layout_constraintTop_toBottomOf="@id/device_name_layout"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -163,6 +136,44 @@
             android:minHeight="48dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/device_title_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/FontMonospaced"
+        android:text="@string/device_title_status"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/device_port_layout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/device_status_ip_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:helperText="Device will be regularly pinged at this address to display it's online status"
+        android:hint="@string/add_device_status_ip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/device_title_status"
+        app:placeholderText="192.168.0.100">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/device_status_ip"
+            style="@style/FontMonospaced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/device_title_security"
@@ -172,7 +183,7 @@
         android:text="@string/device_title_security"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/device_port_layout"
+        app:layout_constraintTop_toBottomOf="@id/device_status_ip_layout"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
