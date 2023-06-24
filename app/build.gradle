@@ -29,6 +29,11 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    // SSH
+    implementation 'com.hierynomus:sshj:0.31.0'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
+
     implementation(name: 'android-ping', ext: 'aar')
     implementation project(path: ':shared-models')
 }

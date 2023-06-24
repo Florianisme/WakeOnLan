@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <include
+        layout="@layout/item_shutdown_test_result"
+        android:id="@+id/result_destination_reached" />
+
+    <include
+        layout="@layout/item_shutdown_test_result"
+        android:id="@+id/result_authorization" />
+
+    <include
+        layout="@layout/item_shutdown_test_result"
+        android:id="@+id/result_session" />
+
+    <include
+        layout="@layout/item_shutdown_test_result"
+        android:id="@+id/result_command_execute" />
+
+    <TextView
+        android:id="@+id/result_optional_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="48dp"
+        android:textStyle="bold"
+        android:textColor="@color/result_error" />
+
+</LinearLayout>

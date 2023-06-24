@@ -20,6 +20,14 @@
     <string name="add_device_broadcast_address">Broadcast Address</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_device_secure_on">SecureOn Password (optional)</string>
+    <string name="add_device_shutdown">Remote Shutdown</string>
+    <string name="add_device_shutdown_enable">Enable Remote Shutdown</string>
+    <string name="add_device_shutdown_ip">SSH Address</string>
+    <string name="add_device_shutdown_port">SSH Port</string>
+    <string name="add_device_shutdown_username">Username</string>
+    <string name="add_device_shutdown_password">Password</string>
+    <string name="add_device_shutdown_command">Shutdown Command</string>
+    <string name="add_device_shutdown_command_helper">Command must be executable without triggering Interactive authentication (sudo password-prompt)</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
     <string-array name="ports_selection">
@@ -29,8 +37,13 @@
 
     <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
     <string name="add_device_error_name_empty">Name must not be empty</string>
+    <string name="add_device_error_broadcast_empty">Broadcast Address must not be empty</string>
     <string name="add_device_error_ip_invalid">Invalid IP Address</string>
     <string name="add_device_error_secure_on_password_invalid">Password must be either empty, a valid MAC or IP Address</string>
+    <string name="add_device_error_ssh_address_empty">SSH Address must not be empty when no Status IP set</string>
+    <string name="add_device_error_ssh_username_empty">Username must not be empty</string>
+    <string name="add_device_error_ssh_password_empty">Password must not be empty</string>
+    <string name="add_device_error_ssh_command_empty">Shutdown Command must not be empty</string>
     <string name="add_device_error_save_clicked">Please correct your inputs first</string>
 
     <!-- Edit Device Activity-->
@@ -43,9 +56,11 @@
     <string name="modify_device_unsaved_changes_message">Do you want to save your changes?</string>
     <string name="modify_device_unsaved_changes_negative">Discard</string>
     <string name="modify_device_unsaved_changes_positive">Save</string>
+    <string name="modify_device_test_shutdown">Test shutdown command</string>
 
     <!-- Device List -->
     <string name="device_list_startup">Turn on</string>
+    <string name="device_list_shutdown">Shutdown</string>
     <string name="device_list_empty_title">No devices set up</string>
     <string name="device_list_empty_hint">Tap the \"+\" icon to add your first device</string>
     <string name="device_list_empty_image">Computer Illustration</string>
@@ -64,7 +79,7 @@
     <!-- Backup Fragment -->
     <string name="backup_description">Export your currently configured devices to a JSON file or import an existing dataset</string>
     <string name="backup_note">Note:</string>
-    <string name="backup_note_content">Importing a list of devices will override all currently configured devices</string>
+    <string name="backup_note_content">Exports will contain the password used to authenticate the user for SSH remote shutdown in plain text.\n\nImporting a list of devices will override all currently configured devices</string>
     <string name="backup_button_export">Export</string>
     <string name="backup_button_import">Import</string>
     <string name="backup_message_import_success">Successfully imported %1$d devices</string>
@@ -89,4 +104,25 @@
 
     <!-- Shortcut Wake Device Activity -->
     <string name="shortcut_wake_device_error">Could not wake device</string>
+
+    <!-- Remote Shutdown -->
+    <string name="remote_shutdown_send_command">Sending shutdown command to %1$s</string>
+    <string name="test_shutdown_initial_destination">Connecting to target…</string>
+    <string name="test_shutdown_successful_destination">Connection to target successful</string>
+    <string name="test_shutdown_initial_authorization">Authenticating user…</string>
+    <string name="test_shutdown_successful_authorization">Successfully authenticated user</string>
+    <string name="test_shutdown_initial_session">Creating session on target…</string>
+    <string name="test_shutdown_successful_session">User session successfully created</string>
+    <string name="test_shutdown_initial_command_execute">Executing shutdown command…</string>
+    <string name="test_shutdown_successful_command_execute">Command execution successful</string>
+
+    <string name="test_shutdown_error_connect_exception">Failed to connect to target %1$s at port %2$d</string>
+    <string name="test_shutdown_error_auth_exception">Failed to authenticate user %1$s at host %2$s</string>
+    <string name="test_shutdown_error_execution_exception">Command \"%1$s\" exited with status code %2$d (%3$s)</string>
+    <string name="test_shutdown_error_execution_timeout">Command \"%1$s\" took too long to execute or triggered sudo authentication</string>
+    <string name="test_shutdown_error_unknown_host">Unknown host \"%1$s\"</string>
+    <string name="test_shutdown_error_unknown_exception">Encountered unknown error: %1$s</string>
+    <string name="execution_error_command_not_found">Command not found</string>
+    <string name="execution_error_command_not_executable">Command not executable</string>
+    <string name="execution_error_unknown">Unknown</string>
 </resources>

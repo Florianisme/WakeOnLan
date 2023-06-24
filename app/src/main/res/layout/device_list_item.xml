@@ -71,7 +71,16 @@
                 style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="@string/device_list_startup"
+                android:textColor="@color/primaryDarkColor" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shutdown"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_list_shutdown"
                 android:textColor="@color/primaryDarkColor" />
 
         </LinearLayout>
