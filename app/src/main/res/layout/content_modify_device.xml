@@ -160,7 +160,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        app:helperText="Device will be regularly pinged at this address to display it's online status"
+        app:helperText="@string/add_device_status_ip_helper"
         android:hint="@string/add_device_status_ip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

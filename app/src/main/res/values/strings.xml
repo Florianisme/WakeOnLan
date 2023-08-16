@@ -15,9 +15,10 @@
     <string name="device_title_status">Status</string>
     <string name="add_device_name">Name</string>
     <string name="add_device_status_ip">Status IP (optional)</string>
+    <string name="add_device_status_ip_helper">Device will be regularly pinged at this address to display it\'s online status</string>
     <string name="add_device_mac_address">MAC Address</string>
     <string name="add_device_port">Port</string>
-    <string name="add_device_broadcast_address">Broadcast Address</string>
+    <string name="add_device_broadcast_address">Broadcast Address (optional)</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_device_secure_on">SecureOn Password (optional)</string>
     <string name="add_device_shutdown">Remote Shutdown</string>
