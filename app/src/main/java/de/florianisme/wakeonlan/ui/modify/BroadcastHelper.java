@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class BroadcastHelper {
 
+    // TODO need refactoring
     public static Optional<InetAddress> getBroadcastAddress() throws IOException {
         Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
@@ -16,7 +17,7 @@ public class BroadcastHelper {
             NetworkInterface singleInterface = networkInterfaces.nextElement();
 
             String interfaceName = singleInterface.getName();
-            if (interfaceName.contains("wlan0") || interfaceName.contains("eth0")) {
+            if (interfaceName.contains("wlan0") || interfaceName.contains("eth0") || interfaceName.contains("tun0")) {
                 for (InterfaceAddress interfaceAddress : singleInterface.getInterfaceAddresses()) {
                     InetAddress broadcastAddress = interfaceAddress.getBroadcast();
                     if (broadcastAddress != null) {
