@@ -117,7 +117,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
+                    Optional<InetAddress> broadcastAddress = new BroadcastHelper().getBroadcastAddress();
                     broadcastAddress.ifPresent(inetAddress -> deviceBroadcastInput.setText(inetAddress.getHostAddress()));
                 } catch (IOException e) {
                     Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
