@@ -64,6 +64,27 @@ public class BroadcastHelperTest {
         assertEquals(inetAddress, broadcastAddress.get());
     }
 
+    @Test
+    public void testGetBroadcastAddress_withSingleNonExactlyMatchingInterface() throws IOException {
+        NetworkInterface singleInterface = mock(NetworkInterface.class);
+        when(singleInterface.getName()).thenReturn("wlan");
+
+        InetAddress inetAddress = mock(InetAddress.class);
+        InterfaceAddress interfaceAddress = mock(InterfaceAddress.class);
+        when(interfaceAddress.getBroadcast()).thenReturn(inetAddress);
+
+        List<InterfaceAddress> interfaceAddresses = Collections.singletonList(interfaceAddress);
+        when(singleInterface.getInterfaceAddresses()).thenReturn(interfaceAddresses);
+
+        Enumeration<NetworkInterface> availableInterfaces = Collections.enumeration(Collections.singletonList(singleInterface));
+
+        TestBroadcastHelper broadcastHelper = new TestBroadcastHelper(availableInterfaces);
+        Optional<InetAddress> broadcastAddress = broadcastHelper.getBroadcastAddress();
+
+        assertTrue(broadcastAddress.isPresent());
+        assertEquals(inetAddress, broadcastAddress.get());
+    }
+
     private static class TestBroadcastHelper extends BroadcastHelper {
 
         private final Enumeration<NetworkInterface> networkInterfaces;

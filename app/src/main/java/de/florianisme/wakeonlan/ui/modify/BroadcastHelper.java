@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class BroadcastHelper {
 
-    private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan0", "eth0", "tun0");
+    private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan", "eth", "tun");
 
     public final Optional<InetAddress> getBroadcastAddress() throws IOException {
         return Collections.list(getNetworkInterfaces()).stream()
@@ -33,6 +33,6 @@ public class BroadcastHelper {
     }
 
     private boolean isAllowedInterfaceName(NetworkInterface networkInterface) {
-        return INTERFACE_LIST.contains(networkInterface.getName());
+        return INTERFACE_LIST.stream().anyMatch(interfaceName -> networkInterface.getName().startsWith(interfaceName));
     }
 }
