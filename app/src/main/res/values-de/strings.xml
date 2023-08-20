@@ -21,7 +21,6 @@
     <string name="add_device_menu_delete">Löschen</string>
     <string name="add_device_error_mac_invalid">Ungültige MAC Adresse</string>
     <string name="add_device_error_name_empty">Name darf nicht leer sein</string>
-    <string name="add_device_error_broadcast_empty">Broadcast Adresse darf nicht leer sein</string>
     <string name="add_device_error_ip_invalid">Ungültige IP Adresse</string>
     <string name="add_device_error_ssh_address_empty">SSH Adresse darf nicht leer sein</string>
     <string name="add_device_error_ssh_username_empty">Benutzername darf nicht leer sein</string>

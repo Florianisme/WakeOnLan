@@ -2,7 +2,6 @@ package de.florianisme.wakeonlan.ui.modify;
 
 import com.google.common.collect.Lists;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -18,7 +17,7 @@ public class BroadcastHelper {
 
     private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan", "eth", "tun");
 
-    public final Optional<InetAddress> getBroadcastAddress() throws IOException {
+    public final Optional<InetAddress> getBroadcastAddress() {
         return Collections.list(getNetworkInterfaces()).stream()
                 .filter(this::isAllowedInterfaceName)
                 .map(NetworkInterface::getInterfaceAddresses)
@@ -28,8 +27,12 @@ public class BroadcastHelper {
                 .findFirst();
     }
 
-    protected Enumeration<NetworkInterface> getNetworkInterfaces() throws SocketException {
-        return NetworkInterface.getNetworkInterfaces();
+    protected Enumeration<NetworkInterface> getNetworkInterfaces() {
+        try {
+            return NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            return Collections.emptyEnumeration();
+        }
     }
 
     private boolean isAllowedInterfaceName(NetworkInterface networkInterface) {
