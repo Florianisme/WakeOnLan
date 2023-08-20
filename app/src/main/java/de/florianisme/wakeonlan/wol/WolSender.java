@@ -2,12 +2,15 @@ package de.florianisme.wakeonlan.wol;
 
 import android.util.Log;
 
+import com.google.common.base.Strings;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.ui.modify.BroadcastHelper;
 
 public class WolSender {
 
@@ -18,8 +21,17 @@ public class WolSender {
 
             @Override
             public void run() {
+                sendPacket(device.broadcastAddress);
+                new BroadcastHelper().getBroadcastAddress().ifPresent(inetAddress -> sendPacket(inetAddress.getHostAddress()));
+            }
+
+            private void sendPacket(String broadcastAddress) {
+                if (Strings.isNullOrEmpty(broadcastAddress)) {
+                    return;
+                }
+
                 try {
-                    DatagramPacket packet = PacketBuilder.buildMagicPacket(device.broadcastAddress, device.macAddress, device.port, device.secureOnPassword);
+                    DatagramPacket packet = PacketBuilder.buildMagicPacket(broadcastAddress, device.macAddress, device.port, device.secureOnPassword);
                     DatagramSocket socket = new DatagramSocket();
                     socket.send(packet);
                     socket.close();

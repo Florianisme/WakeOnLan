@@ -3,7 +3,6 @@ package de.florianisme.wakeonlan.ui.modify;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,7 +29,6 @@ import com.google.common.collect.Lists;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.userauth.UserAuthException;
 
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -113,16 +111,9 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     }
 
     private void addAutofillClickHandler() {
-        broadcastAutofill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Optional<InetAddress> broadcastAddress = BroadcastHelper.getBroadcastAddress();
-                    broadcastAddress.ifPresent(inetAddress -> deviceBroadcastInput.setText(inetAddress.getHostAddress()));
-                } catch (IOException e) {
-                    Log.e(this.getClass().getName(), "Can not retrieve Broadcast Address", e);
-                }
-            }
+        broadcastAutofill.setOnClickListener(v -> {
+            Optional<InetAddress> broadcastAddress = new BroadcastHelper().getBroadcastAddress();
+            broadcastAddress.ifPresent(inetAddress -> deviceBroadcastInput.setText(inetAddress.getHostAddress()));
         });
     }
 
@@ -139,7 +130,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
         deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput, R.string.add_device_error_name_empty));
-        deviceBroadcastInput.addTextChangedListener(new InputNotEmptyValidator(deviceBroadcastInput, R.string.add_device_error_broadcast_empty));
         deviceSecureOnPassword.addTextChangedListener(new SecureOnPasswordValidator(deviceSecureOnPassword));
 
         List<Supplier<Boolean>> remoteShutdownEnabledSupplier = Collections.singletonList(() -> deviceEnableRemoteShutdown.isChecked());
@@ -159,7 +149,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected boolean assertInputsNotEmptyAndValid() {
         return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
                 deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
-                deviceBroadcastInput.getError() == null && isNotEmpty(deviceBroadcastInput) &&
                 deviceStatusIpInput.getError() == null &&
                 deviceSecureOnPassword.getError() == null &&
                 deviceSshAddressInput.getError() == null &&

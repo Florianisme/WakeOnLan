@@ -8,7 +8,7 @@
     <string name="add_device_status_ip">Status IP (optional)</string>
     <string name="add_device_mac_address">MAC Adresse</string>
     <string name="add_device_port">Port</string>
-    <string name="add_device_broadcast_address">Broadcast Adresse</string>
+    <string name="add_device_broadcast_address">Broadcast Adresse (optional)</string>
     <string name="add_device_shutdown">Entferntes Herunterfahren</string>
     <string name="add_device_shutdown_enable">Entferntes Herunterfahren aktivieren</string>
     <string name="add_device_shutdown_ip">SSH Adresse</string>
@@ -21,7 +21,6 @@
     <string name="add_device_menu_delete">Löschen</string>
     <string name="add_device_error_mac_invalid">Ungültige MAC Adresse</string>
     <string name="add_device_error_name_empty">Name darf nicht leer sein</string>
-    <string name="add_device_error_broadcast_empty">Broadcast Adresse darf nicht leer sein</string>
     <string name="add_device_error_ip_invalid">Ungültige IP Adresse</string>
     <string name="add_device_error_ssh_address_empty">SSH Adresse darf nicht leer sein</string>
     <string name="add_device_error_ssh_username_empty">Benutzername darf nicht leer sein</string>
@@ -92,4 +91,5 @@
     <string name="execution_error_command_not_executable">Kommando nicht ausführbar</string>
     <string name="test_shutdown_error_execution_timeout">Ausführung des Kommandos \"%1$s\" dauerte zu lange oder sudo Passwort-Aufforderung wurde gestartet</string>
     <string name="test_shutdown_error_unknown_host">Unbekannter Hostname \"%1$s\"</string>
+    <string name="add_device_status_ip_helper">Onlinestatus des Geräts wird regelmäßig unter dieser Adresse per Ping-Befehl abgefragt</string>
 </resources>
