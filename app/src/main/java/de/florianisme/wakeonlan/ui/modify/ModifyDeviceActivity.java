@@ -204,8 +204,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
                     View view = LayoutInflater.from(ModifyDeviceActivity.this).inflate(R.layout.dialog_test_remote_shutdown, null);
                     AlertDialog dialog = new MaterialAlertDialogBuilder(ModifyDeviceActivity.this)
                             .setView(view)
-                            .setTitle("SSH Shutdown Test")
-                            .setPositiveButton("Ok", (dlg, which) -> dlg.dismiss())
+                            .setTitle(R.string.remote_shutdown_send_command_dialog_title)
+                            .setPositiveButton(android.R.string.ok, (dlg, which) -> dlg.dismiss())
                             .create();
 
                     final LinearLayout destinationReachedResult = view.findViewById(R.id.result_destination_reached);
@@ -240,7 +240,15 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onError(Exception exception, ShutdownModel shutdownModel) {
+                        public void onSudoPromptTriggered(ShutdownModel shutdownModel) {
+                            runOnUiThread(() -> {
+                                optionalErrorMessage.setVisibility(View.VISIBLE);
+                                optionalErrorMessage.setText(getString(R.string.test_shutdown_error_execution_sudo_prompt, shutdownModel.getCommand()));
+                            });
+                        }
+
+                        @Override
+                        public void onGeneralError(Exception exception, ShutdownModel shutdownModel) {
                             runOnUiThread(() -> {
                                 optionalErrorMessage.setVisibility(View.VISIBLE);
                                 optionalErrorMessage.setText(getTextByExceptionType(exception, shutdownModel));

@@ -3,8 +3,12 @@ package de.florianisme.wakeonlan.shutdown;
 import android.util.Log;
 
 import net.schmizz.sshj.SSHClient;
+import net.schmizz.sshj.common.LoggerFactory;
+import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.channel.direct.Session;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 import de.florianisme.wakeonlan.shutdown.exception.CommandExecuteException;
@@ -25,6 +29,8 @@ public class ShutdownRunnable implements Runnable {
 
     @Override
     public void run() {
+        ByteArrayOutputStream commandOutputStream = new ByteArrayOutputStream();
+
         try (SSHClient sshClient = new SSHClient()) {
             sshClient.addHostKeyVerifier((hostname, port, key) -> true);
             sshClient.setConnectTimeout(CONNECT_TIMEOUT);
@@ -39,8 +45,11 @@ public class ShutdownRunnable implements Runnable {
 
             session.allocateDefaultPTY();
             Session.Command exec = session.exec(shutdownModel.getCommand());
-            exec.join(EXECUTE_TIMEOUT, TimeUnit.MILLISECONDS);
+            new StreamCopier(exec.getInputStream(), commandOutputStream, LoggerFactory.DEFAULT)
+                    .bufSize(exec.getLocalMaxPacketSize())
+                    .spawn("stdout");
 
+            exec.join(EXECUTE_TIMEOUT, TimeUnit.MILLISECONDS);
             Integer exitStatus = exec.getExitStatus();
             if (exitStatus != 0) {
                 throw new CommandExecuteException("Command exited with status code " + exitStatus, exitStatus);
@@ -49,7 +58,17 @@ public class ShutdownRunnable implements Runnable {
             shutdownExecutorListener.onCommandExecuteSuccessful();
         } catch (Exception e) {
             Log.e(ShutdownRunnable.class.getSimpleName(), "Error during SSH execution", e);
-            shutdownExecutorListener.onError(e, shutdownModel);
+
+            if (sudoPrompt(commandOutputStream)) {
+                shutdownExecutorListener.onSudoPromptTriggered(shutdownModel);
+                return;
+            }
+
+            shutdownExecutorListener.onGeneralError(e, shutdownModel);
         }
+    }
+
+    private boolean sudoPrompt(ByteArrayOutputStream commandOutputStream) {
+        return new String(commandOutputStream.toByteArray(), StandardCharsets.UTF_8).contains("[sudo] password for ");
     }
 }

@@ -25,7 +25,12 @@ public class IgnoringShutdownExecutorListener implements ShutdownExecutorListene
     }
 
     @Override
-    public void onError(Exception exception, ShutdownModel shutdownModel) {
+    public void onSudoPromptTriggered(ShutdownModel shutdownModel) {
+        // Ignore
+    }
+
+    @Override
+    public void onGeneralError(Exception exception, ShutdownModel shutdownModel) {
         // Ignore
     }
 }

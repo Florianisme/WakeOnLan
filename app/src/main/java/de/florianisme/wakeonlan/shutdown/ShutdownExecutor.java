@@ -28,7 +28,7 @@ public class ShutdownExecutor {
 
         if (!optionalShutdownModel.isPresent()) {
             Log.w(ShutdownExecutor.class.getSimpleName(), "Can not shutdown device. Not all required fields were set");
-            shutdownExecutorListener.onError(new IllegalArgumentException("Can not shutdown device. Not all required fields were set"), null);
+            shutdownExecutorListener.onGeneralError(new IllegalArgumentException("Can not shutdown device. Not all required fields were set"), null);
             return;
         }
 

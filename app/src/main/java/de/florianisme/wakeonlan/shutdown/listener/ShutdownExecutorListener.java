@@ -14,6 +14,8 @@ public interface ShutdownExecutorListener {
 
     void onCommandExecuteSuccessful();
 
-    void onError(Exception exception, @Nullable ShutdownModel shutdownModel);
+    void onSudoPromptTriggered(ShutdownModel shutdownModel);
+
+    void onGeneralError(Exception exception, @Nullable ShutdownModel shutdownModel);
 
 }
