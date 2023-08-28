@@ -17,7 +17,7 @@ public class DeviceEntity {
     @ColumnInfo(name = "mac_address")
     public String macAddress;
 
-    @ColumnInfo(name = "broadcast_address", defaultValue = "")
+    @ColumnInfo(name = "broadcast_address")
     public String broadcastAddress;
 
     @ColumnInfo(name = "port")
