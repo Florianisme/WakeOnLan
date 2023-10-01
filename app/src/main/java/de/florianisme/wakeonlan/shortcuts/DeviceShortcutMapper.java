@@ -24,10 +24,13 @@ public class DeviceShortcutMapper {
     @NonNull
     private static Intent buildIntent(Device device, Context context) {
         Intent wakeDeviceIntent = new Intent(context, WakeDeviceActivity.class);
+        wakeDeviceIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         wakeDeviceIntent.setAction(Intent.ACTION_VIEW);
+
         Bundle bundle = new Bundle();
         bundle.putInt(WakeDeviceActivity.DEVICE_ID_KEY, device.id);
         wakeDeviceIntent.putExtras(bundle);
+
         return wakeDeviceIntent;
     }
 }
