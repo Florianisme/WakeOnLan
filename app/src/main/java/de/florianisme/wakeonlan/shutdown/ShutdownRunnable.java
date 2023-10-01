@@ -2,10 +2,13 @@ package de.florianisme.wakeonlan.shutdown;
 
 import android.util.Log;
 
+import com.google.common.base.Throwables;
+
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.common.LoggerFactory;
 import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.channel.direct.Session;
+import net.schmizz.sshj.transport.TransportException;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -57,6 +60,11 @@ public class ShutdownRunnable implements Runnable {
 
             shutdownExecutorListener.onCommandExecuteSuccessful();
         } catch (Exception e) {
+            if (Throwables.getRootCause(e) instanceof TransportException) {
+                shutdownExecutorListener.onCommandExecuteSuccessful();
+                return;
+            }
+
             Log.e(ShutdownRunnable.class.getSimpleName(), "Error during SSH execution", e);
 
             if (sudoPrompt(commandOutputStream)) {
