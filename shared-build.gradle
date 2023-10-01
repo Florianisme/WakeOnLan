@@ -18,7 +18,7 @@ android {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
         targetSdk 34
-        versionName "1.8.6"
+        versionName "1.8.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
