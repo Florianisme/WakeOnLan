@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wearable:18.1.0'
 
     implementation 'com.google.guava:guava:31.0.1-jre'
+
+    //noinspection GradleDependency 2.15 required Java 19 which is not supported yet
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
     testImplementation 'junit:junit:4.13.2'
