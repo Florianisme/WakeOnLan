@@ -51,9 +51,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         WearableRecyclerView deviceList = binding.deviceList;
         deviceList.setEdgeItemsCenteringEnabled(false);
         deviceList.setLayoutManager(new WearableLinearLayoutManager(this, new CustomScrollingLayoutCallback()));
-        wearDeviceListAdapter = new WearDeviceListAdapter(device -> {
-            MobileClient.sendDeviceClickedMessage(nodeClient, messageClient, device);
-        });
+        wearDeviceListAdapter = new WearDeviceListAdapter(device -> MobileClient.sendDeviceClickedMessage(nodeClient, messageClient, device));
         deviceList.setAdapter(wearDeviceListAdapter);
         deviceList.requestFocus();
 

@@ -2,7 +2,6 @@ package de.florianisme.wakeonlan.ui.backup;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,12 +60,14 @@ public class DataExporter implements ActivityResultCallback<Uri> {
     }
 
     private void writeDevicesToFile(Uri uri, byte[] content, Context context) throws Exception {
-        ParcelFileDescriptor fileDescriptor = context.getContentResolver().openFileDescriptor(uri, FILE_MODE_WRITE);
-        FileOutputStream fileOutputStream = new FileOutputStream(fileDescriptor.getFileDescriptor());
-        fileOutputStream.write(content);
+        try (OutputStream fileOutputStream = context.getContentResolver().openOutputStream(uri, FILE_MODE_WRITE)) {
 
-        fileOutputStream.close();
-        fileDescriptor.close();
+            if (fileOutputStream == null) {
+                throw new IllegalStateException("Could not open File for writing");
+            }
+
+            fileOutputStream.write(content);
+        }
     }
 
 }

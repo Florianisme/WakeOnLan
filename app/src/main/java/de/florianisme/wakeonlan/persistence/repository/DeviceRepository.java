@@ -58,10 +58,6 @@ public class DeviceRepository {
         deviceDao.delete(deviceEntityMapper.modelToEntity(device));
     }
 
-    public void deleteAll() {
-        deviceDao.deleteAll();
-    }
-
     public void replaceAllDevices(Device... devices) {
         DeviceEntity[] deviceEntities = Arrays.stream(devices)
                 .map(deviceEntityMapper::modelToEntity)
