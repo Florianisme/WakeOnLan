@@ -26,6 +26,7 @@ import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 
 public class DeviceListFragment extends Fragment {
 
+    private DeviceRepository deviceRepository;
     private FragmentListDevicesBinding binding;
     private DeviceListAdapter deviceListAdapter;
 
@@ -44,13 +45,14 @@ public class DeviceListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        deviceRepository = DeviceRepository.getInstance(getContext());
+
         instantiateRecyclerView();
         registerLiveDataObserver();
     }
 
     private void registerLiveDataObserver() {
-        DeviceRepository.getInstance(getContext())
-                .getAllAsObservable()
+        deviceRepository.getAllAsObservable()
                 .observe(getViewLifecycleOwner(), devices -> deviceListAdapter.updateDataset(devices));
     }
 

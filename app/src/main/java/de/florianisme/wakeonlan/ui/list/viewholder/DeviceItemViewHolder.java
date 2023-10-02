@@ -54,7 +54,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         this.statusTesterPool = statusTesterPool;
     }
 
-    public void fromDevice(Device device) {
+    public synchronized void fromDevice(Device device) {
         this.device = device;
 
         deviceName.setText(device.name);
@@ -139,6 +139,8 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void cancelStatusUpdates() {
-        statusTesterPool.stopStatusTest(device, StatusTestType.LIST);
+        if (statusTesterPool != null && device != null) {
+            statusTesterPool.stopStatusTest(device, StatusTestType.LIST);
+        }
     }
 }

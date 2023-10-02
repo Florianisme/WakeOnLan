@@ -16,10 +16,10 @@ import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTesterBuilder;
 
 public class PingStatusTesterPool implements StatusTesterPool {
 
-    private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(3);
+    private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(8);
     private static final DeviceStatusTesterBuilder DEVICE_STATUS_TESTER = new PingDeviceStatusTesterBuilder();
 
-    private static Map<Integer, StatusTestItem> statusCheckMap = new HashMap<>(8);
+    private static Map<Integer, StatusTestItem> statusCheckMap = new HashMap<>(10);
 
     private static StatusTesterPool INSTANCE;
 
@@ -69,7 +69,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
         StatusTestItem statusTestItem = statusCheckMap.get(device.id);
 
         if (statusTestItem == null) {
-            throw new IllegalStateException("Item can not be null at this point");
+            return;
         }
 
         statusTestItem.removeListenerAndCancelIfApplicable(testType);

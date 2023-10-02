@@ -23,13 +23,20 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final DeviceClickedCallback deviceClickedCallback;
     private final StatusTesterPool statusTesterPool;
 
+    private boolean initialOberverUpdate = true;
+
     public DeviceListAdapter(List<Device> initialDataset, DeviceClickedCallback deviceClickedCallback, StatusTesterPool statusTesterPool) {
         this.deviceClickedCallback = deviceClickedCallback;
         this.statusTesterPool = statusTesterPool;
-        updateDataset(initialDataset);
+
+        listDiffer.submitList(initialDataset);
     }
 
     public void updateDataset(List<Device> updatedDevices) {
+        if (initialOberverUpdate) {
+            initialOberverUpdate = false;
+            return;
+        }
         listDiffer.submitList(updatedDevices);
     }
 
@@ -88,6 +95,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == ListViewType.DEVICE.ordinal()) {
             DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
+
+            deviceItemViewHolder.cancelStatusUpdates();
 
             Device device = listDiffer.getCurrentList().get(position);
             deviceItemViewHolder.fromDevice(device);
