@@ -16,6 +16,9 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main">
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +38,12 @@
             android:label="@string/title_activity_add_device"
             android:theme="@style/Theme.WakeOnLan.NoDrawerActivity" />
 
-        <activity android:name=".shortcuts.WakeDeviceActivity" />
+        <activity
+            android:name=".shortcuts.WakeDeviceActivity"
+            android:exported="true"></activity>
+        <activity android:name=".assistant.WakeDeviceFromAssistantActivity">
+
+        </activity>
 
         <service
             android:name=".quicksettings.DeviceOneTileService"

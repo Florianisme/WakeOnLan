@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <capability
+        android:name="custom.actions.intent.WAKE_DEVICE"
+        app:queryPatterns="@array/wake_device_prompts">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="de.florianisme.wakeonlan"
+            android:targetClass="de.florianisme.wakeonlan.ui.MainActivity">
+            <parameter
+                android:name="device"
+                android:key="device" />
+        </intent>
+    </capability>
+
+    <shortcut
+        android:shortcutId="WAKE_DEVICE"
+        android:shortcutShortLabel="@string/title_activity_main">
+        <capability-binding android:key="custom.actions.intent.WAKE_DEVICE">
+            <parameter-binding
+                android:key="device"
+                android:value="Device Id" />
+        </capability-binding>
+    </shortcut>
+</shortcuts>
