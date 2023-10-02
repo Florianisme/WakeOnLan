@@ -12,6 +12,7 @@ import java.util.List;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 import de.florianisme.wakeonlan.ui.list.viewholder.DeviceItemViewHolder;
 import de.florianisme.wakeonlan.ui.list.viewholder.EmptyViewHolder;
 import de.florianisme.wakeonlan.ui.list.viewholder.ListViewType;
@@ -20,9 +21,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private final AsyncListDiffer<Device> listDiffer = new AsyncListDiffer<>(this, new DeviceDiffCallback());
     private final DeviceClickedCallback deviceClickedCallback;
+    private final StatusTesterPool statusTesterPool;
 
-    public DeviceListAdapter(List<Device> initialDataset, DeviceClickedCallback deviceClickedCallback) {
+    public DeviceListAdapter(List<Device> initialDataset, DeviceClickedCallback deviceClickedCallback, StatusTesterPool statusTesterPool) {
         this.deviceClickedCallback = deviceClickedCallback;
+        this.statusTesterPool = statusTesterPool;
         updateDataset(initialDataset);
     }
 
@@ -43,7 +46,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.device_list_item, viewGroup, false);
-            viewHolder = new DeviceItemViewHolder(view, deviceClickedCallback);
+            viewHolder = new DeviceItemViewHolder(view, deviceClickedCallback, statusTesterPool);
         }
 
         return viewHolder;
@@ -85,15 +88,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == ListViewType.DEVICE.ordinal()) {
             DeviceItemViewHolder deviceItemViewHolder = (DeviceItemViewHolder) viewHolder;
-            deviceItemViewHolder.cancelStatusUpdates();
-            Device device = listDiffer.getCurrentList().get(position);
 
-            deviceItemViewHolder.setDeviceName(device.name);
-            deviceItemViewHolder.setDeviceMacAddress(device.macAddress);
-            deviceItemViewHolder.setOnClickHandler(device);
-            deviceItemViewHolder.setOnEditClickHandler(device);
-            deviceItemViewHolder.setShutdownVisibilityAndClickHandler(device);
-            deviceItemViewHolder.startDeviceStatusQuery(device);
+            Device device = listDiffer.getCurrentList().get(position);
+            deviceItemViewHolder.fromDevice(device);
         }
     }
 }

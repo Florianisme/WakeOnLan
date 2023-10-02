@@ -20,12 +20,16 @@ import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.GridLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.LinearLayoutManagerWrapper;
+import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 
 
 public class DeviceListFragment extends Fragment {
 
     private FragmentListDevicesBinding binding;
     private DeviceListAdapter deviceListAdapter;
+
+    private static final StatusTesterPool STATUS_TESTER_POOL = PingStatusTesterPool.getInstance();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,7 +56,7 @@ public class DeviceListFragment extends Fragment {
 
     private void instantiateRecyclerView() {
         List<Device> initialDataset = DeviceRepository.getInstance(getContext()).getAll();
-        deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback());
+        deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback(), STATUS_TESTER_POOL);
         deviceListAdapter.setHasStableIds(true);
         RecyclerView devicesRecyclerView = binding.machineList;
 

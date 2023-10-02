@@ -22,8 +22,8 @@ import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.shutdown.ShutdownExecutor;
 import de.florianisme.wakeonlan.shutdown.ShutdownModelFactory;
 import de.florianisme.wakeonlan.ui.list.DeviceClickedCallback;
-import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
-import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 import de.florianisme.wakeonlan.ui.modify.EditDeviceActivity;
 import de.florianisme.wakeonlan.wol.WolSender;
 
@@ -37,9 +37,11 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     private final Button sendWolButton;
     private final Button shutdownButton;
     private final DeviceClickedCallback deviceClickedCallback;
-    private final DeviceStatusTester deviceStatusTester;
+    private final StatusTesterPool statusTesterPool;
 
-    public DeviceItemViewHolder(View view, DeviceClickedCallback deviceClickedCallback) {
+    private Device device;
+
+    public DeviceItemViewHolder(View view, DeviceClickedCallback deviceClickedCallback, StatusTesterPool statusTesterPool) {
         super(view);
         deviceStatus = view.findViewById(R.id.device_status);
         deviceName = view.findViewById(R.id.device_name);
@@ -49,15 +51,19 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         sendWolButton = view.findViewById(R.id.send_wol);
         shutdownButton = view.findViewById(R.id.shutdown);
         this.deviceClickedCallback = deviceClickedCallback;
-        this.deviceStatusTester = new PingDeviceStatusTester();
+        this.statusTesterPool = statusTesterPool;
     }
 
-    public void setDeviceName(String name) {
-        deviceName.setText(name);
-    }
+    public void fromDevice(Device device) {
+        this.device = device;
 
-    public void setDeviceMacAddress(String mac) {
-        deviceMacAddress.setText(mac);
+        deviceName.setText(device.name);
+        deviceMacAddress.setText(device.macAddress);
+
+        setOnClickHandler(device);
+        setOnEditClickHandler(device);
+        setShutdownVisibilityAndClickHandler(device);
+        startDeviceStatusQuery(device);
     }
 
     public void setOnClickHandler(Device device) {
@@ -96,7 +102,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         deviceStatus.clearAnimation();
         deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
 
-        deviceStatusTester.scheduleDeviceStatusPings(device, status -> {
+        statusTesterPool.scheduleStatusTest(device, status -> {
             if (status == DeviceStatus.ONLINE) {
                 setAlphaAnimationIfNotSet();
                 setStatusDrawable(R.drawable.device_status_online);
@@ -107,7 +113,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
                 deviceStatus.clearAnimation();
                 deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
             }
-        });
+        }, StatusTestType.LIST);
     }
 
     private void setStatusDrawable(int statusDrawable) {
@@ -133,8 +139,6 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void cancelStatusUpdates() {
-        if (deviceStatusTester != null) {
-            deviceStatusTester.stopDeviceStatusPings();
-        }
+        statusTesterPool.stopStatusTest(device, StatusTestType.LIST);
     }
 }
