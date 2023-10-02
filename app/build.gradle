@@ -3,7 +3,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 87
+        versionCode 89
         wearAppUnbundled true
     }
     buildFeatures {
