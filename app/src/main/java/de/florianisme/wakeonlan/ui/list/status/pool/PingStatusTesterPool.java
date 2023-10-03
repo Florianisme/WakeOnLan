@@ -16,10 +16,10 @@ import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTesterBuilder;
 
 public class PingStatusTesterPool implements StatusTesterPool {
 
-    private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(8);
+    private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(15);
     private static final DeviceStatusTesterBuilder DEVICE_STATUS_TESTER = new PingDeviceStatusTesterBuilder();
 
-    private static Map<Integer, StatusTestItem> statusCheckMap = new HashMap<>(10);
+    private static Map<Integer, StatusTestItem> statusCheckMap = new HashMap<>(15);
 
     private static StatusTesterPool INSTANCE;
 
@@ -54,8 +54,10 @@ public class PingStatusTesterPool implements StatusTesterPool {
             statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
         }
 
-        ScheduledFuture<?> scheduledFuture = EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, statusTestItem), 0, 4000, TimeUnit.MILLISECONDS);
-        statusTestItem.setRunnable(scheduledFuture);
+        ScheduledFuture<?> scheduledFuture =
+                EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, statusTestItem),
+                        0, 2, TimeUnit.SECONDS);
+        statusTestItem.setOrUpdateRunnable(scheduledFuture);
 
         statusCheckMap.put(device.id, statusTestItem);
         Log.d(getClass().getSimpleName(), "Successfully scheduled new status check for device " + device.name + " of type " + statusTestType);
@@ -72,9 +74,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
             return;
         }
 
-        statusTestItem.removeListenerAndCancelIfApplicable(testType);
-
-        if (!statusTestItem.hasRemainingListeners()) {
+        if (statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
             statusCheckMap.remove(device.id);
         }
     }
@@ -86,9 +86,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
         Map<Integer, StatusTestItem> updatedList = new HashMap<>(8);
 
         statusCheckMap.values().forEach(statusTestItem -> {
-            statusTestItem.removeListenerAndCancelIfApplicable(testType);
-
-            if (statusTestItem.hasRemainingListeners()) {
+            if (!statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
                 updatedList.put(statusTestItem.getDeviceId(), statusTestItem);
             }
         });

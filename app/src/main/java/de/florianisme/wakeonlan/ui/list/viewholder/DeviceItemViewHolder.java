@@ -79,7 +79,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
             Intent intent = new Intent(context, EditDeviceActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt(EditDeviceActivity.MACHINE_ID_KEY, device.id);
+            bundle.putParcelable(EditDeviceActivity.DEVICE_PARCELABLE_KEY, device);
             intent.putExtras(bundle);
             context.startActivity(intent);
         });

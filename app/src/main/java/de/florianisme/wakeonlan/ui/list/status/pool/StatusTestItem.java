@@ -18,28 +18,41 @@ public class StatusTestItem {
         this.id = id;
     }
 
-    synchronized void addOrReplaceStatusListener(StatusTestType testType, DeviceStatusListener deviceStatusListener) {
-        listeners.put(testType, deviceStatusListener);
-    }
-
-    synchronized void removeListenerAndCancelIfApplicable(StatusTestType statusTestType) {
-        listeners.remove(statusTestType);
-
-        if (listeners.isEmpty()) {
-            runnable.cancel(true);
+    void addOrReplaceStatusListener(StatusTestType testType, DeviceStatusListener deviceStatusListener) {
+        synchronized (listeners) {
+            listeners.put(testType, deviceStatusListener);
         }
     }
 
-    synchronized boolean hasRemainingListeners() {
-        return !listeners.isEmpty();
+    boolean removeListenerAndCancelIfApplicable(StatusTestType statusTestType) {
+        synchronized (listeners) {
+            listeners.remove(statusTestType);
+
+            if (listeners.isEmpty()) {
+                runnable.cancel(true);
+                return true;
+            }
+            return false;
+        }
     }
 
-    void setRunnable(ScheduledFuture<?> scheduledFuture) {
+    boolean hasRemainingListeners() {
+        synchronized (listeners) {
+            return !listeners.isEmpty();
+        }
+    }
+
+    void setOrUpdateRunnable(ScheduledFuture<?> scheduledFuture) {
+        if (this.runnable != null) {
+            this.runnable.cancel(true);
+        }
         this.runnable = scheduledFuture;
     }
 
     public synchronized void forAllListeners(Consumer<DeviceStatusListener> consumer) {
-        listeners.values().forEach(consumer);
+        synchronized (listeners) {
+            listeners.values().forEach(consumer);
+        }
     }
 
     public int getDeviceId() {
