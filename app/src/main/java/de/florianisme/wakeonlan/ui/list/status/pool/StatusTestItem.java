@@ -5,17 +5,18 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.function.Consumer;
 
+import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
 
 public class StatusTestItem {
 
-    private final int id;
+    private final Device device;
     private ScheduledFuture<?> runnable;
 
     private final Map<StatusTestType, DeviceStatusListener> listeners = new HashMap<>(3);
 
-    public StatusTestItem(int id) {
-        this.id = id;
+    public StatusTestItem(Device device) {
+        this.device = device;
     }
 
     void addOrReplaceStatusListener(StatusTestType testType, DeviceStatusListener deviceStatusListener) {
@@ -29,24 +30,22 @@ public class StatusTestItem {
             listeners.remove(statusTestType);
 
             if (listeners.isEmpty()) {
-                runnable.cancel(true);
+                cancelRunnable();
                 return true;
             }
             return false;
         }
     }
 
-    boolean hasRemainingListeners() {
-        synchronized (listeners) {
-            return !listeners.isEmpty();
-        }
-    }
-
     void setOrUpdateRunnable(ScheduledFuture<?> scheduledFuture) {
         if (this.runnable != null) {
-            this.runnable.cancel(true);
+            cancelRunnable();
         }
         this.runnable = scheduledFuture;
+    }
+
+    private void cancelRunnable() {
+        this.runnable.cancel(true);
     }
 
     public synchronized void forAllListeners(Consumer<DeviceStatusListener> consumer) {
@@ -55,7 +54,19 @@ public class StatusTestItem {
         }
     }
 
-    public int getDeviceId() {
-        return id;
+    public Device getDevice() {
+        return device;
+    }
+
+    public void pausePingRunnable(StatusTestType testType) {
+        synchronized (listeners) {
+            if (runnableOnlyRunningForType(testType)) {
+                cancelRunnable();
+            }
+        }
+    }
+
+    private boolean runnableOnlyRunningForType(StatusTestType testType) {
+        return listeners.keySet().size() == 1 && listeners.containsKey(testType);
     }
 }

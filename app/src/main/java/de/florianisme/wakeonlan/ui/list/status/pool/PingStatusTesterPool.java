@@ -50,7 +50,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
 
             statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
         } else {
-            statusTestItem = new StatusTestItem(device.id);
+            statusTestItem = new StatusTestItem(device);
             statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
         }
 
@@ -87,11 +87,32 @@ public class PingStatusTesterPool implements StatusTesterPool {
 
         statusCheckMap.values().forEach(statusTestItem -> {
             if (!statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
-                updatedList.put(statusTestItem.getDeviceId(), statusTestItem);
+                updatedList.put(statusTestItem.getDevice().id, statusTestItem);
             }
         });
 
         statusCheckMap = updatedList;
+    }
+
+    @Override
+    public void pauseAllForType(StatusTestType testType) {
+        Log.i(getClass().getSimpleName(), "Pausing all pings of type " + testType);
+
+        statusCheckMap.values().forEach(item -> item.pausePingRunnable(testType));
+    }
+
+    @Override
+    public void resumeAll() {
+        Log.i(getClass().getSimpleName(), "Resuming all previously scheduled pings");
+
+        statusCheckMap.values().forEach(item -> {
+            Device device = item.getDevice();
+
+            ScheduledFuture<?> scheduledFuture =
+                    EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, item),
+                            0, 2, TimeUnit.SECONDS);
+            item.setOrUpdateRunnable(scheduledFuture);
+        });
     }
 
 }

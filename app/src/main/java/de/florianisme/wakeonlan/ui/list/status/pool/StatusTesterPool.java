@@ -10,4 +10,8 @@ public interface StatusTesterPool {
     void stopStatusTest(Device device, StatusTestType testType);
 
     void stopAllStatusTesters(StatusTestType testType);
+
+    void pauseAllForType(StatusTestType testType);
+
+    void resumeAll();
 }

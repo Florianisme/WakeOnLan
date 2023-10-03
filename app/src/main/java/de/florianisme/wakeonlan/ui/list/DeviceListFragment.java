@@ -21,6 +21,7 @@ import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.GridLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.LinearLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
 import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 
 
@@ -39,6 +40,18 @@ public class DeviceListFragment extends Fragment {
         binding = FragmentListDevicesBinding.inflate(inflater, container, false);
         binding.addDeviceFab.setOnClickListener(view -> Navigation.findNavController(container).navigate(R.id.MainActivity_to_AddMachineActivity));
         return binding.getRoot();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PingStatusTesterPool.getInstance().pauseAllForType(StatusTestType.LIST);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PingStatusTesterPool.getInstance().resumeAll();
     }
 
     @Override
