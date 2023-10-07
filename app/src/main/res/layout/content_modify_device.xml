@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="@string/add_device_default_port"
-                android:inputType="text"
+                android:inputType="number"
                 android:minHeight="48dp"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>

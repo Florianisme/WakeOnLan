@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
+    compileSdk 33
     defaultConfig {
         versionCode 92
     }

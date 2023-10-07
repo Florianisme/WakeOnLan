@@ -95,4 +95,5 @@
     <string name="test_shutdown_error_unknown_host">Unbekannter Hostname \"%1$s\"</string>
     <string name="add_device_status_ip_helper">Onlinestatus des Geräts wird regelmäßig unter dieser Adresse per Ping-Befehl abgefragt</string>
     <string name="add_device_shutdown_explanation">Nutzt SSH um sich am Zielsystem anzumelden und über das entsprechende Kommando herunterzufahren.\nFunktioniert nur auf Systemen, auf denen Linux betrieben wird.</string>
+    <string name="add_device_error_port_invalid">Ungültiger Port</string>
 </resources>

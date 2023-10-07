@@ -48,6 +48,7 @@ import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocom
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.ConditionalInputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.InputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.MacValidator;
+import de.florianisme.wakeonlan.ui.modify.watcher.validator.PortValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.SecureOnPasswordValidator;
 
 public abstract class ModifyDeviceActivity extends AppCompatActivity {
@@ -126,6 +127,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
+        devicePorts.addTextChangedListener(new PortValidator(devicePorts));
+
         deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput, R.string.add_device_error_name_empty));
         deviceSecureOnPassword.addTextChangedListener(new SecureOnPasswordValidator(deviceSecureOnPassword));
 
@@ -145,6 +148,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     protected boolean assertInputsNotEmptyAndValid() {
         return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
+                devicePorts.getError() == null &&
                 deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
                 deviceStatusIpInput.getError() == null &&
                 deviceSecureOnPassword.getError() == null &&
@@ -176,6 +180,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput.setText(deviceNameInput.getText());
         deviceBroadcastInput.setText(deviceBroadcastInput.getText());
         deviceMacInput.setText(deviceMacInput.getText());
+        devicePorts.setText(devicePorts.getText());
         deviceSecureOnPassword.setText(deviceSecureOnPassword.getText());
         deviceSshAddressInput.setText(deviceSshAddressInput.getText());
         deviceSshUsernameInput.setText(deviceSshUsernameInput.getText());

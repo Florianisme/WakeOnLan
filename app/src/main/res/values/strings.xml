@@ -35,6 +35,7 @@
     <string name="add_device_menu_delete">Delete</string>
 
     <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
+    <string name="add_device_error_port_invalid">Invalid Port</string>
     <string name="add_device_error_name_empty">Name must not be empty</string>
     <string name="add_device_error_ip_invalid">Invalid IP Address</string>
     <string name="add_device_error_secure_on_password_invalid">Password must be either empty, a valid MAC or IP Address</string>
