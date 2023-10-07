@@ -14,13 +14,14 @@ import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
-import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
-import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
+import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 import de.florianisme.wakeonlan.wol.WolSender;
 
 public abstract class DeviceTileService extends TileService implements DeviceStatusListener {
 
-    private final DeviceStatusTester deviceStatusTester = new PingDeviceStatusTester();
+    private final StatusTesterPool statusTesterPool = PingStatusTesterPool.getInstance();
 
     private DeviceRepository deviceRepository;
     private Device device;
@@ -41,7 +42,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
         if (optionalMachine.isPresent()) {
             Device device = optionalMachine.get();
             this.device = device;
-            deviceStatusTester.scheduleDeviceStatusPings(device, this);
+            statusTesterPool.scheduleStatusTest(device, this, StatusTestType.TILE);
 
             tile.setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -88,7 +89,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     @Override
     public void onStopListening() {
         super.onStopListening();
-        deviceStatusTester.stopDeviceStatusPings();
+        statusTesterPool.stopStatusTest(device, StatusTestType.TILE);
     }
 
     abstract int machineAtIndex();

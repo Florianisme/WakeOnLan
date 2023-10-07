@@ -46,7 +46,7 @@ public class QuickAccessProviderService extends ControlsProviderService {
 
     @Override
     public void onDestroy() {
-        StatefulControlService.unscheduleStatusTester();
+        StatefulControlService.stopAllStatusTesters();
         super.onDestroy();
     }
 

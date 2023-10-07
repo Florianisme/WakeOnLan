@@ -12,28 +12,22 @@ import android.service.controls.templates.ToggleTemplate;
 import androidx.annotation.RequiresApi;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.models.DeviceStatus;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
-import de.florianisme.wakeonlan.ui.list.status.DeviceStatusTester;
-import de.florianisme.wakeonlan.ui.list.status.PingDeviceStatusTester;
+import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 import io.reactivex.processors.ReplayProcessor;
 
 @RequiresApi(api = Build.VERSION_CODES.R)
 public class StatefulControlService {
 
-    private static final Map<Integer, DeviceStatusTester> statusTesterMap = new HashMap<>();
-
-    static void unscheduleStatusTester() {
-        statusTesterMap.forEach((id, tester) -> tester.stopDeviceStatusPings());
-        statusTesterMap.clear();
-    }
+    private static final StatusTesterPool STATUS_TESTER_POOL = PingStatusTesterPool.getInstance();
 
     static void createAndUpdateStatefulControls(List<String> deviceIds, ReplayProcessor<Control> processor, Context context) {
         DeviceRepository deviceRepository = DeviceRepository.getInstance(context);
@@ -42,12 +36,10 @@ public class StatefulControlService {
                 .collect(Collectors.toList());
 
         for (Device device : filteredDevices) {
-            DeviceStatusTester deviceStatusTester = statusTesterMap.getOrDefault(device.id, new PingDeviceStatusTester());
-            statusTesterMap.putIfAbsent(device.id, deviceStatusTester);
-            deviceStatusTester.scheduleDeviceStatusPings(device, deviceStatus -> {
+            STATUS_TESTER_POOL.scheduleStatusTest(device, deviceStatus -> {
                 Control control = mapDeviceToStatefulControl(device, deviceStatus == DeviceStatus.ONLINE, context);
                 processor.onNext(control);
-            });
+            }, StatusTestType.QUICK_ACCESS);
         }
     }
 
@@ -67,4 +59,7 @@ public class StatefulControlService {
                 .build();
     }
 
+    public static void stopAllStatusTesters() {
+        STATUS_TESTER_POOL.stopAllStatusTesters(StatusTestType.QUICK_ACCESS);
+    }
 }
