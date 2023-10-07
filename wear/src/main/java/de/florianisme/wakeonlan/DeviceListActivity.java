@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.wear.widget.WearableLinearLayoutManager;
 import androidx.wear.widget.WearableRecyclerView;
 
@@ -39,6 +40,8 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.installSplashScreen(this);
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityDeviceListBinding.inflate(getLayoutInflater());
@@ -51,9 +54,7 @@ public class DeviceListActivity extends Activity implements DataClient.OnDataCha
         WearableRecyclerView deviceList = binding.deviceList;
         deviceList.setEdgeItemsCenteringEnabled(false);
         deviceList.setLayoutManager(new WearableLinearLayoutManager(this, new CustomScrollingLayoutCallback()));
-        wearDeviceListAdapter = new WearDeviceListAdapter(device -> {
-            MobileClient.sendDeviceClickedMessage(nodeClient, messageClient, device);
-        });
+        wearDeviceListAdapter = new WearDeviceListAdapter(device -> MobileClient.sendDeviceClickedMessage(nodeClient, messageClient, device));
         deviceList.setAdapter(wearDeviceListAdapter);
         deviceList.requestFocus();
 

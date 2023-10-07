@@ -3,10 +3,8 @@ package de.florianisme.wakeonlan.mobile;
 import android.net.Uri;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.wearable.DataClient;
 import com.google.android.gms.wearable.DataItem;
-import com.google.android.gms.wearable.DataItemBuffer;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.MessageClient;
@@ -26,21 +24,13 @@ public class MobileClient {
     private static final String DEVICE_CLICKED_PATH = "/device_clicked";
 
     public static void getDevicesList(NodeClient nodeClient, DataClient dataClient, OnDataReceivedListener onDataReceivedListener) {
-        nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
-            @Override
-            public void onSuccess(List<Node> nodes) {
-                queryDevices(dataClient, onDataReceivedListener);
-            }
-        });
+        nodeClient.getConnectedNodes().addOnSuccessListener(nodes -> queryDevices(dataClient, onDataReceivedListener));
     }
 
     public static void sendDeviceClickedMessage(NodeClient nodeClient, MessageClient messageClient, DeviceDto device) {
-        nodeClient.getConnectedNodes().addOnSuccessListener(new OnSuccessListener<List<Node>>() {
-            @Override
-            public void onSuccess(List<Node> nodes) {
-                for (Node node : nodes) {
-                    messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.getId()});
-                }
+        nodeClient.getConnectedNodes().addOnSuccessListener(nodes -> {
+            for (Node node : nodes) {
+                messageClient.sendMessage(node.getId(), DEVICE_CLICKED_PATH, new byte[]{(byte) device.getId()});
             }
         });
     }
@@ -52,20 +42,17 @@ public class MobileClient {
                 .authority("*")
                 .build();
 
-        dataClient.getDataItems(uri).addOnSuccessListener(new OnSuccessListener<DataItemBuffer>() {
-            @Override
-            public void onSuccess(DataItemBuffer dataItems) {
-                for (DataItem item : dataItems) {
-                    DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
-                    try {
-                        List<DeviceDto> devices = buildDeviceList(dataMap);
-                        onDataReceivedListener.onDataReceived(devices);
-                    } catch (DeviceQueryException e) {
-                        onDataReceivedListener.onError(e);
-                    }
+        dataClient.getDataItems(uri).addOnSuccessListener(dataItems -> {
+            for (DataItem item : dataItems) {
+                DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
+                try {
+                    List<DeviceDto> devices = buildDeviceList(dataMap);
+                    onDataReceivedListener.onDataReceived(devices);
+                } catch (DeviceQueryException e) {
+                    onDataReceivedListener.onError(e);
                 }
-                dataItems.release();
             }
+            dataItems.release();
         });
     }
 

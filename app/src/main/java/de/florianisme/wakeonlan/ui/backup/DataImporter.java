@@ -64,9 +64,16 @@ public class DataImporter implements ActivityResultCallback<Uri> {
     }
 
     private byte[] readContentFromFile(Uri uri, Context context) throws IOException {
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        byte[] content = ByteStreams.toByteArray(inputStream);
-        inputStream.close();
+        byte[] content;
+
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
+
+            if (inputStream == null) {
+                throw new IllegalStateException("Could not open File for reading");
+            }
+
+            content = ByteStreams.toByteArray(inputStream);
+        }
 
         return content;
     }

@@ -1,30 +1,41 @@
 package de.florianisme.wakeonlan.ui.modify;
 
-import java.io.IOException;
+import com.google.common.collect.Lists;
+
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class BroadcastHelper {
 
-    public static Optional<InetAddress> getBroadcastAddress() throws IOException {
-        Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+    private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan", "eth", "tun");
 
-        while (networkInterfaces.hasMoreElements()) {
-            NetworkInterface singleInterface = networkInterfaces.nextElement();
+    public final Optional<InetAddress> getBroadcastAddress() {
+        return Collections.list(getNetworkInterfaces()).stream()
+                .filter(this::isAllowedInterfaceName)
+                .map(NetworkInterface::getInterfaceAddresses)
+                .flatMap(Collection::stream)
+                .map(InterfaceAddress::getBroadcast)
+                .filter(Objects::nonNull)
+                .findFirst();
+    }
 
-            String interfaceName = singleInterface.getName();
-            if (interfaceName.contains("wlan0") || interfaceName.contains("eth0")) {
-                for (InterfaceAddress interfaceAddress : singleInterface.getInterfaceAddresses()) {
-                    InetAddress broadcastAddress = interfaceAddress.getBroadcast();
-                    if (broadcastAddress != null) {
-                        return Optional.of(broadcastAddress);
-                    }
-                }
-            }
+    protected Enumeration<NetworkInterface> getNetworkInterfaces() {
+        try {
+            return NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            return Collections.emptyEnumeration();
         }
-        return Optional.empty();
+    }
+
+    private boolean isAllowedInterfaceName(NetworkInterface networkInterface) {
+        return INTERFACE_LIST.stream().anyMatch(interfaceName -> networkInterface.getName().startsWith(interfaceName));
     }
 }

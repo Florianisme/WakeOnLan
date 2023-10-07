@@ -1,6 +1,6 @@
 android {
     namespace 'de.florianisme.wakeonlan'
-    compileSdk 33
+    compileSdk 34
 
     signingConfigs {
         release {
@@ -17,8 +17,8 @@ android {
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
-        targetSdk 33
-        versionName "1.8.0"
+        targetSdk 34
+        versionName "1.9.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,8 +29,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     buildFeatures {
         viewBinding true
@@ -40,8 +40,13 @@ android {
 dependencies {
     implementation 'com.google.android.support:wearable:2.9.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
-    implementation 'com.google.android.gms:play-services-wearable:18.0.0'
+    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
 
     implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+
+    //noinspection GradleDependency 2.15 required Java 19 which is not supported yet
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
 }

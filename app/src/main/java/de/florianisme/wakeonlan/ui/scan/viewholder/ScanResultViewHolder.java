@@ -47,18 +47,15 @@ public class ScanResultViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setOnAddClickListener(NetworkScanDevice scanDevice) {
-        addDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
+        addDevice.setOnClickListener(view -> {
+            Context context = view.getContext();
 
-                Intent intent = new Intent(context, AddNetworkScanDeviceActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(AddNetworkScanDeviceActivity.MACHINE_NAME_KEY, scanDevice.getName().orElse(null));
-                bundle.putString(AddNetworkScanDeviceActivity.MACHINE_IP_KEY, scanDevice.getIpAddress());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+            Intent intent = new Intent(context, AddNetworkScanDeviceActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(AddNetworkScanDeviceActivity.MACHINE_NAME_KEY, scanDevice.getName().orElse(null));
+            bundle.putString(AddNetworkScanDeviceActivity.MACHINE_IP_KEY, scanDevice.getIpAddress());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
     }
 }
