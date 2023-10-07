@@ -4,7 +4,8 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 android {
     compileSdk 33
     defaultConfig {
-        versionCode 94
+        targetSdk 33
+        versionCode 96
     }
 }
 
