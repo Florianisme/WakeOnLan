@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -63,7 +61,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceBroadcastInput;
     protected TextInputEditText deviceSecureOnPassword;
     protected ImageButton broadcastAutofill;
-    protected MaterialAutoCompleteTextView devicePorts;
+    protected TextInputEditText devicePorts;
     protected ConstraintLayout deviceRemoteShutdownContainer;
     protected SwitchCompat deviceEnableRemoteShutdown;
     protected TextInputEditText deviceSshAddressInput;
@@ -106,7 +104,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         addValidators();
         addAutofillClickHandler();
         setRemoteDeviceShutdownSwitchListener();
-        addDevicePortsAdapter();
         setOnTestSshShutdownListenerClickedListener();
     }
 
@@ -163,13 +160,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     private boolean isEmpty(TextInputEditText inputEditText) {
         return inputEditText.getText() == null || inputEditText.getText().length() == 0;
-    }
-
-    private void addDevicePortsAdapter() {
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_device_port_dropdown,
-                getResources().getStringArray(R.array.ports_selection));
-        devicePorts.setAdapter(stringArrayAdapter);
-        devicePorts.setText("9", false);
     }
 
     protected void checkAndPersistDevice() {
@@ -334,7 +324,15 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     abstract protected boolean inputsHaveNotChanged();
 
     protected int getPort() {
-        return "7".equals(binding.device.devicePorts.getText().toString()) ? 7 : 9;
+        try {
+            String wakePort = getInputText(devicePorts);
+            if (Strings.nullToEmpty(wakePort).isEmpty()) {
+                return 9;
+            }
+            return Integer.parseInt(wakePort);
+        } catch (NumberFormatException e) {
+            return 9;
+        }
     }
 
     @NonNull

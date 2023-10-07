@@ -17,6 +17,7 @@
     <string name="add_device_status_ip">Status IP (optional)</string>
     <string name="add_device_status_ip_helper">Device will be regularly pinged at this address to display it\'s online status</string>
     <string name="add_device_mac_address">MAC Address</string>
+    <string name="add_device_default_port" translatable="false">9</string>
     <string name="add_device_port">Port</string>
     <string name="add_device_broadcast_address">Broadcast Address (optional)</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
@@ -32,10 +33,6 @@
     <string name="add_device_shutdown_command_helper">Command must be executable without triggering Interactive authentication (sudo password-prompt)</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
-    <string-array name="ports_selection">
-        <item>9</item>
-        <item>7</item>
-    </string-array>
 
     <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
     <string name="add_device_error_name_empty">Name must not be empty</string>

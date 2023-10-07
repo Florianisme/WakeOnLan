@@ -40,11 +40,7 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
             deviceStatusIpInput.setText(device.statusIp);
             deviceMacInput.setText(device.macAddress);
             deviceBroadcastInput.setText(device.broadcastAddress);
-            if (device.port == 9) {
-                devicePorts.setText("9", false);
-            } else {
-                devicePorts.setText("7", false);
-            }
+            devicePorts.setText(String.valueOf(device.port));
             deviceSecureOnPassword.setText(device.secureOnPassword);
 
             deviceEnableRemoteShutdown.setChecked(device.remoteShutdownEnabled);
