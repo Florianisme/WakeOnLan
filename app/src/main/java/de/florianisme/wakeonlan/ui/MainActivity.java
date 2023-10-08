@@ -1,5 +1,7 @@
 package de.florianisme.wakeonlan.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -62,6 +64,17 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(getMenuIds()).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
+
+        setGithubShortcut();
+    }
+
+    private void setGithubShortcut() {
+        binding.navigationView.getMenu().findItem(R.id.githubShortcut).setOnMenuItemClickListener(item -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Florianisme/WakeOnLan"));
+            startActivity(browserIntent);
+
+            return false;
+        });
     }
 
     private void initializeShortcuts() {

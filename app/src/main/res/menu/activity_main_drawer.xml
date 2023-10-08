@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/drawer_base_categories"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/deviceListFragment"
             android:icon="@drawable/ic_device_list"
@@ -13,7 +15,15 @@
             android:id="@+id/backupFragment"
             android:icon="@drawable/ic_import_export"
             android:title="@string/drawer_menu_item_backup" />
+    </group>
 
+    <group
+        android:id="@+id/drawer_other_categories"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/githubShortcut"
+            android:icon="@drawable/ic_github_logo"
+            android:title="@string/drawer_menu_item_github" />
     </group>
 
 </menu>
