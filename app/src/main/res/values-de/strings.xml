@@ -70,6 +70,7 @@
     <string name="device_title_security">Sicherheit</string>
     <string name="add_device_secure_on">SecureOn Passwort (optional)</string>
     <string name="add_device_error_secure_on_password_invalid">Passwort muss entweder leer oder eine gültige MAC oder IP Adresse sein</string>
+    <string name="drawer_menu_header_version">Version %1$s</string>
     <string name="quick_access_device_subtitle">Gerät einschalten</string>
     <string name="shortcut_wake_device_error">Gerät kann nicht geweckt werden</string>
     <string name="device_title_status">Status</string>

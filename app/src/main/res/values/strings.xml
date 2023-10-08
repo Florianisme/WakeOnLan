@@ -97,6 +97,7 @@
     <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>
     <string name="drawer_menu_item_scan" translatable="false">@string/title_fragment_network_scan</string>
     <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
+    <string name="drawer_menu_header_version">Version %1$s</string>
 
     <!-- Quick Access -->
     <string name="quick_access_device_subtitle">Wake device</string>

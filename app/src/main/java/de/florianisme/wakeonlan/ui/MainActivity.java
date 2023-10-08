@@ -1,6 +1,7 @@
 package de.florianisme.wakeonlan.ui;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -14,6 +15,7 @@ import com.google.common.collect.Sets;
 
 import java.util.Set;
 
+import de.florianisme.wakeonlan.BuildConfig;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
@@ -34,11 +36,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setVersionInformation();
+
         setSupportActionBar(binding.toolbar);
 
         initializeNavController();
         initializeWearClient();
         initializeShortcuts();
+    }
+
+    private void setVersionInformation() {
+        TextView versionView = binding.navigationView.getHeaderView(0).findViewById(R.id.navigation_header_version);
+        versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
     }
 
     private void initializeWearClient() {
