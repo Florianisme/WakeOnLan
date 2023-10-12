@@ -3,6 +3,7 @@ package de.florianisme.wakeonlan.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setVersionInformation() {
-        TextView versionView = binding.navigationView.getHeaderView(0).findViewById(R.id.navigation_header_version);
+        View headerView = binding.navigationView.getHeaderView(0);
+
+        TextView versionView = headerView.findViewById(R.id.navigation_header_version);
+        TextView headerTitleView = headerView.findViewById(R.id.navigation_header_title);
+
+        headerTitleView.setOnApplyWindowInsetsListener((v, insets) -> {
+            int calculatedTopPadding = Math.round(insets.getSystemWindowInsetTop() +
+                    getResources().getDimension(R.dimen.navigation_header_top_padding));
+
+            headerTitleView.setPadding(versionView.getPaddingStart(), calculatedTopPadding,
+                    versionView.getPaddingEnd(), 0);
+            return insets;
+        });
+
         versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
     }
 

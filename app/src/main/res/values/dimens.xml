@@ -1,3 +1,4 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="navigation_header_top_padding">24dp</dimen>
 </resources>
