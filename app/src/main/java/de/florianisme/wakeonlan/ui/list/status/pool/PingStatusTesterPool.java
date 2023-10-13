@@ -19,6 +19,8 @@ public class PingStatusTesterPool implements StatusTesterPool {
     private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(15);
     private static final DeviceStatusTesterBuilder DEVICE_STATUS_TESTER = new PingDeviceStatusTesterBuilder();
 
+    private static final Object STATUS_LOCK = new Object();
+
     private static Map<Integer, StatusTestItem> statusCheckMap = new HashMap<>(15);
 
     private static StatusTesterPool INSTANCE;
@@ -36,83 +38,93 @@ public class PingStatusTesterPool implements StatusTesterPool {
     }
 
     @Override
-    public synchronized void scheduleStatusTest(Device device, DeviceStatusListener deviceStatusListener, StatusTestType statusTestType) {
-        StatusTestItem statusTestItem;
+    public void scheduleStatusTest(Device device, DeviceStatusListener deviceStatusListener, StatusTestType statusTestType) {
+        synchronized (STATUS_LOCK) {
+            StatusTestItem statusTestItem;
 
-        if (statusCheckMap.containsKey(device.id) && statusCheckMap.get(device.id) != null) {
-            Log.w(getClass().getSimpleName(), "Another status check already running for device " + device.name);
+            if (statusCheckMap.containsKey(device.id) && statusCheckMap.get(device.id) != null) {
+                Log.w(getClass().getSimpleName(), "Another status check already running for device " + device.name);
 
-            statusTestItem = statusCheckMap.get(device.id);
+                statusTestItem = statusCheckMap.get(device.id);
 
-            if (statusTestItem == null) {
-                throw new IllegalStateException("Item can not be null at this point");
+                if (statusTestItem == null) {
+                    throw new IllegalStateException("Item can not be null at this point");
+                }
+
+                statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
+            } else {
+                statusTestItem = new StatusTestItem(device);
+                statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
             }
 
-            statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
-        } else {
-            statusTestItem = new StatusTestItem(device);
-            statusTestItem.addOrReplaceStatusListener(statusTestType, deviceStatusListener);
+            ScheduledFuture<?> scheduledFuture =
+                    EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, statusTestItem),
+                            0, 2, TimeUnit.SECONDS);
+            statusTestItem.setOrUpdateRunnable(scheduledFuture);
+
+            statusCheckMap.put(device.id, statusTestItem);
+            Log.d(getClass().getSimpleName(), "Successfully scheduled new status check for device " + device.name + " of type " + statusTestType);
+            Log.d(getClass().getSimpleName(), "Total of " + statusCheckMap.size() + " status checks currently running");
         }
-
-        ScheduledFuture<?> scheduledFuture =
-                EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, statusTestItem),
-                        0, 2, TimeUnit.SECONDS);
-        statusTestItem.setOrUpdateRunnable(scheduledFuture);
-
-        statusCheckMap.put(device.id, statusTestItem);
-        Log.d(getClass().getSimpleName(), "Successfully scheduled new status check for device " + device.name + " of type " + statusTestType);
-        Log.d(getClass().getSimpleName(), "Total of " + statusCheckMap.size() + " status checks currently running");
     }
 
     @Override
-    public synchronized void stopStatusTest(Device device, StatusTestType testType) {
+    public void stopStatusTest(Device device, StatusTestType testType) {
         Log.d(getClass().getSimpleName(), "Stopping status checks for device " + device.name + " of type " + testType);
 
-        StatusTestItem statusTestItem = statusCheckMap.get(device.id);
+        synchronized (STATUS_LOCK) {
+            StatusTestItem statusTestItem = statusCheckMap.get(device.id);
 
-        if (statusTestItem == null) {
-            return;
-        }
+            if (statusTestItem == null) {
+                return;
+            }
 
-        if (statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
-            statusCheckMap.remove(device.id);
+            if (statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
+                statusCheckMap.remove(device.id);
+            }
         }
     }
 
     @Override
-    public synchronized void stopAllStatusTesters(StatusTestType testType) {
+    public void stopAllStatusTesters(StatusTestType testType) {
         Log.d(getClass().getSimpleName(), "Stopping all status checks of type " + testType);
 
         Map<Integer, StatusTestItem> updatedList = new HashMap<>(8);
 
-        statusCheckMap.values().forEach(statusTestItem -> {
-            if (!statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
-                updatedList.put(statusTestItem.getDevice().id, statusTestItem);
-            }
-        });
+        synchronized (STATUS_LOCK) {
+            statusCheckMap.values().forEach(statusTestItem -> {
+                if (!statusTestItem.removeListenerAndCancelIfApplicable(testType)) {
+                    updatedList.put(statusTestItem.getDevice().id, statusTestItem);
+                }
+            });
 
-        statusCheckMap = updatedList;
+            statusCheckMap = updatedList;
+        }
     }
 
     @Override
     public void pauseAllForType(StatusTestType testType) {
         Log.i(getClass().getSimpleName(), "Pausing all pings of type " + testType);
 
-        statusCheckMap.values().forEach(item -> item.pausePingRunnable(testType));
+        synchronized (STATUS_LOCK) {
+            statusCheckMap.values().forEach(item -> item.pausePingRunnable(testType));
+        }
     }
 
     @Override
     public void resumeAll() {
         Log.i(getClass().getSimpleName(), "Resuming all previously scheduled pings");
 
-        statusCheckMap.values().forEach(item -> {
-            Device device = item.getDevice();
+        synchronized (STATUS_LOCK) {
+            statusCheckMap.values().forEach(item -> {
+                Device device = item.getDevice();
 
-            ScheduledFuture<?> scheduledFuture =
-                    EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, item),
-                            0, 2, TimeUnit.SECONDS);
-            item.setOrUpdateRunnable(scheduledFuture);
-        });
+                ScheduledFuture<?> scheduledFuture =
+                        EXECUTOR.scheduleWithFixedDelay(DEVICE_STATUS_TESTER.buildStatusTestCallable(device, item),
+                                0, 2, TimeUnit.SECONDS);
+                item.setOrUpdateRunnable(scheduledFuture);
+            });
+        }
     }
 
 }

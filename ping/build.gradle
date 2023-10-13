@@ -1,0 +1,13 @@
+apply plugin: 'com.android.library'
+apply from: "$rootProject.projectDir/shared-build.gradle"
+
+android {
+    defaultConfig {
+        applicationId null
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
