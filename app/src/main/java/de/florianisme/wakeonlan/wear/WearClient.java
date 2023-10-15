@@ -3,13 +3,14 @@ package de.florianisme.wakeonlan.wear;
 import android.content.Context;
 import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.wearable.DataClient;
 import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +39,8 @@ public class WearClient {
             List<DeviceDto> deviceDtos = devices.stream()
                     .map(device -> new DeviceDto(device.id, device.name))
                     .collect(Collectors.toList());
-            return new ObjectMapper().writeValueAsBytes(deviceDtos);
-        } catch (JsonProcessingException e) {
+            return new Gson().toJson(deviceDtos).getBytes(StandardCharsets.UTF_8);
+        } catch (JsonParseException e) {
             Log.e(getClass().getSimpleName(), "Could not transform list of devices to byte array", e);
             return new byte[0];
         }

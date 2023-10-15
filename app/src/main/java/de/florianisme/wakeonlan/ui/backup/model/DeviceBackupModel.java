@@ -1,12 +1,9 @@
 package de.florianisme.wakeonlan.ui.backup.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import de.florianisme.wakeonlan.persistence.models.Device;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeviceBackupModel {
 
     /*
@@ -15,50 +12,43 @@ public class DeviceBackupModel {
     to JSON with its obfuscated name ("a", "b", and so on).
      */
 
-    @JsonProperty("id")
-    @JsonAlias("a")
+    @SerializedName(value = "id", alternate = "a")
     public int id;
 
-    @JsonProperty("name")
-    @JsonAlias("b")
+    @SerializedName(value = "name", alternate = "b")
     public String name;
 
-    @JsonProperty("mac_address")
-    @JsonAlias("c")
+    @SerializedName(value = "mac_address", alternate = "c")
     public String macAddress;
 
-    @JsonProperty("broadcast_address")
-    @JsonAlias("d")
+    @SerializedName(value = "broadcast_address", alternate = "d")
     public String broadcastAddress;
 
-    @JsonProperty("port")
-    @JsonAlias("e")
+    @SerializedName(value = "port", alternate = "e")
     public int port;
 
-    @JsonProperty("status_ip")
-    @JsonAlias("f")
+    @SerializedName(value = "status_ip", alternate = "f")
     public String statusIp;
 
-    @JsonProperty("secure_on_password")
-    @JsonAlias("g")
+    @SerializedName(value = "secure_on_password", alternate = "g")
     public String secureOnPassword;
 
-    @JsonProperty("remote_shutdown_enabled")
+    @SerializedName(value = "remote_shutdown_enabled")
     public boolean remoteShutdownEnabled;
 
-    @JsonProperty("ssh_address")
+    @SerializedName(value = "ssh_address")
     public String sshAddress;
 
-    @JsonProperty("ssh_port")
+    @SerializedName(value = "ssh_port")
     public Integer sshPort;
 
-    @JsonProperty("ssh_username")
+    @SerializedName(value = "ssh_username")
     public String sshUsername;
 
-    @JsonProperty("ssh_password")
+    @SerializedName(value = "ssh_password")
     public String sshPassword;
 
-    @JsonProperty("ssh_command")
+    @SerializedName(value = "ssh_command")
     public String sshCommand;
 
     public DeviceBackupModel(Device device) {

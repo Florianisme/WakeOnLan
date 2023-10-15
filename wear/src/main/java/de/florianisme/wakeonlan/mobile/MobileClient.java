@@ -2,7 +2,6 @@ package de.florianisme.wakeonlan.mobile;
 
 import android.net.Uri;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.wearable.DataClient;
 import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataMap;
@@ -11,8 +10,11 @@ import com.google.android.gms.wearable.MessageClient;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeClient;
 import com.google.android.gms.wearable.PutDataRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,8 +66,9 @@ public class MobileClient {
         }
 
         try {
-            return Arrays.asList(new ObjectMapper().readValue(deviceListBytes, DeviceDto[].class));
-        } catch (IOException e) {
+            InputStreamReader inputStreamReader = new InputStreamReader(new ByteArrayInputStream(deviceListBytes));
+            return Arrays.asList(new Gson().fromJson(inputStreamReader, DeviceDto[].class));
+        } catch (JsonParseException e) {
             throw new DeviceQueryException("Devices can not be parsed", e);
         }
     }

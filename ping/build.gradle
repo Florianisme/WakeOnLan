@@ -1,9 +1,15 @@
 apply plugin: 'com.android.library'
-apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
+    namespace 'de.florianisme.wakeonlan.ping'
+    compileSdk 34
+
     defaultConfig {
-        applicationId null
+        minSdk 24
+        targetSdk 34
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 

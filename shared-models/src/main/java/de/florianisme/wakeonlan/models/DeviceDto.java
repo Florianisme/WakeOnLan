@@ -1,18 +1,23 @@
 package de.florianisme.wakeonlan.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.google.gson.annotations.SerializedName;
 
 public class DeviceDto {
 
-    @JsonProperty("id")
-    private final int id;
+    @SerializedName("id")
+    private int id;
 
-    @JsonProperty("name")
-    private final String name;
+    @SerializedName("name")
+    private String name;
 
-    public DeviceDto(@JsonProperty("id") int id, @JsonProperty("name") String name) {
+    public DeviceDto(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @SuppressWarnings("unused")
+    public DeviceDto() {
     }
 
     public int getId() {

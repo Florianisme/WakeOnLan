@@ -9,11 +9,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
+import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
@@ -46,7 +48,8 @@ public class DataImporter implements ActivityResultCallback<Uri> {
 
         try {
             byte[] bytes = readContentFromFile(uri, context);
-            Device[] devices = Arrays.stream(new ObjectMapper().readValue(bytes, DeviceBackupModel[].class))
+            InputStreamReader inputStreamReader = new InputStreamReader(new ByteArrayInputStream(bytes));
+            Device[] devices = Arrays.stream(new Gson().fromJson(inputStreamReader, DeviceBackupModel[].class))
                     .map(DeviceBackupModel::toModel)
                     .toArray(Device[]::new);
 
