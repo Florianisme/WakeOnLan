@@ -6,6 +6,11 @@
 
 -keep class de.florianisme.wakeonlan.models.DeviceDto { *; }
 
+-keep class org.bouncycastle.jcajce.provider.** { *; }
+-keep class org.bouncycastle.jce.provider.** { *; }
+
+-dontwarn javax.naming.**
+
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
