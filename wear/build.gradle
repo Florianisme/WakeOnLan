@@ -5,7 +5,7 @@ android {
     compileSdk 33
     defaultConfig {
         targetSdk 33
-        versionCode 102
+        versionCode 104
     }
 }
 
