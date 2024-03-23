@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -50,6 +48,7 @@ import de.florianisme.wakeonlan.ui.modify.watcher.autocomplete.MacAddressAutocom
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.ConditionalInputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.InputNotEmptyValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.MacValidator;
+import de.florianisme.wakeonlan.ui.modify.watcher.validator.PortValidator;
 import de.florianisme.wakeonlan.ui.modify.watcher.validator.SecureOnPasswordValidator;
 
 public abstract class ModifyDeviceActivity extends AppCompatActivity {
@@ -63,7 +62,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     protected TextInputEditText deviceBroadcastInput;
     protected TextInputEditText deviceSecureOnPassword;
     protected ImageButton broadcastAutofill;
-    protected MaterialAutoCompleteTextView devicePorts;
+    protected TextInputEditText devicePorts;
     protected ConstraintLayout deviceRemoteShutdownContainer;
     protected SwitchCompat deviceEnableRemoteShutdown;
     protected TextInputEditText deviceSshAddressInput;
@@ -106,7 +105,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         addValidators();
         addAutofillClickHandler();
         setRemoteDeviceShutdownSwitchListener();
-        addDevicePortsAdapter();
         setOnTestSshShutdownListenerClickedListener();
     }
 
@@ -129,6 +127,8 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceMacInput.addTextChangedListener(new MacValidator(deviceMacInput));
         deviceMacInput.addTextChangedListener(new MacAddressAutocomplete());
 
+        devicePorts.addTextChangedListener(new PortValidator(devicePorts));
+
         deviceNameInput.addTextChangedListener(new InputNotEmptyValidator(deviceNameInput, R.string.add_device_error_name_empty));
         deviceSecureOnPassword.addTextChangedListener(new SecureOnPasswordValidator(deviceSecureOnPassword));
 
@@ -148,6 +148,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
 
     protected boolean assertInputsNotEmptyAndValid() {
         return deviceMacInput.getError() == null && isNotEmpty(deviceMacInput) &&
+                devicePorts.getError() == null &&
                 deviceNameInput.getError() == null && isNotEmpty(deviceNameInput) &&
                 deviceStatusIpInput.getError() == null &&
                 deviceSecureOnPassword.getError() == null &&
@@ -165,13 +166,6 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         return inputEditText.getText() == null || inputEditText.getText().length() == 0;
     }
 
-    private void addDevicePortsAdapter() {
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.modify_device_port_dropdown,
-                getResources().getStringArray(R.array.ports_selection));
-        devicePorts.setAdapter(stringArrayAdapter);
-        devicePorts.setText("9", false);
-    }
-
     protected void checkAndPersistDevice() {
         triggerValidators();
         if (assertInputsNotEmptyAndValid()) {
@@ -186,6 +180,7 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
         deviceNameInput.setText(deviceNameInput.getText());
         deviceBroadcastInput.setText(deviceBroadcastInput.getText());
         deviceMacInput.setText(deviceMacInput.getText());
+        devicePorts.setText(devicePorts.getText());
         deviceSecureOnPassword.setText(deviceSecureOnPassword.getText());
         deviceSshAddressInput.setText(deviceSshAddressInput.getText());
         deviceSshUsernameInput.setText(deviceSshUsernameInput.getText());
@@ -334,7 +329,15 @@ public abstract class ModifyDeviceActivity extends AppCompatActivity {
     abstract protected boolean inputsHaveNotChanged();
 
     protected int getPort() {
-        return "7".equals(binding.device.devicePorts.getText().toString()) ? 7 : 9;
+        try {
+            String wakePort = getInputText(devicePorts);
+            if (Strings.nullToEmpty(wakePort).isEmpty()) {
+                return 9;
+            }
+            return Integer.parseInt(wakePort);
+        } catch (NumberFormatException e) {
+            return 9;
+        }
     }
 
     @NonNull

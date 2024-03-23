@@ -17,7 +17,7 @@ import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class EditDeviceActivity extends ModifyDeviceActivity {
 
-    public static final String MACHINE_ID_KEY = "machineId";
+    public static final String DEVICE_PARCELABLE_KEY = "machine";
     private Device device;
 
     @Override
@@ -29,24 +29,18 @@ public class EditDeviceActivity extends ModifyDeviceActivity {
     private void populateInputs() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            int machineId = extras.getInt(MACHINE_ID_KEY, -1);
-            if (machineId == -1) {
+            device = extras.getParcelable(DEVICE_PARCELABLE_KEY);
+            if (device == null) {
                 Toast.makeText(this, R.string.edit_machine_error_loading, Toast.LENGTH_SHORT).show();
                 finish();
                 return;
             }
 
-            device = deviceRepository.getById(machineId);
-
             deviceNameInput.setText(device.name);
             deviceStatusIpInput.setText(device.statusIp);
             deviceMacInput.setText(device.macAddress);
             deviceBroadcastInput.setText(device.broadcastAddress);
-            if (device.port == 9) {
-                devicePorts.setText("9", false);
-            } else {
-                devicePorts.setText("7", false);
-            }
+            devicePorts.setText(String.valueOf(device.port));
             deviceSecureOnPassword.setText(device.secureOnPassword);
 
             deviceEnableRemoteShutdown.setChecked(device.remoteShutdownEnabled);

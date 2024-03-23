@@ -14,11 +14,26 @@ android {
         }
     }
 
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootProject.projectDir/proguard-rules.pro"
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootProject.projectDir/proguard-rules.pro"
+        }
+    }
+
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
         targetSdk 34
-        versionName "1.9.2"
+        versionName "1.9.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,8 +59,7 @@ dependencies {
 
     implementation 'com.google.guava:guava:31.0.1-jre'
 
-    //noinspection GradleDependency 2.15 required Java 19 which is not supported yet
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.3.1'
