@@ -9,10 +9,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public class DataExporter implements ActivityResultCallback<Uri> {
                     .stream().map(DeviceBackupModel::new)
                     .collect(Collectors.toList());
 
-            byte[] content = new ObjectMapper().writeValueAsBytes(devices);
+            byte[] content = new Gson().toJson(devices).getBytes(StandardCharsets.UTF_8);
             writeDevicesToFile(uri, content, context);
 
             Toast.makeText(context, context.getString(R.string.backup_message_export_success, devices.size()), Toast.LENGTH_SHORT).show();

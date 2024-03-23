@@ -17,6 +17,7 @@
     <string name="add_device_status_ip">Status IP (optional)</string>
     <string name="add_device_status_ip_helper">Device will be regularly pinged at this address to display it\'s online status</string>
     <string name="add_device_mac_address">MAC Address</string>
+    <string name="add_device_default_port" translatable="false">9</string>
     <string name="add_device_port">Port</string>
     <string name="add_device_broadcast_address">Broadcast Address (optional)</string>
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
@@ -32,12 +33,9 @@
     <string name="add_device_shutdown_command_helper">Command must be executable without triggering Interactive authentication (sudo password-prompt)</string>
     <string name="add_device_menu_save">Save</string>
     <string name="add_device_menu_delete">Delete</string>
-    <string-array name="ports_selection">
-        <item>9</item>
-        <item>7</item>
-    </string-array>
 
     <string name="add_device_error_mac_invalid">Invalid MAC Address</string>
+    <string name="add_device_error_port_invalid">Invalid Port</string>
     <string name="add_device_error_name_empty">Name must not be empty</string>
     <string name="add_device_error_ip_invalid">Invalid IP Address</string>
     <string name="add_device_error_secure_on_password_invalid">Password must be either empty, a valid MAC or IP Address</string>
@@ -99,6 +97,8 @@
     <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>
     <string name="drawer_menu_item_scan" translatable="false">@string/title_fragment_network_scan</string>
     <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
+    <string name="drawer_menu_item_github">Report Issues</string>
+    <string name="drawer_menu_header_version">Version %1$s</string>
 
     <!-- Quick Access -->
     <string name="quick_access_device_subtitle">Wake device</string>

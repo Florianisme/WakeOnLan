@@ -1,6 +1,10 @@
 package de.florianisme.wakeonlan.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -14,6 +18,7 @@ import com.google.common.collect.Sets;
 
 import java.util.Set;
 
+import de.florianisme.wakeonlan.BuildConfig;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
@@ -34,11 +39,31 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setVersionInformation();
+
         setSupportActionBar(binding.toolbar);
 
         initializeNavController();
         initializeWearClient();
         initializeShortcuts();
+    }
+
+    private void setVersionInformation() {
+        View headerView = binding.navigationView.getHeaderView(0);
+
+        TextView versionView = headerView.findViewById(R.id.navigation_header_version);
+        TextView headerTitleView = headerView.findViewById(R.id.navigation_header_title);
+
+        headerTitleView.setOnApplyWindowInsetsListener((v, insets) -> {
+            int calculatedTopPadding = Math.round(insets.getSystemWindowInsetTop() +
+                    getResources().getDimension(R.dimen.navigation_header_top_padding));
+
+            headerTitleView.setPadding(versionView.getPaddingStart(), calculatedTopPadding,
+                    versionView.getPaddingEnd(), 0);
+            return insets;
+        });
+
+        versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
     }
 
     private void initializeWearClient() {
@@ -53,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(getMenuIds()).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
+
+        setGithubShortcut();
+    }
+
+    private void setGithubShortcut() {
+        binding.navigationView.getMenu().findItem(R.id.githubShortcut).setOnMenuItemClickListener(item -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Florianisme/WakeOnLan"));
+            startActivity(browserIntent);
+
+            return false;
+        });
     }
 
     private void initializeShortcuts() {

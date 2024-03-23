@@ -6,6 +6,5 @@ java {
 }
 
 dependencies {
-    //noinspection GradleDependency 2.15 required Java 19 which is not supported yet
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }

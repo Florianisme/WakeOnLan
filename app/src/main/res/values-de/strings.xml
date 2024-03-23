@@ -70,6 +70,8 @@
     <string name="device_title_security">Sicherheit</string>
     <string name="add_device_secure_on">SecureOn Passwort (optional)</string>
     <string name="add_device_error_secure_on_password_invalid">Passwort muss entweder leer oder eine gültige MAC oder IP Adresse sein</string>
+    <string name="drawer_menu_item_github">Fehler melden</string>
+    <string name="drawer_menu_header_version">Version %1$s</string>
     <string name="quick_access_device_subtitle">Gerät einschalten</string>
     <string name="shortcut_wake_device_error">Gerät kann nicht geweckt werden</string>
     <string name="device_title_status">Status</string>
@@ -95,4 +97,5 @@
     <string name="test_shutdown_error_unknown_host">Unbekannter Hostname \"%1$s\"</string>
     <string name="add_device_status_ip_helper">Onlinestatus des Geräts wird regelmäßig unter dieser Adresse per Ping-Befehl abgefragt</string>
     <string name="add_device_shutdown_explanation">Nutzt SSH um sich am Zielsystem anzumelden und über das entsprechende Kommando herunterzufahren.\nFunktioniert nur auf Systemen, auf denen Linux betrieben wird.</string>
+    <string name="add_device_error_port_invalid">Ungültiger Port</string>
 </resources>

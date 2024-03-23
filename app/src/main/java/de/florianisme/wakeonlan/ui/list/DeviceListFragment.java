@@ -20,12 +20,18 @@ import de.florianisme.wakeonlan.persistence.models.Device;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.GridLayoutManagerWrapper;
 import de.florianisme.wakeonlan.ui.list.layoutmanager.LinearLayoutManagerWrapper;
+import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
+import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
 
 
 public class DeviceListFragment extends Fragment {
 
+    private DeviceRepository deviceRepository;
     private FragmentListDevicesBinding binding;
     private DeviceListAdapter deviceListAdapter;
+
+    private static final StatusTesterPool STATUS_TESTER_POOL = PingStatusTesterPool.getInstance();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -37,22 +43,35 @@ public class DeviceListFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        PingStatusTesterPool.getInstance().pauseAllForType(StatusTestType.LIST);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PingStatusTesterPool.getInstance().resumeAll();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        deviceRepository = DeviceRepository.getInstance(getContext());
 
         instantiateRecyclerView();
         registerLiveDataObserver();
     }
 
     private void registerLiveDataObserver() {
-        DeviceRepository.getInstance(getContext())
-                .getAllAsObservable()
+        deviceRepository.getAllAsObservable()
                 .observe(getViewLifecycleOwner(), devices -> deviceListAdapter.updateDataset(devices));
     }
 
     private void instantiateRecyclerView() {
         List<Device> initialDataset = DeviceRepository.getInstance(getContext()).getAll();
-        deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback());
+        deviceListAdapter = new DeviceListAdapter(initialDataset, buildDeviceClickedCallback(), STATUS_TESTER_POOL);
         deviceListAdapter.setHasStableIds(true);
         RecyclerView devicesRecyclerView = binding.machineList;
 

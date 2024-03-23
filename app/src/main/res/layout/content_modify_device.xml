@@ -72,37 +72,40 @@
             app:layout_constraintTop_toBottomOf="@id/device_title_connectivity"
             app:placeholderText="AB:12:CD:34:EF:56">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/device_mac"
-            style="@style/FontMonospaced"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/device_mac"
+                style="@style/FontMonospaced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/device_port_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/add_device_port"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_title_connectivity">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/device_port_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/add_device_port"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/device_title_connectivity">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/device_ports"
-            style="@style/FontMonospaced"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:minHeight="48dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/device_ports"
+                style="@style/FontMonospaced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="@string/add_device_default_port"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/device_broadcast_layout"
@@ -141,43 +144,43 @@
             app:layout_constraintTop_toTopOf="@id/device_broadcast_layout"
             app:srcCompat="@drawable/ic_autofill_broadcast" />
 
-    <TextView
-        android:id="@+id/device_title_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/FontMonospaced"
-        android:text="@string/device_title_status"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/device_broadcast_layout"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/device_status_ip_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        app:helperText="@string/add_device_status_ip_helper"
-        android:hint="@string/add_device_status_ip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/device_title_status"
-        app:placeholderText="192.168.0.100">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/device_status_ip"
+        <TextView
+            android:id="@+id/device_title_status"
             style="@style/FontMonospaced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/device_title_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_broadcast_layout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/device_status_ip_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/add_device_status_ip"
+            app:helperText="@string/add_device_status_ip_helper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_title_status"
+            app:placeholderText="192.168.0.100">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/device_status_ip"
+                style="@style/FontMonospaced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/device_title_remote_shutdown"
@@ -207,15 +210,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textSize="12sp"
             android:text="@string/add_device_shutdown_explanation"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/device_switch_remote_shutdown" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/device_remote_shutdown_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/device_remote_shutdown_container"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/device_title_remote_shutdown_explanation">
@@ -345,13 +348,13 @@
 
             <Button
                 android:id="@+id/device_button_test_shutdown"
-                app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_command"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:text="@string/modify_device_test_shutdown" />
+                android:text="@string/modify_device_test_shutdown"
+                app:layout_constraintTop_toBottomOf="@id/device_remote_shutdown_command" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
