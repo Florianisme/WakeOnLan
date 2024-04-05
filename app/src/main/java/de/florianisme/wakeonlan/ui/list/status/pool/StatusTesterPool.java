@@ -5,11 +5,11 @@ import de.florianisme.wakeonlan.ui.list.status.DeviceStatusListener;
 
 public interface StatusTesterPool {
 
-    void scheduleStatusTest(Device device, DeviceStatusListener deviceStatusListener, StatusTestType testType);
+    void schedule(Device device, DeviceStatusListener deviceStatusListener, StatusTestType testType);
 
-    void stopStatusTest(Device device, StatusTestType testType);
+    void stopSingle(Device device, StatusTestType testType);
 
-    void stopAllStatusTesters(StatusTestType testType);
+    void stopAllForType(StatusTestType testType);
 
     void pauseAllForType(StatusTestType testType);
 

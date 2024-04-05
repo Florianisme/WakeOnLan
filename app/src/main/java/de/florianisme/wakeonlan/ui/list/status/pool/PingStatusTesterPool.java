@@ -38,7 +38,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
     }
 
     @Override
-    public void scheduleStatusTest(Device device, DeviceStatusListener deviceStatusListener, StatusTestType statusTestType) {
+    public void schedule(Device device, DeviceStatusListener deviceStatusListener, StatusTestType statusTestType) {
         synchronized (STATUS_LOCK) {
             StatusTestItem statusTestItem;
 
@@ -69,7 +69,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
     }
 
     @Override
-    public void stopStatusTest(Device device, StatusTestType testType) {
+    public void stopSingle(Device device, StatusTestType testType) {
         Log.d(getClass().getSimpleName(), "Stopping status checks for device " + device.name + " of type " + testType);
 
         synchronized (STATUS_LOCK) {
@@ -86,7 +86,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
     }
 
     @Override
-    public void stopAllStatusTesters(StatusTestType testType) {
+    public void stopAllForType(StatusTestType testType) {
         Log.d(getClass().getSimpleName(), "Stopping all status checks of type " + testType);
 
         Map<Integer, StatusTestItem> updatedList = new HashMap<>(8);

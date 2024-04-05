@@ -36,7 +36,7 @@ public class StatefulControlService {
                 .collect(Collectors.toList());
 
         for (Device device : filteredDevices) {
-            STATUS_TESTER_POOL.scheduleStatusTest(device, deviceStatus -> {
+            STATUS_TESTER_POOL.schedule(device, deviceStatus -> {
                 Control control = mapDeviceToStatefulControl(device, deviceStatus == DeviceStatus.ONLINE, context);
                 processor.onNext(control);
             }, StatusTestType.QUICK_ACCESS);
@@ -60,6 +60,6 @@ public class StatefulControlService {
     }
 
     public static void stopAllStatusTesters() {
-        STATUS_TESTER_POOL.stopAllStatusTesters(StatusTestType.QUICK_ACCESS);
+        STATUS_TESTER_POOL.stopAllForType(StatusTestType.QUICK_ACCESS);
     }
 }

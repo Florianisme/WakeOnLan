@@ -44,7 +44,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
         if (optionalMachine.isPresent()) {
             Device device = optionalMachine.get();
             this.device = device;
-            statusTesterPool.scheduleStatusTest(device, this, StatusTestType.TILE);
+            statusTesterPool.schedule(device, this, StatusTestType.TILE);
 
             tile.setLabel(device.name);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -96,7 +96,7 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     @Override
     public void onStopListening() {
         super.onStopListening();
-        statusTesterPool.stopStatusTest(device, StatusTestType.TILE);
+        statusTesterPool.stopSingle(device, StatusTestType.TILE);
     }
 
     abstract int machineAtIndex();

@@ -102,7 +102,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
         deviceStatus.clearAnimation();
         deviceStatus.setBackground(AppCompatResources.getDrawable(itemView.getContext(), R.drawable.device_status_unknown));
 
-        statusTesterPool.scheduleStatusTest(device, status -> {
+        statusTesterPool.schedule(device, status -> {
             if (status == DeviceStatus.ONLINE) {
                 setAlphaAnimationIfNotSet();
                 setStatusDrawable(R.drawable.device_status_online);
@@ -140,7 +140,7 @@ public class DeviceItemViewHolder extends RecyclerView.ViewHolder {
 
     public void cancelStatusUpdates() {
         if (statusTesterPool != null && device != null) {
-            statusTesterPool.stopStatusTest(device, StatusTestType.LIST);
+            statusTesterPool.stopSingle(device, StatusTestType.LIST);
         }
     }
 }
