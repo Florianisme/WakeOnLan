@@ -2,6 +2,8 @@ package de.florianisme.wakeonlan.ui.list.status.pool;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -69,7 +71,7 @@ public class PingStatusTesterPool implements StatusTesterPool {
     }
 
     @Override
-    public void stopSingle(Device device, StatusTestType testType) {
+    public void stopSingle(@NonNull Device device, StatusTestType testType) {
         Log.d(getClass().getSimpleName(), "Stopping status checks for device " + device.name + " of type " + testType);
 
         synchronized (STATUS_LOCK) {

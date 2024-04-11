@@ -96,7 +96,9 @@ public abstract class DeviceTileService extends TileService implements DeviceSta
     @Override
     public void onStopListening() {
         super.onStopListening();
-        statusTesterPool.stopSingle(device, StatusTestType.TILE);
+        if (device != null) {
+            statusTesterPool.stopSingle(device, StatusTestType.TILE);
+        }
     }
 
     abstract int machineAtIndex();
