@@ -9,9 +9,13 @@ import net.schmizz.sshj.common.LoggerFactory;
 import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.transport.TransportException;
+import net.schmizz.sshj.transport.verification.HostKeyVerifier;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.PublicKey;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.florianisme.wakeonlan.shutdown.exception.CommandExecuteException;
@@ -35,7 +39,17 @@ public class ShutdownRunnable implements Runnable {
         ByteArrayOutputStream commandOutputStream = new ByteArrayOutputStream();
 
         try (SSHClient sshClient = new SSHClient()) {
-            sshClient.addHostKeyVerifier((hostname, port, key) -> true);
+            sshClient.addHostKeyVerifier(new HostKeyVerifier() {
+                @Override
+                public boolean verify(String hostname, int port, PublicKey key) {
+                    return true;
+                }
+
+                @Override
+                public List<String> findExistingAlgorithms(String hostname, int port) {
+                    return Collections.emptyList();
+                }
+            });
             sshClient.setConnectTimeout(CONNECT_TIMEOUT);
             sshClient.connect(shutdownModel.getSshAddress(), shutdownModel.getSshPort());
             shutdownExecutorListener.onTargetHostReached();

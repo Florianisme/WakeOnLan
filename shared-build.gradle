@@ -1,6 +1,6 @@
 android {
     namespace 'de.florianisme.wakeonlan'
-    compileSdk 34
+    compileSdk 37
 
     signingConfigs {
         release {
@@ -18,21 +18,17 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                    "$rootProject.projectDir/proguard-rules.pro"
         }
         debug {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                    "$rootProject.projectDir/proguard-rules.pro"
         }
     }
 
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
         minSdk 24
-        targetSdk 34
+        targetSdk 37
         versionName "1.9.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -44,8 +40,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding true
@@ -55,12 +51,12 @@ android {
 dependencies {
     implementation 'com.google.android.support:wearable:2.9.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
-    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
+    implementation 'com.google.android.gms:play-services-wearable:20.0.1'
 
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'com.google.guava:guava:33.6.0-jre'
 
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.code.gson:gson:2.14.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-core:5.23.0'
 }

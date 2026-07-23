@@ -18,7 +18,6 @@ import com.google.common.collect.Sets;
 
 import java.util.Set;
 
-import de.florianisme.wakeonlan.BuildConfig;
 import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
+        versionView.setText(getString(R.string.drawer_menu_header_version, "TODO"));
     }
 
     private void initializeWearClient() {
