@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
@@ -7,6 +8,9 @@ android {
         targetSdk 37
         versionCode 110
     }
+    buildFeatures {
+        compose true
+    }
 }
 
 dependencies {
@@ -14,8 +18,16 @@ dependencies {
     implementation "androidx.core:core-splashscreen:1.2.0"
 
     implementation 'androidx.wear:wear:1.4.0'
+
+    // Jetpack Compose (Wear)
+    def compose_bom = platform('androidx.compose:compose-bom:2024.12.01')
+    implementation compose_bom
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.activity:activity-compose:1.9.3'
     implementation 'androidx.wear.compose:compose-foundation:1.6.2'
     implementation 'androidx.wear.compose:compose-material:1.6.2'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation project(path: ':shared-models')
 }
