@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -94,7 +95,9 @@ public class DeviceListFragment extends Fragment {
             String snackbarText = getContext().getString(R.string.wol_toast_sending_packet, deviceName);
             View coordinatorView = getActivity().findViewById(R.id.device_list_coordinator_layout);
 
-            Snackbar.make(coordinatorView, snackbarText, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(coordinatorView, snackbarText, Snackbar.LENGTH_SHORT)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .show();
         };
     }
 
