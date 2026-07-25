@@ -6,16 +6,22 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.florianisme.wakeonlan.R
 import de.florianisme.wakeonlan.ui.modify.AddNetworkScanDeviceActivity
@@ -95,7 +103,10 @@ fun NetworkScanScreen() {
                 )
             }
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(vertical = 8.dp),
+            ) {
                 items(items = devices, key = { it.ipAddress }) { device ->
                     ScanResultRow(
                         device = device,
@@ -120,24 +131,44 @@ fun NetworkScanScreen() {
 
 @Composable
 private fun ScanResultRow(device: NetworkScanDevice, onAddClicked: () -> Unit) {
-    Card(
+    val name = device.name.orElse(null)
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        ),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 12.dp, vertical = 6.dp),
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            val name = device.name.orElse(null)
+        Column(
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp,
+                top = 14.dp,
+                bottom = 8.dp,
+            )
+        ) {
+            Text(
+                text = name ?: device.ipAddress,
+                style = MaterialTheme.typography.titleLarge,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold,
+            )
             if (name != null) {
-                Text(text = name, style = MaterialTheme.typography.titleMedium)
-                Text(text = device.ipAddress, style = MaterialTheme.typography.bodyMedium)
-            } else {
-                Text(text = device.ipAddress, style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = device.ipAddress,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = FontFamily.Monospace,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
-            OutlinedButton(
-                onClick = onAddClicked,
-                modifier = Modifier.padding(top = 8.dp),
-            ) {
-                Text(stringResource(R.string.network_scan_button_add))
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(modifier = Modifier.offset(x = (-8).dp)) {
+                TextButton(onClick = onAddClicked) {
+                    Text(stringResource(R.string.network_scan_button_add))
+                }
             }
         }
     }
