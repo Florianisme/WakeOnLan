@@ -2,10 +2,27 @@ android {
     namespace 'de.florianisme.wakeonlan'
     compileSdk 37
 
+    signingConfigs {
+        release {
+            def storeFilePath = System.getenv("RELEASE_STORE_FILE")
+            if (storeFilePath) {
+                storeFile file(storeFilePath)
+                storePassword System.getenv("RELEASE_STORE_PASSWORD")
+                keyAlias System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
+            // Sign the release build only when a keystore is provided via env vars
+            // (e.g. in CI). Local builds without it stay unsigned.
+            if (System.getenv("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
         }
         debug {
             minifyEnabled true
