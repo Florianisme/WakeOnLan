@@ -1,66 +1,42 @@
 android {
     namespace 'de.florianisme.wakeonlan'
-    compileSdk 34
-
-    signingConfigs {
-        release {
-            storeFile file(project.findProperty('UPLOAD_KEYSTORE_PATH') ?: " ")
-            storePassword project.findProperty('KEYSTORE_PASSWORD') ?: ""
-            keyAlias project.findProperty('KEY_ALIAS') ?: ""
-            keyPassword project.findProperty('KEY_PASSWORD') ?: ""
-
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
-    }
+    compileSdk 37
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                    "$rootProject.projectDir/proguard-rules.pro"
         }
         debug {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                    "$rootProject.projectDir/proguard-rules.pro"
         }
     }
 
     defaultConfig {
         applicationId "de.florianisme.wakeonlan"
-        minSdk 24
-        targetSdk 34
+        minSdk 25
+        targetSdk 37
         versionName "1.9.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        viewBinding true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
     implementation 'com.google.android.support:wearable:2.9.0'
     compileOnly 'com.google.android.wearable:wearable:2.9.0'
-    implementation 'com.google.android.gms:play-services-wearable:18.1.0'
+    implementation 'com.google.android.gms:play-services-wearable:20.0.1'
 
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'com.google.guava:guava:33.6.0-jre'
 
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.code.gson:gson:2.14.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-core:5.23.0'
 }
