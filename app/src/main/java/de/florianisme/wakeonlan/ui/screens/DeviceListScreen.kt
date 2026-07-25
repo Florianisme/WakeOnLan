@@ -55,6 +55,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -69,6 +70,7 @@ import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool
 import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType
 import de.florianisme.wakeonlan.ui.modify.AddDeviceActivity
 import de.florianisme.wakeonlan.ui.modify.EditDeviceActivity
+import de.florianisme.wakeonlan.ui.theme.WakeOnLanTheme
 import de.florianisme.wakeonlan.wol.WolSender
 import kotlinx.coroutines.launch
 
@@ -171,6 +173,25 @@ private fun DeviceRow(
 
     val shutdownAvailable = remember(device) { ShutdownModelFactory.fromDevice(device).isPresent }
 
+    DeviceCard(
+        device = device,
+        status = status,
+        shutdownAvailable = shutdownAvailable,
+        onWakeClicked = onWakeClicked,
+        onEditClicked = onEditClicked,
+        onShutdownClicked = onShutdownClicked,
+    )
+}
+
+@Composable
+private fun DeviceCard(
+    device: Device,
+    status: DeviceStatus,
+    shutdownAvailable: Boolean,
+    onWakeClicked: () -> Unit,
+    onEditClicked: () -> Unit,
+    onShutdownClicked: () -> Unit,
+) {
     ElevatedCard(
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -277,6 +298,65 @@ private fun EmptyDeviceList(modifier: Modifier = Modifier) {
         )
     }
 }
+
+// region Previews
+
+private fun sampleDevice(
+    id: Int,
+    name: String,
+    mac: String,
+    remoteShutdown: Boolean = false,
+) = Device().apply {
+    this.id = id
+    this.name = name
+    this.macAddress = mac
+    this.broadcastAddress = "255.255.255.255"
+    this.port = 9
+    this.remoteShutdownEnabled = remoteShutdown
+}
+
+@Preview(name = "Device cards", showBackground = true)
+@Composable
+private fun DeviceListContentPreview() {
+    WakeOnLanTheme {
+        Column {
+            DeviceCard(
+                device = sampleDevice(1, "Gaming PC", "1A:2B:3C:4D:5E:6F", remoteShutdown = true),
+                status = DeviceStatus.ONLINE,
+                shutdownAvailable = true,
+                onWakeClicked = {},
+                onEditClicked = {},
+                onShutdownClicked = {},
+            )
+            DeviceCard(
+                device = sampleDevice(2, "Home Server", "AA:BB:CC:DD:EE:FF"),
+                status = DeviceStatus.OFFLINE,
+                shutdownAvailable = false,
+                onWakeClicked = {},
+                onEditClicked = {},
+                onShutdownClicked = {},
+            )
+            DeviceCard(
+                device = sampleDevice(3, "Laptop", "11:22:33:44:55:66"),
+                status = DeviceStatus.UNKNOWN,
+                shutdownAvailable = false,
+                onWakeClicked = {},
+                onEditClicked = {},
+                onShutdownClicked = {},
+            )
+        }
+    }
+}
+
+@Preview(name = "Empty list", showBackground = true)
+@Composable
+private fun EmptyDeviceListPreview() {
+    WakeOnLanTheme {
+        EmptyDeviceList()
+    }
+}
+
+// endregion
 
 
 

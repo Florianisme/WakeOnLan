@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
@@ -90,29 +93,61 @@ private fun MainScreen() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = Destination.fromRoute(backStackEntry?.destination?.route)
 
+    MainScreenScaffold(
+        drawerState = drawerState,
+        currentDestination = currentDestination,
+        isSelected = { destination ->
+            backStackEntry?.destination?.hierarchy?.any { it.route == destination.route } == true
+        },
+        onDestinationSelected = { destination, selected ->
+            scope.launch { drawerState.close() }
+            if (!selected) {
+                navController.navigate(destination.route) {
+                    popUpTo(Destination.START.route) { saveState = true }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        },
+        onMenuClick = { scope.launch { drawerState.open() } },
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Destination.START.route,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            composable(Destination.DEVICE_LIST.route) { DeviceListScreen() }
+            composable(Destination.NETWORK_SCAN.route) { NetworkScanScreen() }
+            composable(Destination.BACKUP.route) { BackupScreen() }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MainScreenScaffold(
+    drawerState: DrawerState,
+    currentDestination: Destination,
+    isSelected: (Destination) -> Boolean,
+    onDestinationSelected: (Destination, Boolean) -> Unit,
+    onMenuClick: () -> Unit,
+    content: @Composable (PaddingValues) -> Unit,
+) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
                 DrawerHeader()
-                HorizontalDivider()
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 Destination.entries.forEach { destination ->
-                    val selected = backStackEntry?.destination?.hierarchy
-                        ?.any { it.route == destination.route } == true
+                    val selected = isSelected(destination)
                     NavigationDrawerItem(
                         icon = { Icon(destination.icon, contentDescription = null) },
                         label = { Text(stringResource(destination.titleRes)) },
                         selected = selected,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            if (!selected) {
-                                navController.navigate(destination.route) {
-                                    popUpTo(Destination.START.route) { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        },
+                        onClick = { onDestinationSelected(destination, selected) },
                         modifier = Modifier.padding(horizontal = 12.dp),
                     )
                 }
@@ -126,7 +161,7 @@ private fun MainScreen() {
                 TopAppBar(
                     title = { Text(stringResource(currentDestination.titleRes)) },
                     navigationIcon = {
-                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                        IconButton(onClick = onMenuClick) {
                             Icon(Icons.Filled.Menu, contentDescription = null)
                         }
                     },
@@ -137,19 +172,8 @@ private fun MainScreen() {
                     ),
                 )
             },
-        ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = Destination.START.route,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            ) {
-                composable(Destination.DEVICE_LIST.route) { DeviceListScreen() }
-                composable(Destination.NETWORK_SCAN.route) { NetworkScanScreen() }
-                composable(Destination.BACKUP.route) { BackupScreen() }
-            }
-        }
+            content = content,
+        )
     }
 }
 
@@ -190,5 +214,46 @@ private fun GithubDrawerItem() {
         },
         modifier = Modifier.padding(horizontal = 12.dp),
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(name = "Main screen", showBackground = true)
+@Composable
+private fun MainScreenPreview() {
+    WakeOnLanTheme {
+        MainScreenScaffold(
+            drawerState = rememberDrawerState(DrawerValue.Closed),
+            currentDestination = Destination.DEVICE_LIST,
+            isSelected = { it == Destination.DEVICE_LIST },
+            onDestinationSelected = { _, _ -> },
+            onMenuClick = {},
+        ) { innerPadding ->
+            Column(modifier = Modifier
+                .padding(innerPadding)
+                .padding(24.dp)) {
+                Text(
+                    text = stringResource(R.string.title_fragment_device_list),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(name = "Navigation drawer", showBackground = true)
+@Composable
+private fun MainScreenDrawerPreview() {
+    WakeOnLanTheme {
+        MainScreenScaffold(
+            drawerState = rememberDrawerState(DrawerValue.Open),
+            currentDestination = Destination.DEVICE_LIST,
+            isSelected = { it == Destination.DEVICE_LIST },
+            onDestinationSelected = { _, _ -> },
+            onMenuClick = {},
+        ) { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {}
+        }
+    }
 }
 

@@ -45,9 +45,11 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.florianisme.wakeonlan.R
 import de.florianisme.wakeonlan.persistence.models.Device
+import de.florianisme.wakeonlan.ui.theme.WakeOnLanTheme
 
 /** Runs the broadcast interface lookup and fills the broadcast field, mirroring the old autofill button. */
 fun fillBroadcastAddress(state: DeviceFormState) {
@@ -374,5 +376,58 @@ private fun LabeledField(
         modifier = modifier.padding(top = 4.dp),
     )
 }
+
+// region Previews
+
+@Preview(name = "Add device", showBackground = true)
+@Composable
+private fun ModifyDeviceScreenAddPreview() {
+    val state = remember { DeviceFormState() }
+    WakeOnLanTheme {
+        ModifyDeviceScreen(
+            titleRes = R.string.title_activity_add_device,
+            state = state,
+            showDelete = false,
+            onPersist = {},
+            onDelete = {},
+            onFinish = {},
+        )
+    }
+}
+
+@Preview(name = "Edit device with shutdown", showBackground = true)
+@Composable
+private fun ModifyDeviceScreenEditPreview() {
+    val state = remember {
+        DeviceFormState(
+            Device().apply {
+                id = 1
+                name = "Gaming PC"
+                macAddress = "1A:2B:3C:4D:5E:6F"
+                broadcastAddress = "192.168.0.255"
+                port = 9
+                statusIp = "192.168.0.100"
+                remoteShutdownEnabled = true
+                sshAddress = "192.168.0.100"
+                sshPort = 22
+                sshUsername = "florian"
+                sshPassword = "secret"
+                sshCommand = "sudo /usr/sbin/shutdown -h now"
+            }
+        )
+    }
+    WakeOnLanTheme {
+        ModifyDeviceScreen(
+            titleRes = R.string.title_activity_edit_device,
+            state = state,
+            showDelete = true,
+            onPersist = {},
+            onDelete = {},
+            onFinish = {},
+        )
+    }
+}
+
+// endregion
 
 
