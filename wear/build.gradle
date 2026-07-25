@@ -6,7 +6,7 @@ android {
     compileSdk 37
     defaultConfig {
         targetSdk 37
-        versionCode 110
+        versionCode 112
     }
     buildFeatures {
         compose true
