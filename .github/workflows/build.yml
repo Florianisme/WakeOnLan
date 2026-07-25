@@ -13,10 +13,20 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build unsigned release APK and AAB
+      - name: Run unit tests
         run: |
           chmod +x ./gradlew
           ./gradlew clean
+          ./gradlew --parallel --max-workers=8 test
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: '**/build/reports/tests/'
+          if-no-files-found: ignore
+      - name: Build unsigned release APK and AAB
+        run: |
           ./gradlew --parallel --max-workers=8 \
             :app:assembleRelease :app:bundleRelease \
             :wear:assembleRelease :wear:bundleRelease

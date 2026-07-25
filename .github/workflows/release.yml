@@ -20,6 +20,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Run unit tests
+        run: |
+          chmod +x ./gradlew
+          ./gradlew --parallel --max-workers=8 test
       - name: Decode release keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
