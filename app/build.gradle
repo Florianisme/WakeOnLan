@@ -61,5 +61,5 @@ dependencies {
     implementation project(path: ':ping')
 
     // Kotlin BOM
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.0"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.3.21"))
 }
