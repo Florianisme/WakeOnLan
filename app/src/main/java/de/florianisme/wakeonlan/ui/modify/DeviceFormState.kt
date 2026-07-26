@@ -54,12 +54,6 @@ class DeviceFormState(initial: Device? = null) {
             remoteShutdownEnabled,
             R.string.add_device_error_ssh_username_empty
         )
-    val sshPasswordError: Int?
-        get() = DeviceFormValidation.validateConditionalNotEmpty(
-            sshPassword,
-            remoteShutdownEnabled,
-            R.string.add_device_error_ssh_password_empty
-        )
     val sshCommandError: Int?
         get() = DeviceFormValidation.validateConditionalNotEmpty(
             sshCommand,
@@ -69,7 +63,7 @@ class DeviceFormState(initial: Device? = null) {
 
     val isValid: Boolean
         get() = nameError == null && macError == null && portError == null && secureOnError == null &&
-                sshAddressError == null && sshUsernameError == null && sshPasswordError == null && sshCommandError == null
+                sshAddressError == null && sshUsernameError == null && sshCommandError == null
 
     fun getPort(): Int = port.trim().toIntOrNull() ?: 9
 
