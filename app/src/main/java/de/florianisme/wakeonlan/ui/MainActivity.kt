@@ -1,11 +1,15 @@
 package de.florianisme.wakeonlan.ui
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,11 +32,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -39,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -47,6 +55,7 @@ import androidx.navigation.compose.rememberNavController
 import de.florianisme.wakeonlan.R
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager
+import de.florianisme.wakeonlan.ui.MainActivity.Companion.ACCESS_LOCAL_NETWORK
 import de.florianisme.wakeonlan.ui.screens.BackupScreen
 import de.florianisme.wakeonlan.ui.screens.DeviceListScreen
 import de.florianisme.wakeonlan.ui.screens.NetworkScanScreen
@@ -56,18 +65,70 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
+    private companion object {
+        // Framework constant only exists on API 36+; use the literal so it resolves everywhere.
+        const val ACCESS_LOCAL_NETWORK = "android.permission.ACCESS_LOCAL_NETWORK"
+    }
+
+    private val localNetworkPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) {
+                showPermissionDeniedDialog.value = true
+            }
+        }
+
+    private val showPermissionDeniedDialog = mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        requestLocalNetworkPermissionIfNeeded()
         initializeWearClient()
         initializeShortcuts()
 
         setContent {
             WakeOnLanTheme {
                 MainScreen()
+
+                if (showPermissionDeniedDialog.value) {
+                    LocalNetworkPermissionDeniedDialog(
+                        onOpenSettings = {
+                            showPermissionDeniedDialog.value = false
+                            openAppSettings()
+                        },
+                        onDismiss = { showPermissionDeniedDialog.value = false },
+                    )
+                }
             }
         }
+    }
+
+    /**
+     * Android 16 (API 36) introduced Local Network Protection. Sending a WOL magic
+     * packet to a local broadcast address is blocked unless the app holds the
+     * [ACCESS_LOCAL_NETWORK] runtime permission. Request it once on startup so all
+     * entry points (tiles, shortcuts, Wear, quick access) can wake devices afterwards.
+     */
+    private fun requestLocalNetworkPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT < 36) {
+            return
+        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                ACCESS_LOCAL_NETWORK
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            localNetworkPermissionLauncher.launch(ACCESS_LOCAL_NETWORK)
+        }
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", packageName, null),
+        )
+        startActivity(intent)
     }
 
     private fun initializeWearClient() {
@@ -213,6 +274,28 @@ private fun GithubDrawerItem() {
             context.startActivity(browserIntent)
         },
         modifier = Modifier.padding(horizontal = 12.dp),
+    )
+}
+
+@Composable
+private fun LocalNetworkPermissionDeniedDialog(
+    onOpenSettings: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.local_network_permission_denied_title)) },
+        text = { Text(stringResource(R.string.local_network_permission_denied_message)) },
+        confirmButton = {
+            TextButton(onClick = onOpenSettings) {
+                Text(stringResource(R.string.local_network_permission_denied_settings))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.local_network_permission_denied_dismiss))
+            }
+        },
     )
 }
 
