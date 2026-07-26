@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'de.florianisme.wakeonlan.ping'
-    compileSdk 36
+    compileSdk 37
 
     defaultConfig {
         minSdk 24
-        targetSdk 36
+        targetSdk 37
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -128,4 +128,9 @@
     <string name="execution_error_command_not_found">Command not found</string>
     <string name="execution_error_command_not_executable">Command not executable</string>
     <string name="execution_error_unknown">Unknown</string>
+
+    <string name="local_network_permission_denied_title">Permission required</string>
+    <string name="local_network_permission_denied_message">Wake on Lan needs the local network permission to send magic packets to your devices. Without it, waking devices will not work.\n\nPlease grant the local network permission in the app settings.</string>
+    <string name="local_network_permission_denied_settings">Open settings</string>
+    <string name="local_network_permission_denied_dismiss">Not now</string>
 </resources>
