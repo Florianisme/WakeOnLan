@@ -24,7 +24,7 @@ import de.florianisme.wakeonlan.shutdown.listener.ShutdownExecutorListener;
 public class ShutdownRunnable implements Runnable {
 
     private static final int CONNECT_TIMEOUT = 5000;
-    private static final int EXECUTE_TIMEOUT = 500;
+    private static final int EXECUTE_TIMEOUT = 5000;
 
     private final ShutdownModel shutdownModel;
     private final ShutdownExecutorListener shutdownExecutorListener;
