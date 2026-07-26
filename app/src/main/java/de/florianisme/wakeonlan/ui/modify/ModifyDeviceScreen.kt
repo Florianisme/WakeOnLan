@@ -222,7 +222,6 @@ fun ModifyDeviceScreen(
                     value = state.sshPassword,
                     onValueChange = { state.sshPassword = it },
                     labelRes = R.string.add_device_shutdown_password,
-                    errorRes = if (state.showErrors) state.sshPasswordError else null,
                     isPassword = true,
                 )
                 LabeledField(
