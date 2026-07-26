@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -24,8 +25,9 @@ public class WolSender {
             public void run() {
                 // Send the magic packet to all possible broadcast addresses except the one specifically set in the device
                 new BroadcastHelper().getAllPossibleBroadcastAddresses().stream()
-                        .filter(address -> !Objects.equals(address.getHostAddress(), device.broadcastAddress))
-                        .forEach(address -> sendPacket(address.getHostAddress()));
+                        .map(InetAddress::getHostAddress)
+                        .filter(address -> !Objects.equals(address, device.broadcastAddress))
+                        .forEach(this::sendPacket);
                 sendPacket(device.broadcastAddress);
             }
 

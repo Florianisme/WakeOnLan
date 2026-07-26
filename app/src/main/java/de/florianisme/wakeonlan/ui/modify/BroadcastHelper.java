@@ -30,6 +30,7 @@ public class BroadcastHelper {
                 .flatMap(Collection::stream)
                 .map(InterfaceAddress::getBroadcast)
                 .filter(Objects::nonNull)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
