@@ -36,12 +36,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.florianisme.wakeonlan.R
 import de.florianisme.wakeonlan.ui.modify.AddNetworkScanDeviceActivity
 import de.florianisme.wakeonlan.ui.scan.NetworkScanTask
 import de.florianisme.wakeonlan.ui.scan.callbacks.ScanCallback
 import de.florianisme.wakeonlan.ui.scan.model.NetworkScanDevice
+import de.florianisme.wakeonlan.ui.theme.WakeOnLanTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -174,3 +176,34 @@ private fun ScanResultRow(device: NetworkScanDevice, onAddClicked: () -> Unit) {
     }
 }
 
+
+private fun sampleDevice(
+    name: String,
+) = NetworkScanDevice().apply {
+    this.ipAddress = name
+}
+
+@Preview(name = "Device cards", showBackground = true)
+@Composable
+private fun DeviceListContentPreview() {
+    WakeOnLanTheme {
+        Column {
+            ScanResultRow(
+                device = sampleDevice("192.168.1.1"),
+                onAddClicked = {},
+            )
+            ScanResultRow(
+                device = sampleDevice("192.168.1.2"),
+                onAddClicked = {},
+            )
+            ScanResultRow(
+                device = sampleDevice("192.168.1.3"),
+                onAddClicked = {},
+            )
+            ScanResultRow(
+                device = sampleDevice("192.168.1.4"),
+                onAddClicked = {},
+            )
+        }
+    }
+}
