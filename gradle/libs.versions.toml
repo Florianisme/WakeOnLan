@@ -1,0 +1,159 @@
+[versions]
+# Build Tools & Kotlin
+android-gradle-plugin = "9.3.1"
+kotlin = "2.3.21"
+compose-compiler-gradle-plugin = "2.3.21"
+foojay-resolver-convention = "1.0.0"
+
+# AndroidX & Core
+androidx-appcompat = "1.7.1"
+androidx-core = "1.19.0"
+androidx-core-google-shortcuts = "1.1.0"
+androidx-core-splashscreen = "1.2.0"
+androidx-constraintlayout = "2.2.1"
+androidx-legacy-support-v4 = "1.0.0"
+
+# Jetpack Compose
+compose-bom = "2026.06.01"
+androidx-activity-compose = "1.13.0"
+androidx-wear-compose-foundation = "1.6.2"
+androidx-wear-compose-material = "1.6.2"
+androidx-lifecycle-runtime-compose = "2.11.0"
+
+# Navigation
+androidx-navigation = "2.9.8"
+
+# Lifecycle & Room
+androidx-lifecycle-livedata = "2.11.0"
+androidx-lifecycle-runtime = "2.11.0"
+androidx-room = "2.8.4"
+
+# UI & Material
+google-material = "1.14.0"
+androidx-swiperefreshlayout = "1.2.0"
+
+# Reactive
+reactive-streams = "1.0.4"
+rxjava2 = "2.2.21"
+
+# SSH & Security
+sshj = "0.40.0"
+bouncycastle = "1.85"
+
+# Google & Wearable
+google-guava = "33.6.0-jre"
+google-gson = "2.14.0"
+google-play-services-wearable = "20.0.1"
+google-wearable-support = "2.9.0"
+google-wearable-api = "2.9.0"
+
+# Wearable
+androidx-wear = "1.4.0"
+
+# Testing
+junit = "4.13.2"
+mockito = "5.23.0"
+androidx-test-runner = "1.5.2"
+
+[libraries]
+# Build plugins
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "android-gradle-plugin" }
+kotlin-compose-compiler-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose-compiler-gradle-plugin" }
+
+# AndroidX & Core
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
+androidx-core-google-shortcuts = { module = "androidx.core:core-google-shortcuts", version.ref = "androidx-core-google-shortcuts" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "androidx-legacy-support-v4" }
+
+# Jetpack Compose (BOM)
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
+
+# Compose Activity & Navigation
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-runtime-compose" }
+
+# Navigation
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "androidx-navigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "androidx-navigation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+
+# Lifecycle & Room
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "androidx-lifecycle-livedata" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "androidx-lifecycle-runtime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+
+# UI & Material
+google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+
+# Reactive
+reactive-streams = { module = "org.reactivestreams:reactive-streams", version.ref = "reactive-streams" }
+rxjava2 = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava2" }
+
+# SSH & Security
+sshj = { module = "com.hierynomus:sshj", version.ref = "sshj" }
+bouncycastle-provider = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
+bouncycastle-pkix = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
+
+# Google & Wearable
+google-guava = { module = "com.google.guava:guava", version.ref = "google-guava" }
+google-gson = { module = "com.google.code.gson:gson", version.ref = "google-gson" }
+google-play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "google-play-services-wearable" }
+google-android-support-wearable = { module = "com.google.android.support:wearable", version.ref = "google-wearable-support" }
+google-android-wearable-api = { module = "com.google.android.wearable:wearable", version.ref = "google-wearable-api" }
+
+# Wearable
+androidx-wear = { module = "androidx.wear:wear", version.ref = "androidx-wear" }
+androidx-wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "androidx-wear-compose-foundation" }
+androidx-wear-compose-material = { module = "androidx.wear.compose:compose-material", version.ref = "androidx-wear-compose-material" }
+
+# Testing
+junit = { module = "junit:junit", version.ref = "junit" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+androidx-test-runner = { module = "androidx.test.runner:runner", version.ref = "androidx-test-runner" }
+
+# Kotlin BOM
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+
+[bundles]
+# Jetpack Compose - Core
+compose-core = ["androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-material3", "androidx-compose-material-icons-extended"]
+
+# Jetpack Compose - Debug/Development
+compose-debug = ["androidx-compose-ui-tooling"]
+
+# Navigation
+navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
+
+# Lifecycle
+lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-runtime"]
+
+# Testing
+testing = ["junit", "mockito"]
+
+# Security - BouncyCastle
+security = ["bouncycastle-provider", "bouncycastle-pkix"]
+
+# Wearable Support
+wearable = ["google-android-support-wearable", "google-android-wearable-api", "google-play-services-wearable"]
+
+# Wearable Compose
+wearable-compose = ["androidx-wear-compose-foundation", "androidx-wear-compose-material"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+foojay-resolver-convention = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "foojay-resolver-convention" }
+
+

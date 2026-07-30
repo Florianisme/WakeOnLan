@@ -1,0 +1,117 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    allow:
+      - dependency-type: "all"
+    groups:
+      build-tools:
+        patterns:
+          - "com.android.tools.build:*"
+          - "org.jetbrains.kotlin:*"
+          - "org.gradle.toolchains:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      androidx-core:
+        patterns:
+          - "androidx.appcompat:*"
+          - "androidx.core:*"
+          - "androidx.constraintlayout:*"
+          - "androidx.legacy:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      androidx-compose:
+        patterns:
+          - "androidx.compose:*"
+          - "androidx.activity:activity-compose"
+          - "androidx.lifecycle:lifecycle-runtime-compose"
+        update-types:
+          - "minor"
+          - "major"
+
+      androidx-navigation:
+        patterns:
+          - "androidx.navigation:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      androidx-lifecycle-room:
+        patterns:
+          - "androidx.lifecycle:lifecycle-livedata"
+          - "androidx.lifecycle:lifecycle-runtime"
+          - "androidx.room:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      androidx-wearable:
+        patterns:
+          - "androidx.wear:*"
+          - "androidx.wear.compose:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      material-ui:
+        patterns:
+          - "com.google.android.material:*"
+          - "androidx.swiperefreshlayout:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      reactive-streams:
+        patterns:
+          - "org.reactivestreams:*"
+          - "io.reactivex.rxjava2:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      security-crypto:
+        patterns:
+          - "org.bouncycastle:*"
+          - "com.hierynomus:sshj"
+        update-types:
+          - "minor"
+          - "major"
+
+      google-services:
+        patterns:
+          - "com.google.android.support:*"
+          - "com.google.android.wearable:*"
+          - "com.google.android.gms:*"
+          - "com.google.guava:*"
+          - "com.google.code.gson:*"
+        update-types:
+          - "minor"
+          - "major"
+
+      testing:
+        patterns:
+          - "junit:*"
+          - "org.mockito:*"
+          - "androidx.test:*"
+        update-types:
+          - "minor"
+          - "major"
+
+    pull-requests:
+      auto-merge: false
+      auto-rebase: true
+    reviewers:
+      - "florianisme"
+    assignees:
+      - "florianisme"
+    commit-message:
+      prefix: "build"
+      include: "scope"

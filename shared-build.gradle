@@ -46,14 +46,14 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.support:wearable:2.9.0'
-    compileOnly 'com.google.android.wearable:wearable:2.9.0'
-    implementation 'com.google.android.gms:play-services-wearable:20.0.1'
+    implementation libs.google.android.support.wearable
+    compileOnly libs.google.android.wearable.api
+    implementation libs.google.play.services.wearable
 
-    implementation 'com.google.guava:guava:33.6.0-jre'
+    implementation libs.google.guava
 
-    implementation 'com.google.code.gson:gson:2.14.0'
+    implementation libs.google.gson
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.23.0'
+    testImplementation libs.junit
+    testImplementation libs.mockito
 }
