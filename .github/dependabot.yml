@@ -6,8 +6,14 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "03:00"
-    allow:
-      - dependency-type: "all"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "florianisme"
+    assignees:
+      - "florianisme"
+    commit-message:
+      prefix: "build"
+      include: "scope"
     groups:
       build-tools:
         patterns:
@@ -105,13 +111,3 @@ updates:
           - "minor"
           - "major"
 
-    pull-requests:
-      auto-merge: false
-      auto-rebase: true
-    reviewers:
-      - "florianisme"
-    assignees:
-      - "florianisme"
-    commit-message:
-      prefix: "build"
-      include: "scope"
