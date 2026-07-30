@@ -14,20 +14,17 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.core:core-splashscreen:1.2.0"
+    implementation libs.androidx.legacy.support.v4
+    implementation libs.androidx.core.splashscreen
 
-    implementation 'androidx.wear:wear:1.4.0'
+    implementation libs.androidx.wear
 
     // Jetpack Compose (Wear)
-    def compose_bom = platform('androidx.compose:compose-bom:2026.06.01')
-    implementation compose_bom
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.activity:activity-compose:1.13.0'
-    implementation 'androidx.wear.compose:compose-foundation:1.6.2'
-    implementation 'androidx.wear.compose:compose-material:1.6.2'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.bundles.compose.core
+    implementation libs.androidx.activity.compose
+    implementation libs.bundles.wearable.compose
+    debugImplementation libs.bundles.compose.debug
 
     implementation project(path: ':shared-models')
 }
