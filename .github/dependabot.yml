@@ -8,9 +8,9 @@ updates:
       time: "03:00"
     open-pull-requests-limit: 10
     reviewers:
-      - "florianisme"
+      - "Florianisme"
     assignees:
-      - "florianisme"
+      - "Florianisme"
     commit-message:
       prefix: "build"
       include: "scope"
