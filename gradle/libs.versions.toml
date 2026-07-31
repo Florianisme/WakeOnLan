@@ -2,7 +2,7 @@
 # Build Tools & Kotlin
 android-gradle-plugin = "9.3.1"
 kotlin = "2.4.10"
-compose-compiler-gradle-plugin = "2.3.21"
+compose-compiler-gradle-plugin = "2.4.10"
 foojay-resolver-convention = "1.0.0"
 
 # AndroidX & Core
