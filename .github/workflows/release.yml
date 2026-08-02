@@ -53,15 +53,21 @@ jobs:
             :wear:assembleRelease :wear:bundleRelease
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228
-        with:
-          generate_release_notes: true
-          prerelease: ${{ contains(github.ref_name, '-') }}
-          fail_on_unmatched_files: true
-          files: |
-            app/build/outputs/apk/release/*.apk
-            wear/build/outputs/apk/release/*.apk
-            app/build/outputs/bundle/release/*.aab
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PRERELEASE_FLAG=""
+          if [[ "${{ github.ref_name }}" == *"-"* ]]; then
+            PRERELEASE_FLAG="--prerelease"
+          fi
+          
+          gh release create "${{ github.ref_name }}" \
+            $PRERELEASE_FLAG \
+            --generate-notes \
+            --title "${{ github.ref_name }}" \
+            app/build/outputs/apk/release/*.apk \
+            wear/build/outputs/apk/release/*.apk \
+            app/build/outputs/bundle/release/*.aab \
             wear/build/outputs/bundle/release/*.aab
 
 
