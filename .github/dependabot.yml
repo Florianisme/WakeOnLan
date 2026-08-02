@@ -11,6 +11,8 @@ updates:
       - "Florianisme"
     assignees:
       - "Florianisme"
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "build"
       include: "scope"
