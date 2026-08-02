@@ -14,11 +14,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BroadcastHelper {
+public class BroadcastAddressLister {
 
     private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan", "eth", "tun");
 
-    public final Optional<InetAddress> getBroadcastAddress() {
+    public final Optional<InetAddress> getFirstBroadcastAddress() {
         return getAllPossibleBroadcastAddresses().stream()
                 .findFirst();
     }
