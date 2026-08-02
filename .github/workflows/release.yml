@@ -55,16 +55,17 @@ jobs:
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
         run: |
           PRERELEASE_FLAG=""
-          if [[ "${{ github.ref_name }}" == *"-"* ]]; then
+          if [[ "$TAG_NAME" == *"-"* ]]; then
             PRERELEASE_FLAG="--prerelease"
           fi
-          
-          gh release create "${{ github.ref_name }}" \
+
+          gh release create "$TAG_NAME" \
             $PRERELEASE_FLAG \
             --generate-notes \
-            --title "${{ github.ref_name }}" \
+            --title "$TAG_NAME" \
             app/build/outputs/apk/release/*.apk \
             wear/build/outputs/apk/release/*.apk \
             app/build/outputs/bundle/release/*.aab \
