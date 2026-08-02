@@ -1,6 +1,8 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
   build:
@@ -8,16 +10,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'gradle'
+
       - name: Run unit tests
         run: |
           chmod +x ./gradlew
           ./gradlew clean
-          ./gradlew --parallel --max-workers=8 test
+          ./gradlew --parallel test
+
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v4
@@ -25,33 +31,21 @@ jobs:
           name: unit-test-reports
           path: '**/build/reports/tests/'
           if-no-files-found: ignore
+
       - name: Build unsigned release APK and AAB
         run: |
-          ./gradlew --parallel --max-workers=8 \
+          ./gradlew --parallel \
             :app:assembleRelease :app:bundleRelease \
             :wear:assembleRelease :wear:bundleRelease
-      - name: Upload app APK
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: app/build/outputs/apk/release/*.apk
-          if-no-files-found: error
-      - name: Upload wear APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: wear-release-apk
-          path: wear/build/outputs/apk/release/*.apk
-          if-no-files-found: error
-      - name: Upload app AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-aab
-          path: app/build/outputs/bundle/release/*.aab
-          if-no-files-found: error
-      - name: Upload wear AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: wear-release-aab
-          path: wear/build/outputs/bundle/release/*.aab
+          name: unsigned-release-builds
+          path: |
+            app/build/outputs/apk/release/*.apk
+            wear/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
+            wear/build/outputs/bundle/release/*.aab
           if-no-files-found: error
 

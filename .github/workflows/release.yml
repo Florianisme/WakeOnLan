@@ -15,15 +15,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Run unit tests
         run: |
           chmod +x ./gradlew
-          ./gradlew --parallel --max-workers=8 test
+          ./gradlew --parallel test
+
       - name: Decode release keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
@@ -34,6 +37,7 @@ jobs:
           fi
           echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
           echo "RELEASE_STORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
       - name: Build release APK and AAB
         env:
           RELEASE_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -42,9 +46,10 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew clean
-          ./gradlew --parallel --max-workers=8 \
+          ./gradlew --parallel \
             :app:assembleRelease :app:bundleRelease \
             :wear:assembleRelease :wear:bundleRelease
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
