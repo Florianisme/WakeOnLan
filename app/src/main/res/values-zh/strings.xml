@@ -1,0 +1,132 @@
+<resources>
+    <!-- Titles -->
+    <string name="app_name">网络唤醒 APP</string>
+    <string name="title_activity_main">网络唤醒</string>
+    <string name="title_activity_add_device">添加设备</string>
+    <string name="title_activity_edit_device">编辑设备</string>
+    <string name="title_fragment_device_list">唤醒设备</string>
+    <string name="title_fragment_network_scan">扫描设备</string>
+    <string name="title_fragment_backup">备份恢复</string>
+
+    <!-- Add Device Activity -->
+    <string name="device_title_general">通用</string>
+    <string name="device_title_connection">连接</string>
+    <string name="device_title_security">安全</string>
+    <string name="device_title_status">状态</string>
+    <string name="add_device_name">设备名称</string>
+    <string name="add_device_status_ip">状态检测地址（可选）</string>
+    <string name="add_device_status_ip_helper">定期检测此地址的连通性，以显示设备在线状态。</string>
+    <string name="add_device_mac_address">MAC 地址</string>
+    <string name="add_device_port">端口</string>
+    <string name="add_device_broadcast_address">广播地址（可选）</string>
+    <string name="add_device_autofill_broadcast">自动获取广播地址</string>
+    <string name="add_device_secure_on">安全网络唤醒密码（可选）</string>
+    <string name="add_device_shutdown">远程关机</string>
+    <string name="add_device_shutdown_explanation">使用 SSH 登录设备，并执行指定的关机命令。\n此功能仅在 Linux 上测试过。</string>
+    <string name="add_device_shutdown_enable">启用远程关机</string>
+    <string name="add_device_shutdown_ip">SSH 地址</string>
+    <string name="add_device_shutdown_port">SSH 端口</string>
+    <string name="add_device_shutdown_username">用户名</string>
+    <string name="add_device_shutdown_password">密码</string>
+    <string name="add_device_shutdown_command">关机命令</string>
+    <string name="add_device_shutdown_command_helper">必须使用非交互式命令，且无需交互式提权（例如sudo的询问密码）。</string>
+    <string name="add_device_menu_save">保存</string>
+    <string name="add_device_menu_delete">删除</string>
+
+    <string name="add_device_error_mac_invalid">MAC 地址无效</string>
+    <string name="add_device_error_port_invalid">端口无效</string>
+    <string name="add_device_error_name_empty">设备名称不能为空</string>
+    <string name="add_device_error_ip_invalid">IP 地址无效</string>
+    <string name="add_device_error_secure_on_password_invalid">密码必须为有效的 MAC 或 IP 地址，或者留空</string>
+    <string name="add_device_error_ssh_address_empty">未设置状态检测地址，必须指定 SSH 地址</string>
+    <string name="add_device_error_ssh_username_empty">用户名不能为空</string>
+    <string name="add_device_error_ssh_password_empty">密码不能为空</string>
+    <string name="add_device_error_ssh_command_empty">关机命令不能为空</string>
+    <string name="add_device_error_save_clicked">请检查无效的输入</string>
+
+    <!-- Edit Device Activity-->
+    <string name="edit_machine_error_loading">无法加载设备</string>
+    <string name="edit_device_delete_title">删除设备</string>
+    <string name="edit_device_delete_message">是否删除该设备？</string>
+
+    <!-- Modify Device Activity -->
+    <string name="modify_device_unsaved_changes_title">未保存</string>
+    <string name="modify_device_unsaved_changes_message">是否保存更改？</string>
+    <string name="modify_device_unsaved_changes_negative">放弃</string>
+    <string name="modify_device_unsaved_changes_positive">保存</string>
+    <string name="modify_device_test_shutdown">测试关机命令</string>
+
+    <!-- Device List -->
+    <string name="device_list_startup">远程开机</string>
+    <string name="device_list_shutdown">远程关机</string>
+    <string name="device_list_empty_title">未添加设备</string>
+    <string name="device_list_empty_hint">点击 \"+\" 按钮添加设备</string>
+    <string name="device_list_empty_image">无设备</string>
+    <string name="device_list_edit">编辑</string>
+
+    <!-- Tile -->
+    <string name="tile_name_device_one">唤醒设备 1</string>
+    <string name="tile_name_device_two">唤醒设备 2</string>
+    <string name="tile_name_device_three">唤醒设备 3</string>
+    <string name="tile_no_device_found">未找到设备</string>
+    <string name="tile_subtitle">网络唤醒 APP</string>
+
+    <!-- Misc -->
+    <string name="wol_toast_sending_packet">已向 %1$s 发送唤醒数据包</string>
+
+    <!-- Backup Fragment -->
+    <string name="backup_description">将当前配置导出为 json 文件或从 json 文件导入。</string>
+    <string name="backup_note">注意：</string>
+    <string name="backup_note_content">导出的数据包含 SSH 明文密码。\n\n导入配置将覆盖当前添加的设备。</string>
+    <string name="backup_button_export">导出</string>
+    <string name="backup_button_import">导入</string>
+    <string name="backup_message_import_success">成功导入 %1$d 个设备</string>
+    <string name="backup_message_import_error">导入失败</string>
+    <string name="backup_message_export_success">成功导出 %1$d 个设备</string>
+    <string name="backup_message_export_error">导出失败</string>
+
+    <!-- Network Scan Fragment -->
+    <string name="network_scan_button_add">添加此设备</string>
+    <string name="network_scan_no_devices_found">未扫描到设备</string>
+    <string name="network_scan_empty_title">请确认已连接到局域网</string>
+    <string name="network_scan_error_ip">无法获取 ip 地址</string>
+    <string name="network_scan_error_general">无法扫描设备</string>
+
+    <!-- Main Activity Drawer -->
+    <string name="drawer_menu_item_github">问题反馈</string>
+    <string name="drawer_menu_header_version">版本：%1$s</string>
+
+    <!-- Quick Access -->
+    <string name="quick_access_device_subtitle">唤醒设备</string>
+
+    <!-- Shortcut Wake Device Activity -->
+    <string name="shortcut_wake_device_error">唤醒失败</string>
+
+    <!-- Remote Shutdown -->
+    <string name="remote_shutdown_send_command">正在向 %1$s 发送关机命令</string>
+    <string name="remote_shutdown_send_command_dialog_title">测试关机命令</string>
+    <string name="test_shutdown_initial_destination">连接设备…</string>
+    <string name="test_shutdown_successful_destination">连接设备成功</string>
+    <string name="test_shutdown_initial_authorization">登录用户…</string>
+    <string name="test_shutdown_successful_authorization">登录用户成功</string>
+    <string name="test_shutdown_initial_session">创建会话…</string>
+    <string name="test_shutdown_successful_session">创建会话成功</string>
+    <string name="test_shutdown_initial_command_execute">执行命令…</string>
+    <string name="test_shutdown_successful_command_execute">执行命令成功</string>
+
+    <string name="test_shutdown_error_connect_exception">无法连接到设备 %1$s 端口 %2$d</string>
+    <string name="test_shutdown_error_auth_exception">无法在设备 %2$s 登录 %1$s 用户</string>
+    <string name="test_shutdown_error_execution_exception">命令 \"%1$s\" 以错误代码 %2$d 退出（%3$s）</string>
+    <string name="test_shutdown_error_execution_timeout">命令 \"%1$s\" 执行超时或需要交互式操作</string>
+    <string name="test_shutdown_error_execution_sudo_prompt">命令 \"%1$s\" 需要额外提权。\n不支持 sudo 交互式提权！</string>
+    <string name="test_shutdown_error_unknown_host">无效的设备地址：\"%1$s\"</string>
+    <string name="test_shutdown_error_unknown_exception">未知错误：%1$s</string>
+    <string name="execution_error_command_not_found">命令不存在</string>
+    <string name="execution_error_command_not_executable">命令无法执行</string>
+    <string name="execution_error_unknown">出现未知错误</string>
+
+    <string name="local_network_permission_denied_title">需要授权</string>
+    <string name="local_network_permission_denied_message">网络唤醒 APP 需要访问本地网络来发送唤醒数据包，否则网络唤醒无法工作。\n\n请在应用程序信息中授予本地网络权限。</string>
+    <string name="local_network_permission_denied_settings">打开设置</string>
+    <string name="local_network_permission_denied_dismiss">暂不</string>
+</resources>
