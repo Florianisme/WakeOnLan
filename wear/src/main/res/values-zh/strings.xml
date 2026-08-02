@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">网络唤醒 APP</string>
+    <string name="sending_magic_packet">向 %1$s 发送唤醒数据包</string>
+
+    <string name="device_list_empty_description">请在手机上安装并配置 \"网络唤醒 APP\"</string>
+    <string name="device_list_empty_title">无设备</string>
+    <string name="device_list_title">所有设备</string>
+    <string name="device_list_no_data">未收到数据</string>
+</resources>
