@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
 
+permissions: { }
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,14 +40,31 @@ jobs:
             :app:assembleRelease :app:bundleRelease \
             :wear:assembleRelease :wear:bundleRelease
 
-      - name: Upload artifacts
+      - name: Upload app APK
         uses: actions/upload-artifact@v4
         with:
-          name: unsigned-release-builds
-          path: |
-            app/build/outputs/apk/release/*.apk
-            wear/build/outputs/apk/release/*.apk
-            app/build/outputs/bundle/release/*.aab
-            wear/build/outputs/bundle/release/*.aab
+          name: app-release-apk
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+      - name: Upload wear APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: wear-release-apk
+          path: wear/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+      - name: Upload app AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+
+      - name: Upload wear AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: wear-release-aab
+          path: wear/build/outputs/bundle/release/*.aab
           if-no-files-found: error
 
