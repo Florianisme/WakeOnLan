@@ -4,7 +4,7 @@ apply from: "$rootProject.projectDir/shared-build.gradle"
 
 android {
     defaultConfig {
-        versionCode 117
+        versionCode 119
         wearAppUnbundled true
     }
     buildFeatures {
