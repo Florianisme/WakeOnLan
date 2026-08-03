@@ -23,7 +23,7 @@
     <string name="add_device_autofill_broadcast">Autofill Broadcast Address</string>
     <string name="add_device_secure_on">SecureOn Password (optional)</string>
     <string name="add_device_shutdown">Remote Shutdown</string>
-    <string name="add_device_shutdown_explanation">Uses SSH to log into the device and execute the specified shutdown command.\nThis feature only works on machines running Linux</string>
+    <string name="add_device_shutdown_explanation">Uses SSH to log into the device and execute the specified shutdown command.</string>
     <string name="add_device_shutdown_enable">Enable Remote Shutdown</string>
     <string name="add_device_shutdown_ip">SSH Address</string>
     <string name="add_device_shutdown_port">SSH Port</string>
