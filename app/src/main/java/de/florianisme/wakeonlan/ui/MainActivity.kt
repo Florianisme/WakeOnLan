@@ -66,7 +66,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private companion object {
-        // Framework constant only exists on API 36+; use the literal so it resolves everywhere.
         const val ACCESS_LOCAL_NETWORK = "android.permission.ACCESS_LOCAL_NETWORK"
     }
 
@@ -105,22 +104,25 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Android 16 (API 36) introduced Local Network Protection. Sending a WOL magic
+     * Android 17 (API 37) introduced Local Network Protection. Sending a WOL magic
      * packet to a local broadcast address is blocked unless the app holds the
-     * [ACCESS_LOCAL_NETWORK] runtime permission. Request it once on startup so all
-     * entry points (tiles, shortcuts, Wear, quick access) can wake devices afterwards.
+     * [ACCESS_LOCAL_NETWORK] runtime permission.
+     * https://developer.android.com/privacy-and-security/local-network-permission
      */
     private fun requestLocalNetworkPermissionIfNeeded() {
-        if (Build.VERSION.SDK_INT < 36) {
+        if (Build.VERSION.SDK_INT <= 36) {
+            showPermissionDeniedDialog.value = false
             return
         }
-        if (ContextCompat.checkSelfPermission(
-                this,
-                ACCESS_LOCAL_NETWORK
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+
+        if (checkPermissionGranted(ACCESS_LOCAL_NETWORK)) {
             localNetworkPermissionLauncher.launch(ACCESS_LOCAL_NETWORK)
         }
+    }
+
+    fun checkPermissionGranted(permission: String): Boolean {
+        return (ContextCompat.checkSelfPermission(this, permission)
+                != PackageManager.PERMISSION_GRANTED)
     }
 
     private fun openAppSettings() {
