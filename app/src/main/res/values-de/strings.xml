@@ -96,7 +96,7 @@
     <string name="test_shutdown_error_execution_timeout">Ausführung des Kommandos \"%1$s\" dauerte zu lange oder sudo Passwort-Aufforderung wurde gestartet</string>
     <string name="test_shutdown_error_unknown_host">Unbekannter Hostname \"%1$s\"</string>
     <string name="add_device_status_ip_helper">Onlinestatus des Geräts wird regelmäßig unter dieser Adresse per Ping-Befehl abgefragt</string>
-    <string name="add_device_shutdown_explanation">Nutzt SSH um sich am Zielsystem anzumelden und über das entsprechende Kommando herunterzufahren.\nFunktioniert nur auf Systemen, auf denen Linux betrieben wird.</string>
+    <string name="add_device_shutdown_explanation">Nutzt SSH um sich am Zielsystem anzumelden und über das entsprechende Kommando herunterzufahren.</string>
     <string name="add_device_error_port_invalid">Ungültiger Port</string>
     <string name="local_network_permission_denied_title">Berechtigung erforderlich</string>
     <string name="local_network_permission_denied_message">Wake on Lan benötigt die Berechtigung für das lokale Netzwerk, um Magic Packets an deine Geräte zu senden. Ohne diese Berechtigung funktioniert das Aufwecken von Geräten nicht.\n\nBitte erteile die Berechtigung für das lokale Netzwerk in den App-Einstellungen.</string>

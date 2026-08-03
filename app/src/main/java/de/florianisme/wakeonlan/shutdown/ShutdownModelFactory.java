@@ -17,18 +17,18 @@ public class ShutdownModelFactory {
         String address = getValueOrFallback(device.sshAddress, device.statusIp);
         int port = getSshPortOrFallback(device.sshPort);
         String username = getValueOrFallback(device.sshUsername, null);
-        String password = getValueOrFallback(device.sshPassword, null);
+        String password = getValueOrFallback(device.sshPassword, "");
         String command = getValueOrFallback(device.sshCommand, null);
 
-        if (allRequiredFieldsSet(shutdownEnabled, address, username, password, command)) {
+        if (allRequiredFieldsSet(shutdownEnabled, address, username, command)) {
             return Optional.of(new ShutdownModel(address, port, username, password, command));
         }
 
         return Optional.empty();
     }
 
-    private static boolean allRequiredFieldsSet(boolean shutdownEnabled, String address, String username, String password, String command) {
-        return shutdownEnabled && address != null && username != null && password != null && command != null;
+    private static boolean allRequiredFieldsSet(boolean shutdownEnabled, String address, String username, String command) {
+        return shutdownEnabled && address != null && username != null && command != null;
     }
 
     @Nullable
@@ -36,10 +36,8 @@ public class ShutdownModelFactory {
         if (!Strings.isNullOrEmpty(value)) {
             return value;
         }
-        if (!Strings.isNullOrEmpty(fallback)) {
-            return fallback;
-        }
-        return null;
+
+        return fallback;
     }
 
     private static Integer getSshPortOrFallback(@Nullable Integer value) {

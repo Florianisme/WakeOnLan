@@ -22,7 +22,7 @@
     <string name="add_device_autofill_broadcast">自动获取广播地址</string>
     <string name="add_device_secure_on">安全网络唤醒密码（可选）</string>
     <string name="add_device_shutdown">远程关机</string>
-    <string name="add_device_shutdown_explanation">使用 SSH 登录设备，并执行指定的关机命令。\n此功能仅在 Linux 上测试过。</string>
+    <string name="add_device_shutdown_explanation">使用 SSH 登录设备，并执行指定的关机命令。</string>
     <string name="add_device_shutdown_enable">启用远程关机</string>
     <string name="add_device_shutdown_ip">SSH 地址</string>
     <string name="add_device_shutdown_port">SSH 端口</string>
