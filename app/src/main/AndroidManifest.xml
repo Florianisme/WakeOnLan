@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Android 16+ Local Network Protection: required to send WOL magic packets
-         to a local broadcast address. Unknown on older platforms (ignored there). -->
+         to a local broadcast address. Older platforms ignore this permission. -->
     <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
 
     <application
