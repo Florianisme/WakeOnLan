@@ -12,19 +12,26 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class BroadcastHelper {
+public class BroadcastAddressLister {
 
     private static final List<String> INTERFACE_LIST = Lists.newArrayList("wlan", "eth", "tun");
 
-    public final Optional<InetAddress> getBroadcastAddress() {
+    public final Optional<InetAddress> getFirstBroadcastAddress() {
+        return getAllPossibleBroadcastAddresses().stream()
+                .findFirst();
+    }
+
+    public final List<InetAddress> getAllPossibleBroadcastAddresses() {
         return Collections.list(getNetworkInterfaces()).stream()
                 .filter(this::isAllowedInterfaceName)
                 .map(NetworkInterface::getInterfaceAddresses)
                 .flatMap(Collection::stream)
                 .map(InterfaceAddress::getBroadcast)
                 .filter(Objects::nonNull)
-                .findFirst();
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     protected Enumeration<NetworkInterface> getNetworkInterfaces() {
