@@ -1,6 +1,6 @@
 [versions]
 # Build Tools & Kotlin
-android-gradle-plugin = "9.3.1"
+android-gradle-plugin = "9.3.2"
 kotlin = "2.4.10"
 compose-compiler-gradle-plugin = "2.4.10"
 foojay-resolver-convention = "1.0.0"
