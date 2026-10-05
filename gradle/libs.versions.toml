@@ -14,7 +14,7 @@ androidx-constraintlayout = "2.2.2"
 androidx-legacy-support-v4 = "1.0.0"
 
 # Jetpack Compose
-compose-bom = "2026.06.01"
+compose-bom = "2026.09.00"
 androidx-activity-compose = "1.13.0"
 androidx-wear-compose-foundation = "1.6.2"
 androidx-wear-compose-material = "1.6.2"
