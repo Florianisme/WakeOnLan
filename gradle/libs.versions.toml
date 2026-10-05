@@ -21,7 +21,7 @@ androidx-wear-compose-material = "1.6.2"
 androidx-lifecycle-runtime-compose = "2.11.0"
 
 # Navigation
-androidx-navigation = "2.9.8"
+androidx-navigation = "2.10.2"
 
 # Lifecycle & Room
 androidx-lifecycle-livedata = "2.11.0"
