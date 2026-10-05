@@ -26,7 +26,7 @@ androidx-navigation = "2.9.8"
 # Lifecycle & Room
 androidx-lifecycle-livedata = "2.11.0"
 androidx-lifecycle-runtime = "2.11.0"
-androidx-room = "2.8.4"
+androidx-room = "2.8.5"
 
 # UI & Material
 google-material = "1.14.0"
