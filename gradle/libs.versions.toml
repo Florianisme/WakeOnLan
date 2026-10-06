@@ -41,7 +41,7 @@ sshj = "0.40.0"
 bouncycastle = "1.85"
 
 # Google & Wearable
-google-guava = "33.6.0-jre"
+google-guava = "33.7.1-jre"
 google-gson = "2.14.0"
 google-play-services-wearable = "20.0.1"
 google-wearable-support = "2.9.0"
