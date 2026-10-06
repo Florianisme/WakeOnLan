@@ -52,7 +52,7 @@ androidx-wear = "1.4.0"
 
 # Testing
 junit = "4.13.2"
-mockito = "5.23.0"
+mockito = "5.24.0"
 androidx-test-runner = "1.5.2"
 
 [libraries]
