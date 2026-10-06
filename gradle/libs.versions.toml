@@ -6,7 +6,7 @@ compose-compiler-gradle-plugin = "2.4.20"
 foojay-resolver-convention = "1.0.0"
 
 # AndroidX & Core
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.8.0"
 androidx-core = "1.19.0"
 androidx-core-google-shortcuts = "1.1.0"
 androidx-core-splashscreen = "1.2.0"
