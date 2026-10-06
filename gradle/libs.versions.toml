@@ -37,8 +37,8 @@ reactive-streams = "1.0.4"
 rxjava2 = "2.2.21"
 
 # SSH & Security
-sshj = "0.40.0"
-bouncycastle = "1.85"
+sshj = "0.41.1"
+bouncycastle = "1.86"
 
 # Google & Wearable
 google-guava = "33.7.1-jre"
