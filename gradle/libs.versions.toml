@@ -7,7 +7,7 @@ foojay-resolver-convention = "1.0.0"
 
 # AndroidX & Core
 androidx-appcompat = "1.8.0"
-androidx-core = "1.19.0"
+androidx-core = "1.19.1"
 androidx-core-google-shortcuts = "1.1.0"
 androidx-core-splashscreen = "1.2.0"
 androidx-constraintlayout = "2.2.2"
