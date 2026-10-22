@@ -53,7 +53,7 @@ import de.florianisme.wakeonlan.ui.theme.WakeOnLanTheme
 
 /** Runs the broadcast interface lookup and fills the broadcast field, mirroring the old autofill button. */
 fun fillBroadcastAddress(state: DeviceFormState) {
-    BroadcastHelper().broadcastAddress.ifPresent { inetAddress ->
+    BroadcastAddressLister().firstBroadcastAddress.ifPresent { inetAddress ->
         state.broadcast = inetAddress.hostAddress.orEmpty()
     }
 }

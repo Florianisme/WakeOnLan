@@ -32,6 +32,11 @@ open class AddDeviceActivity : ComponentActivity() {
     }
 
     /** Overridable so [AddNetworkScanDeviceActivity] can pre-populate the form. */
-    protected open fun createFormState(): DeviceFormState = DeviceFormState()
+    protected open fun createFormState(): DeviceFormState {
+        val state = DeviceFormState()
+        fillBroadcastAddress(state)
+
+        return state
+    }
 }
 
