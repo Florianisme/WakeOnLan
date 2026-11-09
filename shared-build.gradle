@@ -18,6 +18,8 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootProject.projectDir/proguard-rules.pro"
             // Sign the release build only when a keystore is provided via env vars
             // (e.g. in CI). Local builds without it stay unsigned.
             if (System.getenv("RELEASE_STORE_FILE")) {
@@ -27,6 +29,8 @@ android {
         debug {
             minifyEnabled true
             shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootProject.projectDir/proguard-rules.pro"
         }
     }
 
