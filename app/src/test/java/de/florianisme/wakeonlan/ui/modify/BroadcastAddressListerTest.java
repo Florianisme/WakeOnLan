@@ -18,33 +18,33 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
-public class BroadcastHelperTest {
+public class BroadcastAddressListerTest {
 
     @Test
-    public void testGetBroadcastAddress_withNoAvailableInterfaces() throws IOException {
+    public void testGetFirstBroadcastAddress_withNoAvailableInterfaces() throws IOException {
         Enumeration<NetworkInterface> availableInterfaces = Collections.emptyEnumeration();
 
-        TestBroadcastHelper broadcastHelper = new TestBroadcastHelper(availableInterfaces);
-        Optional<InetAddress> broadcastAddress = broadcastHelper.getBroadcastAddress();
+        TestBroadcastAddressLister broadcastHelper = new TestBroadcastAddressLister(availableInterfaces);
+        Optional<InetAddress> broadcastAddress = broadcastHelper.getFirstBroadcastAddress();
 
         assertFalse(broadcastAddress.isPresent());
     }
 
     @Test
-    public void testGetBroadcastAddress_withSingleNonMatchingInterface() throws IOException {
+    public void testGetFirstBroadcastAddress_withSingleNonMatchingInterface() throws IOException {
         NetworkInterface singleInterface = mock(NetworkInterface.class);
         when(singleInterface.getName()).thenReturn("nonMatching");
 
         Enumeration<NetworkInterface> availableInterfaces = Collections.emptyEnumeration();
 
-        TestBroadcastHelper broadcastHelper = new TestBroadcastHelper(availableInterfaces);
-        Optional<InetAddress> broadcastAddress = broadcastHelper.getBroadcastAddress();
+        TestBroadcastAddressLister broadcastHelper = new TestBroadcastAddressLister(availableInterfaces);
+        Optional<InetAddress> broadcastAddress = broadcastHelper.getFirstBroadcastAddress();
 
         assertFalse(broadcastAddress.isPresent());
     }
 
     @Test
-    public void testGetBroadcastAddress_withSingleMatchingInterface() throws IOException {
+    public void testGetFirstBroadcastAddress_withSingleMatchingInterface() throws IOException {
         NetworkInterface singleInterface = mock(NetworkInterface.class);
         when(singleInterface.getName()).thenReturn("wlan0");
 
@@ -57,15 +57,15 @@ public class BroadcastHelperTest {
 
         Enumeration<NetworkInterface> availableInterfaces = Collections.enumeration(Collections.singletonList(singleInterface));
 
-        TestBroadcastHelper broadcastHelper = new TestBroadcastHelper(availableInterfaces);
-        Optional<InetAddress> broadcastAddress = broadcastHelper.getBroadcastAddress();
+        TestBroadcastAddressLister broadcastHelper = new TestBroadcastAddressLister(availableInterfaces);
+        Optional<InetAddress> broadcastAddress = broadcastHelper.getFirstBroadcastAddress();
 
         assertTrue(broadcastAddress.isPresent());
         assertEquals(inetAddress, broadcastAddress.get());
     }
 
     @Test
-    public void testGetBroadcastAddress_withSingleNonExactlyMatchingInterface() throws IOException {
+    public void testGetFirstBroadcastAddress_withSingleNonExactlyMatchingInterface() throws IOException {
         NetworkInterface singleInterface = mock(NetworkInterface.class);
         when(singleInterface.getName()).thenReturn("wlan");
 
@@ -78,18 +78,18 @@ public class BroadcastHelperTest {
 
         Enumeration<NetworkInterface> availableInterfaces = Collections.enumeration(Collections.singletonList(singleInterface));
 
-        TestBroadcastHelper broadcastHelper = new TestBroadcastHelper(availableInterfaces);
-        Optional<InetAddress> broadcastAddress = broadcastHelper.getBroadcastAddress();
+        TestBroadcastAddressLister broadcastHelper = new TestBroadcastAddressLister(availableInterfaces);
+        Optional<InetAddress> broadcastAddress = broadcastHelper.getFirstBroadcastAddress();
 
         assertTrue(broadcastAddress.isPresent());
         assertEquals(inetAddress, broadcastAddress.get());
     }
 
-    private static class TestBroadcastHelper extends BroadcastHelper {
+    private static class TestBroadcastAddressLister extends BroadcastAddressLister {
 
         private final Enumeration<NetworkInterface> networkInterfaces;
 
-        private TestBroadcastHelper(Enumeration<NetworkInterface> networkInterfaces) {
+        private TestBroadcastAddressLister(Enumeration<NetworkInterface> networkInterfaces) {
             this.networkInterfaces = networkInterfaces;
         }
 
